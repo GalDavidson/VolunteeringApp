@@ -65,8 +65,17 @@ namespace VolunteeringApp.ViewModels
             ServerStatus = "מתחבר לשרת...";
             await App.Current.MainPage.Navigation.PushModalAsync(new Views.ServerStatusPage(this));
             VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
-            User user = await proxy.LoginAsync(Email, Password);
-            if (user == null)
+            Association association = await proxy.LoginAsync(Email, Password);
+            Volunteer volunteer = await proxy.LoginAsync(Email, Password);
+            Object o = null;
+
+            if (association != null)
+                o = association;
+
+            else if (volunteer != null)
+                o = volunteer;
+
+            if (o == null)
             {
                 await App.Current.MainPage.Navigation.PopModalAsync();
                 await App.Current.MainPage.DisplayAlert("שגיאה", "התחברות נכשלה, בדוק שם משתמש וסיסמה ונסה שוב", "בסדר");
@@ -75,7 +84,7 @@ namespace VolunteeringApp.ViewModels
             {
                 ServerStatus = "קורא נתונים...";
                 App theApp = (App)App.Current;
-                theApp.CurrentUser = user;
+                theApp.CurrentUser = o;
                 bool success = await LoadPhoneTypes(theApp);
                 if (!success)
                 {
@@ -85,7 +94,7 @@ namespace VolunteeringApp.ViewModels
                 else
                 {
                     //Initiate all phone types refrence to the same objects of PhoneTypes
-                    foreach (UserContact uc in user.UserContacts)
+                    foreach (UserContact uc in o.UserContacts)
                     {
                         foreach (Models.ContactPhone cp in uc.ContactPhones)
                             cp.PhoneType = theApp.PhoneTypes.Where(pt => pt.TypeId == cp.PhoneTypeId).FirstOrDefault();

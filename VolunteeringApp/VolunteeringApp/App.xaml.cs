@@ -6,6 +6,8 @@ namespace VolunteeringApp
 {
     public partial class App : Application
     {
+        public Object CurrentUser { get; set; }
+
         public static bool IsDevEnv
         {
             get 
