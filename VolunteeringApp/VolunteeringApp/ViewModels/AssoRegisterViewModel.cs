@@ -19,7 +19,7 @@ namespace VolunteeringApp.ViewModels
         public const string REQUIRED_FIELD = "זהו שדה חובה";
         public const string BAD_EMAIL = "מייל לא תקין";
     }
-    public class RegisterViewModel : INotifyPropertyChanged
+    public class AssoRegisterViewModel : INotifyPropertyChanged
     {
 
         #region INotifyPropertyChanged
@@ -27,94 +27,6 @@ namespace VolunteeringApp.ViewModels
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        #endregion
-
-        #region פרטי שם
-        private bool showNameError;
-
-        public bool ShowNameError
-        {
-            get => showNameError;
-            set
-            {
-                showNameError = value;
-                OnPropertyChanged("ShowNameError");
-            }
-        }
-
-        private string name;
-
-        public string Name
-        {
-            get => name;
-            set
-            {
-                name = value;
-                ValidateName();
-                OnPropertyChanged("Name");
-            }
-        }
-
-        private string nameError;
-
-        public string NameError
-        {
-            get => nameError;
-            set
-            {
-                nameError = value;
-                OnPropertyChanged("NameError");
-            }
-        }
-
-        private void ValidateName()
-        {
-            this.ShowNameError = string.IsNullOrEmpty(Name);
-        }
-        #endregion
-
-        #region משפחה שם
-        private bool showLastNameError;
-
-        public bool ShowLastNameError
-        {
-            get => showLastNameError;
-            set
-            {
-                showLastNameError = value;
-                OnPropertyChanged("ShowLastNameError");
-            }
-        }
-
-        private string lastName;
-
-        public string LastName
-        {
-            get => lastName;
-            set
-            {
-                lastName = value;
-                ValidateLastName();
-                OnPropertyChanged("LastName");
-            }
-        }
-
-        private string lastNameError;
-
-        public string LastNameError
-        {
-            get => lastNameError;
-            set
-            {
-                lastNameError = value;
-                OnPropertyChanged("LastNameError");
-            }
-        }
-
-        private void ValidateLastName()
-        {
-            this.ShowLastNameError = string.IsNullOrEmpty(LastName);
         }
         #endregion
 
@@ -172,44 +84,222 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion
 
-        #region מקור התמונה
-        private string contactImgSrc;
+        #region פרטי שם משתמש
+        private bool showUsernameError;
 
-        public string ContactImgSrc
+        public bool ShowUsernameError
         {
-            get => contactImgSrc;
+            get => showUsernameError;
             set
             {
-                contactImgSrc = value;
-                OnPropertyChanged("ContactImgSrc");
+                showUsernameError = value;
+                OnPropertyChanged("ShowUsernameError");
+            }
+        }
+
+        private string username;
+
+        public string Username
+        {
+            get => username;
+            set
+            {
+                username = value;
+                ValidateUsername();
+                OnPropertyChanged("Username");
+            }
+        }
+
+        private string usernameError;
+
+        public string UsernameError
+        {
+            get => usernameError;
+            set
+            {
+                usernameError = value;
+                OnPropertyChanged("UsernameError");
+            }
+        }
+
+        private void ValidateUsername()
+        {
+            this.ShowUsernameError = string.IsNullOrEmpty(Username);
+        }
+        #endregion
+
+        #region מידע על
+
+        private bool showInformationAboutError;
+
+        public bool ShowInformationAboutError
+        {
+            get => showInformationAboutError;
+            set
+            {
+                showInformationAboutError = value;
+                OnPropertyChanged("ShowInformationAboutError");
+            }
+        }
+
+        private string informationAbout;
+
+        public string InformationAbout
+        {
+            get => informationAbout;
+            set
+            {
+                informationAbout = value;
+                ValidateInformationAbout();
+                OnPropertyChanged("InformationAbout");
+            }
+        }
+
+        private string informationAboutError;
+
+        public string InformationAboutError
+        {
+            get => informationAboutError;
+            set
+            {
+                informationAboutError = value;
+                OnPropertyChanged("InformationAboutError");
+            }
+        }
+
+        private void ValidateInformationAbout()
+        {
+            this.ShowInformationAboutError = string.IsNullOrEmpty(InformationAbout);
+        }
+
+        #endregion
+
+        #region מס טלפון
+
+        private bool showPhoneNumError;
+
+        public bool ShowPhoneNumError
+        {
+            get => showPhoneNumError;
+            set
+            {
+                showPhoneNumError = value;
+                OnPropertyChanged("ShowPhoneNumError");
+            }
+        }
+
+        private string phoneNum;
+
+        public string PhoneNum
+        {
+            get => phoneNum;
+            set
+            {
+                phoneNum = value;
+                ValidatePhoneNum();
+                OnPropertyChanged("PhoneNum");
+            }
+        }
+
+        private string phoneNumError;
+
+        public string PhoneNumError
+        {
+            get => phoneNumError;
+            set
+            {
+                phoneNumError = value;
+                OnPropertyChanged("PhoneNumError");
+            }
+        }
+
+        private void ValidatePhoneNum()
+        {
+            this.ShowEmailError = string.IsNullOrEmpty(PhoneNum);
+        }
+
+        #endregion
+
+        #region סיסמה
+
+        private bool showPassError;
+
+        public bool ShowPassError
+        {
+            get => showPassError;
+            set
+            {
+                showPassError = value;
+                OnPropertyChanged("ShowPassError");
+            }
+        }
+
+        private string pass;
+
+        public string Pass
+        {
+            get => pass;
+            set
+            {
+                pass = value;
+                ValidatePass();
+                OnPropertyChanged("Pass");
+            }
+        }
+
+        private string passError;
+
+        public string PassError
+        {
+            get => passError;
+            set
+            {
+                passError = value;
+                OnPropertyChanged("PassError");
+            }
+        }
+
+        private void ValidatePass()
+        {
+            this.ShowPassError = string.IsNullOrEmpty(Pass);
+            
+            if (!this.ShowPassError)
+            {
+                if (Pass.Length < MIN_PASS_CHARS)
+                {
+                    this.ShowPassError = true;
+                    this.PassError = ERROR_MESSAGES.BAD_PASSWORD;
+                }
+            }
+            else
+                this.PassError = ERROR_MESSAGES.REQUIRED_FIELD;
+        }
+    }
+
+        #endregion
+
+
+
+        #region מקור התמונה
+        private string profileImgSrc;
+
+        public string ProfileImgSrc
+        {
+            get => profileImgSrc;
+            set
+            {
+                profileImgSrc = value;
+                OnPropertyChanged("ProfileImgSrc");
             }
         }
         private const string DEFAULT_PHOTO_SRC = "defaultphoto.jpg";
-        #endregion
-        #region רשימת טלפונים
-        ObservableCollection<Models.ContactPhone> contactPhones;
-        public ObservableCollection<Models.ContactPhone> ContactPhones
-        {
-            get
-            {
-                return this.contactPhones;
-            }
-            set
-            {
-                if (value != this.contactPhones)
-                {
-                    this.contactPhones = value;
-                    OnPropertyChanged("ContactPhones");
-                }
-            }
-        }
         #endregion
 
         //This contact is a reference to the updated or new created contact
         private UserContact theContact;
         //For adding a new contact, uc will be null
         //For updates the user contact object should be sent to the constructor
-        public AddContactViewModel(UserContact uc = null)
+        public AssoRegisterViewModel(UserContact uc = null)
         {
             //create a new user contact if this is an add operation
             if (uc == null)
@@ -331,38 +421,6 @@ namespace VolunteeringApp.ViewModels
                 await App.Current.MainPage.DisplayAlert("שמירת נתונים", " יש בעיה עם הנתונים בדוק ונסה שוב", "אישור", FlowDirection.RightToLeft);
         }
 
-        //The following command deletes a phone from the observable phone list
-        public ICommand DeletePhoneCommand => new Command<Models.ContactPhone>(OnDeletePhone);
-        public async void OnDeletePhone(Models.ContactPhone phone)
-        {
-            //check if the phone has an id. if so, it is not new and should be deleted from server
-            if (phone.PhoneId > 0)
-            {
-                ContactsAPIProxy proxy = ContactsAPIProxy.CreateProxy();
-                bool success = await proxy.RemoveContactPhone(phone);
-                if (success)
-                {
-                    this.ContactPhones.Remove(phone);
-                    this.theContact.ContactPhones.Remove(phone);
-                }
-                else
-                {
-                    await App.Current.MainPage.DisplayAlert("שגיאה", "שגיאה במחיקת טלפון", "בסדר", FlowDirection.RightToLeft);
-                }
-            }
-            else //delete phone locally
-                this.ContactPhones.Remove(phone);
-        }
-
-        //The following command open a page to add a new phone
-        public ICommand AddPhoneCommand => new Command(OnAddPhone);
-        public async void OnAddPhone()
-        {
-            Page p = new Views.AddPhone();
-            p.BindingContext = new AddPhoneViewModel(ContactPhones);
-            await App.Current.MainPage.Navigation.PushModalAsync(p);
-        }
-
         ///The following command handle the pick photo button
         FileResult imageFileResult;
         public event Action<ImageSource> SetImageSourceEvent;
@@ -404,5 +462,5 @@ namespace VolunteeringApp.ViewModels
             }
         }
 
-
     }
+}
