@@ -279,7 +279,6 @@ namespace VolunteeringApp.ViewModels
         #endregion
 
 
-
         #region מקור התמונה
         private string profileImgSrc;
 
@@ -322,7 +321,7 @@ namespace VolunteeringApp.ViewModels
             else
             {
                 //set the path url to the contact photo
-                ContactsAPIProxy proxy = ContactsAPIProxy.CreateProxy();
+                VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
                 //Create a source with cache busting!
                 Random r = new Random();
                 this.ContactImgSrc = proxy.GetBasePhotoUri() + uc.ContactId + $".jpg?{r.Next()}";
@@ -333,7 +332,7 @@ namespace VolunteeringApp.ViewModels
             this.LastNameError = ERROR_MESSAGES.REQUIRED_FIELD;
             this.EmailError = ERROR_MESSAGES.BAD_EMAIL;
 
-            this.ShowNameError = false;
+            this.ShowEmailError = false;
             this.ShowLastNameError = false;
             this.ShowEmailError = false;
             this.ContactPhones = new ObservableCollection<Models.ContactPhone>(uc.ContactPhones);
