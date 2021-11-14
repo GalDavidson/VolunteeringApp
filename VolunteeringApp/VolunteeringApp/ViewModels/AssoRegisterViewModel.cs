@@ -14,11 +14,19 @@ using Xamarin.Essentials;
 
 namespace VolunteeringApp.ViewModels
 {
+
     public static class ERROR_MESSAGES
     {
         public const string REQUIRED_FIELD = "זהו שדה חובה";
         public const string BAD_EMAIL = "מייל לא תקין";
+        public const string EMAIL_EXIST = "Email is already exist";
+        public const string BAD_PHONE = "Phone number is not valid";
+        public const string BAD_USERNAME = "This username is already exist. Please try another one:)";
+        public const string GENERAL_ERROR = "Something went bad. Please try again";
+        public const string BAD_PASSWORD = "Password has to be 6 charechters minimum";
+        public const string BAD_DATE = "You must be older than today years old to use this app!";
     }
+
     public class AssoRegisterViewModel : INotifyPropertyChanged
     {
 
@@ -221,6 +229,7 @@ namespace VolunteeringApp.ViewModels
         #endregion
 
         #region סיסמה
+        private const int MIN_PASS_CHARS = 6;
 
         private bool showPassError;
 
@@ -274,10 +283,9 @@ namespace VolunteeringApp.ViewModels
             else
                 this.PassError = ERROR_MESSAGES.REQUIRED_FIELD;
         }
-    }
+    
 
         #endregion
-
 
         #region מקור התמונה
         private string profileImgSrc;
@@ -295,26 +303,27 @@ namespace VolunteeringApp.ViewModels
         #endregion
 
         //This contact is a reference to the updated or new created contact
-        private UserContact theContact;
+        private Association theAssociation;
         //For adding a new contact, uc will be null
         //For updates the user contact object should be sent to the constructor
-        public AssoRegisterViewModel(UserContact uc = null)
+        public AssoRegisterViewModel(Association uc = null)
         {
             //create a new user contact if this is an add operation
             if (uc == null)
             {
                 App theApp = (App)App.Current;
-                uc = new UserContact()
+                uc = new Association()
                 {
-                    UserId = theApp.CurrentUser.Id,
-                    FirstName = "",
-                    LastName = "",
+                    AssociationId = theApp.CurrentUser.Id,
                     Email = "",
-                    ContactPhones = new List<Models.ContactPhone>()
+                    UserName = "",
+                    InformationAbout = "",
+                    PhoneNum = "",
+                    Pass = ""
                 };
 
                 //Setup default image photo
-                this.ContactImgSrc = DEFAULT_PHOTO_SRC;
+                this.ProfileImgSrc = DEFAULT_PHOTO_SRC;
                 this.imageFileResult = null; //mark that no picture was chosen
 
             }
@@ -324,12 +333,12 @@ namespace VolunteeringApp.ViewModels
                 VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
                 //Create a source with cache busting!
                 Random r = new Random();
-                this.ContactImgSrc = proxy.GetBasePhotoUri() + uc.ContactId + $".jpg?{r.Next()}";
+                this.ProfileImgSrc = proxy.GetBasePhotoUri() + uc.AssociationId + $".jpg?{r.Next()}";
             }
 
-            this.theContact = uc;
-            this.NameError = ERROR_MESSAGES.REQUIRED_FIELD;
-            this.LastNameError = ERROR_MESSAGES.REQUIRED_FIELD;
+            this.theAssociation = uc;
+            this.UsernameError = ERROR_MESSAGES.REQUIRED_FIELD;
+            this.Email = ERROR_MESSAGES.REQUIRED_FIELD;
             this.EmailError = ERROR_MESSAGES.BAD_EMAIL;
 
             this.ShowEmailError = false;

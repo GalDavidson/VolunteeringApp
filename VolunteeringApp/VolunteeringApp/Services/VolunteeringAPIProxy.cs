@@ -80,6 +80,7 @@ namespace VolunteeringApp.Services
             this.basePhotosUri = basePhotosUri;
         }
 
+        public string GetBasePhotoUri() { return this.basePhotosUri; }
 
         public async Task<User> LoginAsync(string email, string pass)
         {
