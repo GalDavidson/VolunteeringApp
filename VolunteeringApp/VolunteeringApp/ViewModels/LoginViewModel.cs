@@ -86,19 +86,27 @@ namespace VolunteeringApp.ViewModels
                         await App.Current.MainPage.DisplayAlert("שגיאה", "קריאת נתונים נכשלה. נסה שוב מאוחר יותר", "בסדר");
                     }
                     else
-                    {
-                        //Initiate all phone types refrence to the same objects of PhoneTypes
-                        foreach (UserContact uc in o.UserContacts)
-                        {
-                            foreach (Models.ContactPhone cp in uc.ContactPhones)
-                                cp.PhoneType = theApp.PhoneTypes.Where(pt => pt.TypeId == cp.PhoneTypeId).FirstOrDefault();
-                        }
-
-                        Page p = new NavigationPage(new Views.ContactsList());
+                    { 
+                        Page p = new NavigationPage(new Views.HomePage());
                         App.Current.MainPage = p;
                     }
-
-
+                }
+            }
+            else
+            {
+                ServerStatus = "קורא נתונים...";
+                App theApp = (App)App.Current;
+                theApp.CurrentUser = association;
+                bool success = await LoadLoginPage(theApp);
+                if (!success)
+                {
+                    await App.Current.MainPage.Navigation.PopModalAsync();
+                    await App.Current.MainPage.DisplayAlert("שגיאה", "קריאת נתונים נכשלה. נסה שוב מאוחר יותר", "בסדר");
+                }
+                else
+                {
+                    Page p = new NavigationPage(new Views.HomePage());
+                    App.Current.MainPage = p;
                 }
             }
 

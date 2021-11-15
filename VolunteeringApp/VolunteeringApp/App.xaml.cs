@@ -1,6 +1,7 @@
 ﻿using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using VolunteeringApp.Views;
 
 namespace VolunteeringApp
 {
@@ -20,7 +21,7 @@ namespace VolunteeringApp
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new LoginView();
         }
 
         protected override void OnStart()
