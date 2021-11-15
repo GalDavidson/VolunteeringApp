@@ -342,9 +342,8 @@ namespace VolunteeringApp.ViewModels
             this.EmailError = ERROR_MESSAGES.BAD_EMAIL;
 
             this.ShowEmailError = false;
-            this.ShowLastNameError = false;
-            this.ShowEmailError = false;
-            this.ContactPhones = new ObservableCollection<Models.ContactPhone>(uc.ContactPhones);
+            this.ShowInformationAboutError = false;
+            this.ShowPassError = false;
             this.SaveDataCommand = new Command(() => SaveData());
             this.Name = uc.FirstName;
             this.LastName = uc.LastName;
