@@ -82,7 +82,7 @@ namespace VolunteeringApp.Services
 
         public string GetBasePhotoUri() { return this.basePhotosUri; }
 
-        public async Task<User> LoginAsync(string email, string pass)
+        public async Task<Object> LoginAsync(string email, string pass)
         {
             try
             {
@@ -95,8 +95,13 @@ namespace VolunteeringApp.Services
                         PropertyNameCaseInsensitive = true
                     };
                     string content = await response.Content.ReadAsStringAsync();
-                    User u = JsonSerializer.Deserialize<User>(content, options);
-                    return u;
+                    Volunteer u = JsonSerializer.Deserialize<Volunteer>(content, options);
+                    if (u.FName != "")
+                    {
+                        return u;
+                    }
+                    Association assos = JsonSerializer.Deserialize<Association>(content, options);
+                    return assos;
                 }
                 else
                 {

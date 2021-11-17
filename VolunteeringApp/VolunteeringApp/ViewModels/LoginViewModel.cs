@@ -79,12 +79,9 @@ namespace VolunteeringApp.ViewModels
                     ServerStatus = "קורא נתונים...";
                     App theApp = (App)App.Current;
                     theApp.CurrentUser = volunteer;
-                    bool success = await LoadLoginPage(theApp);
-                    if (!success)
-                    {
+                   
                         await App.Current.MainPage.Navigation.PopModalAsync();
                         await App.Current.MainPage.DisplayAlert("שגיאה", "קריאת נתונים נכשלה. נסה שוב מאוחר יותר", "בסדר");
-                    }
                     else
                     { 
                         Page p = new NavigationPage(new Views.HomePage());
@@ -97,7 +94,6 @@ namespace VolunteeringApp.ViewModels
                 ServerStatus = "קורא נתונים...";
                 App theApp = (App)App.Current;
                 theApp.CurrentUser = association;
-                bool success = await LoadLoginPage(theApp);
                 if (!success)
                 {
                     await App.Current.MainPage.Navigation.PopModalAsync();
@@ -112,13 +108,6 @@ namespace VolunteeringApp.ViewModels
 
            
            
-        }
-
-        private async Task<bool> LoadLoginPage(App theApp)
-        {
-            VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
-            theApp.PhoneTypes = await proxy.GetPhoneTypesAsync();
-            return theApp.PhoneTypes != null;
         }
     }
 }
