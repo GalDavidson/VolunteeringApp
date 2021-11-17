@@ -64,40 +64,19 @@ namespace VolunteeringApp.ViewModels
         {
             ServerStatus = "מתחבר לשרת...";
             VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
-            Association association = await proxy.LoginAsync(Email, Password);
+            Object user = await proxy.LoginAsync(Email, Password);
 
-            if (association == null)
+            if (user == null)
             {
-                Volunteer volunteer = await proxy.LoginAsync(Email, Password);
-                if (volunteer == null)
-                {
-                    await App.Current.MainPage.Navigation.PopModalAsync();
-                    await App.Current.MainPage.DisplayAlert("שגיאה", "התחברות נכשלה, בדוק שם משתמש וסיסמה ונסה שוב", "בסדר");
-                }
-                else
-                {
-                    ServerStatus = "קורא נתונים...";
-                    App theApp = (App)App.Current;
-                    theApp.CurrentUser = volunteer;
-                   
-                        await App.Current.MainPage.Navigation.PopModalAsync();
-                        await App.Current.MainPage.DisplayAlert("שגיאה", "קריאת נתונים נכשלה. נסה שוב מאוחר יותר", "בסדר");
-                    else
-                    { 
-                        Page p = new NavigationPage(new Views.HomePage());
-                        App.Current.MainPage = p;
-                    }
-                }
+                await App.Current.MainPage.Navigation.PopModalAsync();
+                await App.Current.MainPage.DisplayAlert("שגיאה", "התחברות נכשלה, בדוק שם משתמש וסיסמה ונסה שוב", "בסדר");
             }
             else
             {
-                ServerStatus = "קורא נתונים...";
-                App theApp = (App)App.Current;
-                theApp.CurrentUser = association;
-                if (!success)
+                if (user is Association)
                 {
-                    await App.Current.MainPage.Navigation.PopModalAsync();
-                    await App.Current.MainPage.DisplayAlert("שגיאה", "קריאת נתונים נכשלה. נסה שוב מאוחר יותר", "בסדר");
+                    Page p = new NavigationPage(new Views.HomePage());
+                    App.Current.MainPage = p;
                 }
                 else
                 {
@@ -105,9 +84,6 @@ namespace VolunteeringApp.ViewModels
                     App.Current.MainPage = p;
                 }
             }
-
-           
-           
         }
     }
 }
