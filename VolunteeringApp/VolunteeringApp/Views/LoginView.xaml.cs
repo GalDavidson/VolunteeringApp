@@ -16,5 +16,10 @@ namespace VolunteeringApp.Views
         {
             InitializeComponent();
         }
+
+        private void Password_Focused(object sender, FocusEventArgs e)
+        {
+
+        }
     }
 }
