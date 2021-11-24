@@ -11,9 +11,9 @@ using VolunteeringApp.ViewModels;
 namespace VolunteeringApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class LoginView : ContentPage
+    public partial class LoginPage : ContentPage
     {
-        public LoginView()
+        public LoginPage()
         {
             this.BindingContext = new LoginViewModel();
             InitializeComponent();
