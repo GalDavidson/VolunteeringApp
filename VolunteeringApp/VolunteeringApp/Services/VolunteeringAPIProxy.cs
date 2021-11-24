@@ -21,10 +21,10 @@ namespace VolunteeringApp.Services
         private const string CLOUD_PHOTOS_URL = "TBD";
         private const string DEV_ANDROID_EMULATOR_URL = "http://10.0.2.2:64340/VolunteeringAPI"; //API url when using emulator on android
         private const string DEV_ANDROID_PHYSICAL_URL = "http://10.58.55.43:64340/VolunteeringAPI"; //API url when using physucal device on android
-        private const string DEV_WINDOWS_URL = "https://localhost:44397/VolunteeringAPI"; //API url when using windoes on development
+        private const string DEV_WINDOWS_URL = "http://localhost:64340/VolunteeringAPI"; //API url when using windoes on development
         private const string DEV_ANDROID_EMULATOR_PHOTOS_URL = "http://10.0.2.2:64340/Images/"; //API url when using emulator on android
         private const string DEV_ANDROID_PHYSICAL_PHOTOS_URL = "http://10.58.55.43:64340/Images/"; //API url when using physucal device on android
-        private const string DEV_WINDOWS_PHOTOS_URL = "https://localhost:44397/Images/"; //API url when using windoes on development
+        private const string DEV_WINDOWS_PHOTOS_URL = "http://localhost:64340/Images/"; //API url when using windoes on development
 
         private HttpClient client;
         private string baseUri;

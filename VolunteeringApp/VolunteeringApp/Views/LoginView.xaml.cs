@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using VolunteeringApp.ViewModels;
 
 namespace VolunteeringApp.Views
 {
@@ -14,12 +15,13 @@ namespace VolunteeringApp.Views
     {
         public LoginView()
         {
+            this.BindingContext = new LoginViewModel();
             InitializeComponent();
         }
 
-        private void Password_Focused(object sender, FocusEventArgs e)
-        {
+        //private void Password_Focused(object sender, FocusEventArgs e)
+        //{
 
-        }
+        //}
     }
 }

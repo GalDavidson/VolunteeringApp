@@ -62,14 +62,12 @@ namespace VolunteeringApp.ViewModels
 
         public async void OnSubmit()
         {
-            ServerStatus = "מתחבר לשרת...";
             VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
             Object user = await proxy.LoginAsync(Email, Password);
 
             if (user == null)
             {
-                await App.Current.MainPage.Navigation.PopModalAsync();
-                await App.Current.MainPage.DisplayAlert("שגיאה", "התחברות נכשלה, בדוק שם משתמש וסיסמה ונסה שוב", "בסדר");
+               await App.Current.MainPage.DisplayAlert("שגיאה", "התחברות נכשלה, בדוק שם משתמש וסיסמה ונסה שוב", "בסדר");
             }
             else
             {
