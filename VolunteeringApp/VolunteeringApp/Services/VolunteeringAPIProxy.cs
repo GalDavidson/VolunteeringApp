@@ -117,25 +117,26 @@ namespace VolunteeringApp.Services
 
 
 
-        public async Task<Association> RegAssoAsync ()
+        public async Task<Association> RegAssoAsync (Association association)
         {
             try
             {
-                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/RegisterAsso?");
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve,
+                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.Hebrew, UnicodeRanges.BasicLatin),
+                    PropertyNameCaseInsensitive = true
+                };
+                string jsonObject = JsonSerializer.Serialize<Association>(association, options);
+                StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/RegisterAsso", content);
                 if (response.IsSuccessStatusCode)
                 {
-                    JsonSerializerOptions options = new JsonSerializerOptions
-                    {
-                        ReferenceHandler = ReferenceHandler.Preserve, //avoid reference loops!
-                        PropertyNameCaseInsensitive = true
-                    };
-                    string content = await response.Content.ReadAsStringAsync();
-                    Volunteer u = JsonSerializer.Deserialize<Volunteer>(content, options);
-                    if (u.FName != "")
-                    {
-                        return u;
-                    }
-                    Association assos = JsonSerializer.Deserialize<Association>(content, options);
+                    
+                    string str = await response.Content.ReadAsStringAsync();
+                    
+                    Association assos = JsonSerializer.Deserialize<Association>(str, options);
                     return assos;
                 }
                 else
