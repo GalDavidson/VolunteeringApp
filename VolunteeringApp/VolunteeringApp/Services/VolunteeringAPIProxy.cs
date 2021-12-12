@@ -115,5 +115,39 @@ namespace VolunteeringApp.Services
             }
         }
 
+
+
+        public async Task<Association> RegAssoAsync ()
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/RegisterAsso?");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        ReferenceHandler = ReferenceHandler.Preserve, //avoid reference loops!
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    Volunteer u = JsonSerializer.Deserialize<Volunteer>(content, options);
+                    if (u.FName != "")
+                    {
+                        return u;
+                    }
+                    Association assos = JsonSerializer.Deserialize<Association>(content, options);
+                    return assos;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
     }
 }

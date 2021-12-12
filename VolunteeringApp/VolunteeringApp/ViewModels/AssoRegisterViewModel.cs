@@ -356,8 +356,8 @@ namespace VolunteeringApp.ViewModels
         private const string DEFAULT_PHOTO_SRC = "defaultphoto.jpg";
         #endregion
 
-        private Association theAssociation;
 
+        
 
 
     
