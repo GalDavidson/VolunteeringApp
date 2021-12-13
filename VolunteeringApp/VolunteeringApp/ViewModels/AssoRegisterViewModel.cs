@@ -38,6 +38,20 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion
 
+        #region הצגת בעיות
+        private bool showConditions;
+
+        public bool ShowConditions
+        {
+            get => showConditions;
+            set
+            {
+                showConditions = value;
+                OnPropertyChanged("ShowConditions");
+            }
+        }
+        #endregion
+
         #region דואר אלקטרוני
         private bool showEmailError;
 
@@ -78,6 +92,9 @@ namespace VolunteeringApp.ViewModels
 
         private void ValidateEmail()
         {
+
+            this.ShowConditions = false; 
+
             this.ShowEmailError = string.IsNullOrEmpty(Email);
             if (!this.ShowEmailError)
             {
@@ -89,6 +106,7 @@ namespace VolunteeringApp.ViewModels
             }
             else
                 this.EmailError = ERROR_MESSAGES.REQUIRED_FIELD;
+                //this.emailError = null;
         }
         #endregion
 
@@ -132,7 +150,14 @@ namespace VolunteeringApp.ViewModels
 
         private void ValidateUsername()
         {
+            this.ShowConditions = false;
+
             this.ShowUsernameError = string.IsNullOrEmpty(Username);
+            if (ShowUsernameError)
+                UsernameError = "השם אינו תקין";
+            else
+                UsernameError = ERROR_MESSAGES.REQUIRED_FIELD; 
+
         }
         #endregion
 
@@ -178,6 +203,11 @@ namespace VolunteeringApp.ViewModels
         private void ValidateInformationAbout()
         {
             this.ShowInformationAboutError = string.IsNullOrEmpty(InformationAbout);
+            if (ShowInformationAboutError)
+                InformationAboutError = "השם אינו תקין";
+            else
+                InformationAboutError = ERROR_MESSAGES.REQUIRED_FIELD;
+
         }
 
         #endregion
@@ -224,6 +254,13 @@ namespace VolunteeringApp.ViewModels
         private void ValidatePhoneNum()
         {
             this.ShowEmailError = string.IsNullOrEmpty(PhoneNum);
+            if (ShowEmailError)
+                this.EmailError = "זהו שדה חובה";
+            else
+            {
+                if (PhoneNum.Length < 10)
+                    this.EmailError = "מס' הטלפון קצר מדי, הוא צריך להכיל בעל 10 ספרות לפחות ";
+            }
         }
 
         #endregion
@@ -283,11 +320,9 @@ namespace VolunteeringApp.ViewModels
                 this.PasswordError = ERROR_MESSAGES.REQUIRED_FIELD;
             else
                 ShowPasswordError = false;
-
         }
-        #endregion
+      
 
-        #region verPassword
         private string verPassword;
         public string VerPassword
         {
@@ -356,15 +391,41 @@ namespace VolunteeringApp.ViewModels
         private const string DEFAULT_PHOTO_SRC = "defaultphoto.jpg";
         #endregion
 
-        Association association = new Association
-        {
-            Email= 
+        public ICommand SubmitCommand { protected set; get; }
 
-        };
         
 
+        public AssoRegisterViewModel()
+        {
+            SubmitCommand = new Command(OnSubmit);
+        }
 
-    
+        public async void OnSubmit()
+        {
+            Association association = new Association
+            {
+                Email = Email,
+                UserName = Username,
+                InformationAbout = InformationAbout,
+                PhoneNum = phoneNum,
+                Pass = Password,
+                ActionDate = DateTime.Today
+            };
+
+            VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
+            Association success = await proxy.RegAssoAsync(association);
+
+            if (success == null)
+            {
+                await App.Current.MainPage.DisplayAlert("שגיאה", "הרשמה נכשלה, בדוק את הפרטים המוקלדים", "בסדר");
+            }
+            else
+            {
+                Page p = new NavigationPage(new Views.HomePage());
+                App.Current.MainPage = p;
+            }
+        }
+
     }
 }
 

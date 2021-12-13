@@ -49,17 +49,6 @@ namespace VolunteeringApp.ViewModels
             SubmitCommand = new Command(OnSubmit);
         }
 
-        private string serverStatus;
-        public string ServerStatus
-        {
-            get { return serverStatus; }
-            set
-            {
-                serverStatus = value;
-                OnPropertyChanged("ServerStatus");
-            }
-        }
-
         public async void OnSubmit()
         {
             VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
