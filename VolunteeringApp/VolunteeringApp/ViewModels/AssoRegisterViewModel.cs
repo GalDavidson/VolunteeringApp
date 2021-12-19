@@ -52,6 +52,32 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion
 
+        #region הבעיה הבאה
+        private string nextError;
+
+        public string NextError
+        {
+            get => nextError;
+            set
+            {
+                nextError = value;
+                OnPropertyChanged("NextError");
+            }
+        }
+
+        private bool showNextError;
+
+        public bool ShowNextError
+        {
+            get => showNextError;
+            set
+            {
+                showNextError = value;
+                OnPropertyChanged("ShowNextError");
+            }
+        }
+        #endregion הבעיה הבאה
+
         #region דואר אלקטרוני
         private bool showEmailError;
 
@@ -202,6 +228,8 @@ namespace VolunteeringApp.ViewModels
 
         private void ValidateInformationAbout()
         {
+            this.ShowConditions = false;
+
             this.ShowInformationAboutError = string.IsNullOrEmpty(InformationAbout);
             if (ShowInformationAboutError)
                 InformationAboutError = "השם אינו תקין";
@@ -253,6 +281,8 @@ namespace VolunteeringApp.ViewModels
 
         private void ValidatePhoneNum()
         {
+            this.ShowConditions = false;
+
             this.ShowEmailError = string.IsNullOrEmpty(PhoneNum);
             if (ShowEmailError)
                 this.EmailError = "זהו שדה חובה";
@@ -311,13 +341,22 @@ namespace VolunteeringApp.ViewModels
 
         private void ValidatePassword()
         {
+            this.ShowConditions = false;
+
+            if (string.IsNullOrEmpty(Password))
+                this.PasswordError = ERROR_MESSAGES.REQUIRED_FIELD;
+
+            if (!Regex.IsMatch(this.Password, @"^ (?=.*?[A - Z])(?=.*?[a - z])(?=.*?[0 - 9])(?=.*?[#?!@$%^&*-]).{8,}$"))
+            {
+                this.ShowPasswordError = true;
+                this.PasswordError = "הסיסמה אינה תקינה";
+            }
+
             if (Password.Length > 0 && Password.Length < MIN_PASS_CHARS)
             {
                 PasswordError = "הסיסמה חייבת לכלול לפחות 8 תווים";
                 ShowPasswordError = true;
             }
-            else if (string.IsNullOrEmpty(Password))
-                this.PasswordError = ERROR_MESSAGES.REQUIRED_FIELD;
             else
                 ShowPasswordError = false;
         }
@@ -367,11 +406,20 @@ namespace VolunteeringApp.ViewModels
 
         private void ValidateVerPassword()
         {
-            if (VerPassword != Password)
+
+            this.ShowConditions = false;
+
+
+            if (string.IsNullOrEmpty(VerPassword))
+                this.VerPasswordError = ERROR_MESSAGES.REQUIRED_FIELD;
+
+            else if (VerPassword != Password)
             {
                 VerPasswordError = "הסיסמאות חייבות להיות תואמות";
                 ShowVerPasswordError = true;
             }
+            else
+                this.ShowVerPasswordError = false;
 
         }
         #endregion
@@ -391,38 +439,73 @@ namespace VolunteeringApp.ViewModels
         private const string DEFAULT_PHOTO_SRC = "defaultphoto.jpg";
         #endregion
 
+
+
         public ICommand SubmitCommand { protected set; get; }
 
-        
+        private bool ValidateForm()
+        {
+            ValidateEmail();
+            ValidateUsername();
+            ValidateInformationAbout();
+            ValidatePhoneNum();
+            ValidatePassword();
+            ValidateVerPassword();
+
+            //check if any validation failed
+            if (ShowUsernameError || ShowEmailError || ShowInformationAboutError || ShowPhoneNumError || ShowPasswordError || ShowVerPasswordError)
+                return false;
+            return true;
+        }
 
         public AssoRegisterViewModel()
         {
-            SubmitCommand = new Command(OnSubmit);
+            this.ShowEmailError = false;
+            this.ShowUsernameError = false;
+            this.ShowInformationAboutError = false;
+            this.ShowPhoneNumError = false;
+            this.ShowPasswordError = false;
+            this.ShowVerPasswordError = false;
+            
+            ShowConditions = false;
+
+            this.SubmitCommand = new Command(OnSubmit);
+
+            this.UserImgSrc = DEFAULT_PHOTO_SRC;
+            this.imageFileResult = null;
         }
 
         public async void OnSubmit()
         {
-            Association association = new Association
+            if (ValidateForm())
             {
-                Email = Email,
-                UserName = Username,
-                InformationAbout = InformationAbout,
-                PhoneNum = phoneNum,
-                Pass = Password,
-                ActionDate = DateTime.Today
-            };
+                Association association = new Association
+                {
+                    Email = Email,
+                    UserName = Username,
+                    InformationAbout = InformationAbout,
+                    PhoneNum = phoneNum,
+                    Pass = Password,
+                    ActionDate = DateTime.Today
+                };
 
-            VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
-            Association success = await proxy.RegAssoAsync(association);
+                VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
+                Association success = await proxy.RegAssoAsync(association);
 
-            if (success == null)
-            {
-                await App.Current.MainPage.DisplayAlert("שגיאה", "הרשמה נכשלה, בדוק את הפרטים המוקלדים", "בסדר");
+                if (success == null)
+                {
+                    await App.Current.MainPage.DisplayAlert("שגיאה", "הרשמה נכשלה, בדוק את הפרטים המוקלדים", "בסדר");
+                }
+                else
+                {
+                    Page p = new NavigationPage(new Views.HomePage());
+                    App.Current.MainPage = p;
+                }
             }
             else
             {
-                Page p = new NavigationPage(new Views.HomePage());
-                App.Current.MainPage = p;
+                ShowNextError = true;
+                NextError = "אירעה שגיאה! לא ניתן להמשיך בהרשמה";
             }
         }
 
