@@ -28,31 +28,64 @@
         </Style>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout Style="{StaticResource RegisterStack}">
-            <Label Text="הרשמה" Style="{StaticResource FormTitle}"></Label>
-            <Frame BackgroundColor="#BF043055" HasShadow="False">
-                <StackLayout>
-                    <Entry x:Name="Email" Text="{Binding Email}" Placeholder="דואר אלקטרוני"   
-                           Keyboard="Email"  
-                           Style="{StaticResource RegisterEntry}"/>
-                    <Entry x:Name="Email" Text="{Binding Email}" Placeholder="שם משתמש"   
-                           Keyboard="Email"  
-                           Style="{StaticResource RegisterEntry}"/>
-                    <Entry x:Name="Email" Text="{Binding Email}" Placeholder="מידע על העמותה או הארגון"   
-                           Keyboard="Email"  
-                           Style="{StaticResource RegisterEntry}"/>
-                    <Entry x:Name="Email" Text="{Binding Email}" Placeholder="מספר טלפון"   
-                           Keyboard="Email"  
-                           Style="{StaticResource RegisterEntry}"/>
-                    <Entry x:Name="Email" Text="{Binding Email}" Placeholder="תמונת פרופיל"   
-                           Keyboard="Email"  
-                           Style="{StaticResource RegisterEntry}"/>
-                    <Entry x:Name="Password" Text="{Binding Password}" Placeholder="סיסמה" 
-                           Style="{StaticResource RegisterEntry}"/>
-                </StackLayout>
-            </Frame>
-            <Button Command="{Binding SubmitCommand}" Text="הירשם" Style="{StaticResource RegisterButton}" />
+        <ScrollView>
+            <StackLayout Padding="0,20,0,0" Style="{StaticResource LoginStack}">>
+                <Label Text="הרשמה" Style="{StaticResource FormTitle}"></Label>
 
-        </StackLayout>
+                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
+                    <Entry Placeholder="אימייל" Text="{Binding Email}"/>
+                </Frame>
+                <Label Padding="0" Text="{Binding EmailError}"  HorizontalOptions="Center" IsVisible="{Binding ShowEmailError}" Style="{StaticResource labelErrorStyle}"/>
+
+
+                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
+                    <Entry Placeholder="שם משתמש" Text="{Binding Username}" Keyboard="Email"/>
+                </Frame>
+                <Label Padding="0" Text="{Binding UsernameError}" HorizontalOptions="Center" IsVisible="{Binding ShowUsernameError}"  Style="{StaticResource labelErrorStyle}"/>
+
+
+                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
+                    <Entry Placeholder="סיסמה" Text="{Binding Password}"/>
+                </Frame>
+                <Label Padding="0" Text="{Binding PasswordError}" HorizontalOptions="Center" IsVisible="{Binding ShowPasswordError}"  Style="{StaticResource labelErrorStyle}"/>
+
+                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
+                    <Entry Placeholder="אימות סיסמה" Text="{Binding VerPassword}"/>
+                </Frame>
+                <Label Padding="0" Text="{Binding VerPasswordError}" HorizontalOptions="Center" IsVisible="{Binding ShowVerPasswordError}"  Style="{StaticResource labelErrorStyle}"/>
+
+
+                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
+                    <Entry Placeholder="מספר טלפון" Text="{Binding PhoneNum}"/>
+                </Frame>
+                <Label Padding="0" Text="{Binding PhoneNumError}" HorizontalOptions="Center" IsVisible="{Binding ShowPhoneNumError}" Style="{StaticResource labelErrorStyle}"/>
+
+                
+                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
+                    <Entry Placeholder="מידע על העמותה" Text="{Binding PhoneNum}"/>
+                </Frame>
+                <Label Padding="0" Text="{Binding InformationAboutError}" HorizontalOptions="Center" IsVisible="{Binding ShowInformationAboutError}" Style="{StaticResource labelErrorStyle}"/>
+
+                
+                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
+                    <Entry Placeholder="מידע על העמותה" Text="{Binding PhoneNum}"/>
+                </Frame>
+                <Label Padding="0" Text="{Binding InformationAboutError}" HorizontalOptions="Center" IsVisible="{Binding ShowInformationAboutError}" Style="{StaticResource labelErrorStyle}"/>
+
+
+
+
+
+
+                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
+                    <Picker Title="מגדר" ItemsSource="{Binding Genders}" ItemDisplayBinding="{Binding GenderType}" SelectedItem="{Binding Gender}">
+                    </Picker>
+                </Frame>
+                <Label/>
+                <Button Text="הבא" HorizontalOptions="Center" Padding="0" FontSize="20" FontAttributes="Bold" Command="{Binding SaveDataCommand}" BackgroundColor="LightGray" CornerRadius="10" TextColor="Black"/>
+
+                <Label Padding="0" Text="{Binding NextError}" HorizontalOptions="Center" IsVisible="{Binding ShowNextError}" Style="{StaticResource labelErrorStyle}"/>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

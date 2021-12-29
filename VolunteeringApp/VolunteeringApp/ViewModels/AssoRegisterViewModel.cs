@@ -7,6 +7,7 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using VolunteeringApp.Services;
 using VolunteeringApp.Models;
+using VolunteeringApp.Views;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -424,19 +425,63 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion
 
-        #region מקור התמונה
-        private string profileImgSrc;
-
-        public string ProfileImgSrc
+        #region תחומי עיסוק
+        public List<OccupationalArea> OccupationalAreas
         {
-            get => profileImgSrc;
-            set
+            get
             {
-                profileImgSrc = value;
-                OnPropertyChanged("ProfileImgSrc");
+                //if (((App)App.Current).Tables != null)
+                //    return ((App)App.Current).Tables.Genders;
+                return new List<OccupationalArea>();
             }
         }
-        private const string DEFAULT_PHOTO_SRC = "defaultphoto.jpg";
+
+        private OccupationalArea occupationalArea;
+        public OccupationalArea OccupationalArea
+        {
+            get { return occupationalArea; }
+            set
+            {
+                occupationalArea = value;
+                OnPropertyChanged("OccupationalArea");
+            }
+        }
+        #endregion תחומי עיסוק
+
+        #region סניפים
+        public List<Branch> Branches
+        {
+            get
+            {
+                //if (((App)App.Current).Tables != null)
+                //    return ((App)App.Current).Tables.Branches;
+                return new List<Branch>();
+            }
+        }
+
+        private Branch branch;
+        public Branch Branch
+        {
+            get { return branch; }
+            set
+            {
+                branch = value;
+                OnPropertyChanged("Branch");
+            }
+        }
+        #endregion סניפים
+
+        #region serverStatus
+        private string serverStatus;
+        public string ServerStatus
+        {
+            get { return serverStatus; }
+            set
+            {
+                serverStatus = value;
+                OnPropertyChanged("ServerStatus");
+            }
+        }
         #endregion
 
 
@@ -466,13 +511,12 @@ namespace VolunteeringApp.ViewModels
             this.ShowPhoneNumError = false;
             this.ShowPasswordError = false;
             this.ShowVerPasswordError = false;
-            
             ShowConditions = false;
 
             this.SubmitCommand = new Command(OnSubmit);
-
-            this.UserImgSrc = DEFAULT_PHOTO_SRC;
+            this.ProfileImgSrc = DEFAULT_PHOTO_SRC;
             this.imageFileResult = null;
+
         }
 
         public async void OnSubmit()
@@ -490,14 +534,32 @@ namespace VolunteeringApp.ViewModels
                 };
 
                 VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
-                Association success = await proxy.RegAssoAsync(association);
+                Association asso = await proxy.RegAssoAsync(association);
 
-                if (success == null)
+                if (asso == null)
                 {
                     await App.Current.MainPage.DisplayAlert("שגיאה", "הרשמה נכשלה, בדוק את הפרטים המוקלדים", "בסדר");
                 }
                 else
                 {
+                    if (this.imageFileResult != null)
+                    {
+                        ServerStatus = "מעלה תמונה...";
+
+                        bool success = await proxy.UploadImage(new FileInfo()
+                        {
+                            Name = this.imageFileResult.FullPath
+                        }, $"{asso.AssociationId}.jpg");
+                    }
+                    ServerStatus = "שומר נתונים...";
+
+                    //if someone registered to get the contact added event, fire the event
+                    //if (this.ContactUpdatedEvent != null)
+                    //{
+                    //    this.ContactUpdatedEvent(newUC, this.theContact);
+                    //} 
+
+
                     Page p = new NavigationPage(new Views.HomePage());
                     App.Current.MainPage = p;
                 }
@@ -508,6 +570,48 @@ namespace VolunteeringApp.ViewModels
                 NextError = "אירעה שגיאה! לא ניתן להמשיך בהרשמה";
             }
         }
+
+
+        FileResult imageFileResult;
+        public event Action<ImageSource> SetImageSourceEvent;
+        public ICommand PickImageCommand => new Command(OnPickImage);
+        public async void OnPickImage()
+        {
+            FileResult result = await MediaPicker.PickPhotoAsync(new MediaPickerOptions()
+            {
+                Title = "בחר תמונה"
+            });
+
+            if (result != null)
+            {
+                this.imageFileResult = result;
+
+                var stream = await result.OpenReadAsync();
+                ImageSource imgSource = ImageSource.FromStream(() => stream);
+                if (SetImageSourceEvent != null)
+                    SetImageSourceEvent(imgSource);
+            }
+        }
+
+        ///The following command handle the take photo button
+        public ICommand CameraImageCommand => new Command(OnCameraImage);
+        public async void OnCameraImage()
+        {
+            var result = await MediaPicker.CapturePhotoAsync(new MediaPickerOptions()
+            {
+                Title = "צלם תמונה"
+            });
+
+            if (result != null)
+            {
+                this.imageFileResult = result;
+                var stream = await result.OpenReadAsync();
+                ImageSource imgSource = ImageSource.FromStream(() => stream);
+                if (SetImageSourceEvent != null)
+                    SetImageSourceEvent(imgSource);
+            }
+        }
+
 
     }
 }
