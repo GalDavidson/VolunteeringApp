@@ -12,8 +12,9 @@ namespace VolunteeringApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ServerStatusPage : ContentPage
     {
-        public ServerStatusPage()
+        public ServerStatusPage(Object bindingContext)
         {
+            this.BindingContext = bindingContext;
             InitializeComponent();
         }
     }

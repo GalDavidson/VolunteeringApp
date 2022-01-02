@@ -29,7 +29,7 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout Padding="0,20,0,0" Style="{StaticResource LoginStack}">>
+            <StackLayout Padding="0,20,0,0" Style="{StaticResource LoginStack}">
                 <Label Text="הרשמה" Style="{StaticResource FormTitle}"></Label>
 
                 <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
@@ -62,7 +62,7 @@
 
                 
                 <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
-                    <Entry Placeholder="מידע על העמותה" Text="{Binding PhoneNum}"/>
+                    <Entry Placeholder="מידע על העמותה" Text="{Binding InformationAbout}"/>
                 </Frame>
                 <Label Padding="0" Text="{Binding InformationAboutError}" HorizontalOptions="Center" IsVisible="{Binding ShowInformationAboutError}" Style="{StaticResource labelErrorStyle}"/>
 
@@ -73,16 +73,10 @@
                 <Label Padding="0" Text="{Binding InformationAboutError}" HorizontalOptions="Center" IsVisible="{Binding ShowInformationAboutError}" Style="{StaticResource labelErrorStyle}"/>
 
 
+                <Label Text="אלרגיות" HorizontalTextAlignment="Start" Style="{StaticResource labelNameStyle}"/>
+                <Button Text="רשימת אלרגיות" Clicked="Allergy_Clicked" BackgroundColor="#bee9e8" FontSize="16" CornerRadius="10"></Button>
 
 
-
-
-                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
-                    <Picker Title="מגדר" ItemsSource="{Binding Genders}" ItemDisplayBinding="{Binding GenderType}" SelectedItem="{Binding Gender}">
-                    </Picker>
-                </Frame>
-                <Label/>
-                <Button Text="הבא" HorizontalOptions="Center" Padding="0" FontSize="20" FontAttributes="Bold" Command="{Binding SaveDataCommand}" BackgroundColor="LightGray" CornerRadius="10" TextColor="Black"/>
 
                 <Label Padding="0" Text="{Binding NextError}" HorizontalOptions="Center" IsVisible="{Binding ShowNextError}" Style="{StaticResource labelErrorStyle}"/>
             </StackLayout>

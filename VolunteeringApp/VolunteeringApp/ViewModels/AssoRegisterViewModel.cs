@@ -425,36 +425,13 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion
 
-        #region תחומי עיסוק
-        public List<OccupationalArea> OccupationalAreas
-        {
-            get
-            {
-                //if (((App)App.Current).Tables != null)
-                //    return ((App)App.Current).Tables.Genders;
-                return new List<OccupationalArea>();
-            }
-        }
-
-        private OccupationalArea occupationalArea;
-        public OccupationalArea OccupationalArea
-        {
-            get { return occupationalArea; }
-            set
-            {
-                occupationalArea = value;
-                OnPropertyChanged("OccupationalArea");
-            }
-        }
-        #endregion תחומי עיסוק
-
         #region סניפים
         public List<Branch> Branches
         {
             get
             {
-                //if (((App)App.Current).Tables != null)
-                //    return ((App)App.Current).Tables.Branches;
+                if (((App)App.Current).LookupTables!= null)
+                    return ((App)App.Current).LookupTables.Branches;
                 return new List<Branch>();
             }
         }
@@ -471,6 +448,204 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion סניפים
 
+        #region תחומי עיסוק
+
+        private List<OccupationalArea> allOccupationalAreas;
+        private ObservableCollection<OccupationalArea> filteredOccuAreas;
+        public ObservableCollection<OccupationalArea> FilteredOccuAreas
+        {
+            get
+            {
+                return this.filteredOccuAreas;
+            }
+            set
+            {
+                if (this.filteredOccuAreas != value)
+                {
+
+                    this.filteredOccuAreas = value;
+                    OnPropertyChanged("FilteredOccuAreas");
+                }
+            }
+        }
+
+        private string searchTerm;
+        public string SearchTerm
+        {
+            get
+            {
+                return this.searchTerm;
+            }
+            set
+            {
+                if (this.searchTerm != value)
+                {
+
+                    this.searchTerm = value;
+                    OnTextChanged(value);
+                    OnPropertyChanged("SearchTerm");
+                }
+            }
+        }
+
+       
+
+        private void InitOccuAreas()
+        {
+            IsRefreshing = true;
+            App theApp = (App)App.Current;
+            this.allOccupationalAreas = theApp.LookupTables.OccupationalAreas;
+
+
+            //Copy list to the filtered list
+            this.FilteredOccuAreas = new ObservableCollection<OccupationalArea>(this.allOccupationalAreas.OrderBy(a => a.OccupationName));
+            SearchTerm = String.Empty;
+            IsRefreshing = false;
+        }
+
+        private string newOccuArea;
+        public string NewOccuArea
+        {
+            get => newOccuArea;
+            set
+            {
+                newOccuArea = value;
+                OnPropertyChanged("NewOccuArea");
+            }
+        }
+        #endregion תחומי עיסוק
+
+        #region Search
+        public void OnTextChanged(string search)
+        {
+            //Filter the list of contacts based on the search term
+            if (this.allOccupationalAreas == null)
+                return;
+            if (String.IsNullOrWhiteSpace(search) || String.IsNullOrEmpty(search))
+            {
+                foreach (OccupationalArea a in this.allOccupationalAreas)
+                {
+                    if (!this.FilteredOccuAreas.Contains(a))
+                        this.FilteredOccuAreas.Add(a);
+
+
+                }
+            }
+            else
+            {
+                foreach (OccupationalArea a in this.allOccupationalAreas)
+                {
+                    string occuAreaString = $"{a.OccupationName}";
+
+                    if (!this.FilteredOccuAreas.Contains(a) &&
+                        occuAreaString.Contains(search))
+                        this.FilteredOccuAreas.Add(a);
+                    else if (this.FilteredOccuAreas.Contains(a) &&
+                        !occuAreaString.Contains(search))
+                        this.FilteredOccuAreas.Remove(a);
+                }
+            }
+
+            this.FilteredOccuAreas = new ObservableCollection<OccupationalArea>(this.FilteredOccuAreas.OrderBy(a => a.OccupationName));
+        }
+        #endregion
+
+        #region Refresh
+        private bool isRefreshing;
+        public bool IsRefreshing
+        {
+            get => isRefreshing;
+            set
+            {
+                if (this.isRefreshing != value)
+                {
+                    this.isRefreshing = value;
+                    OnPropertyChanged(nameof(IsRefreshing));
+                }
+            }
+        }
+        public ICommand RefreshCommand => new Command(OnRefresh);
+        public void OnRefresh()
+        {
+            InitOccuAreas();
+        }
+        #endregion
+
+        #region AreaSelection
+        List<OccupationalArea> selectedOccuAreas;
+        public List<OccupationalArea> SelectedOccuAreas
+        {
+            get
+            {
+                return selectedOccuAreas;
+            }
+            set
+            {
+                if (selectedOccuAreas != value)
+                {
+                    selectedOccuAreas = value;
+                }
+            }
+        }
+
+        public ICommand UpdateOccuArea => new Command(OnPressedOccuArea);
+        public async void OnPressedOccuArea(object occuAreasList)
+        {
+            if (occuAreasList is List<OccupationalArea>)
+            {
+                SelectedOccuAreas.Clear();
+                List<OccupationalArea> occupationalAreas = (List<OccupationalArea>)occuAreasList;
+                foreach (OccupationalArea a in occupationalAreas)
+                {
+                    SelectedOccuAreas.Add(a);
+                }
+            }
+        }
+        #endregion
+
+        #region Add New Area
+        public ICommand AddOccuArea => new Command(OnAddOccuArea);
+        public async void OnAddOccuArea()
+        {
+
+            if (string.IsNullOrEmpty(NewOccuArea))
+            {
+                await App.Current.MainPage.DisplayAlert("שגיאה", "לא ניתן להוסיף ערך זה!", "בסדר");
+                return;
+            }
+
+            OccupationalArea NewOccuAr = new OccupationalArea
+            {
+                OccupationName = NewOccuArea
+            };
+
+            bool IsExist = false;
+            if (allOccupationalAreas.Contains(NewOccuAr)) { IsExist = true; }
+
+            if (!IsExist)
+            {
+                VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
+                bool ok = await proxy.AddOccupationalArea(NewOccuAr);
+
+                if (ok)
+                {
+                    await App.Current.MainPage.DisplayAlert("", "בסדר", "!הוספת אלרגיה בהצלחה");
+                }
+                else if (!ok)
+                {
+                    await App.Current.MainPage.DisplayAlert("בסדר", "הוספת אלרגיה נכשלה", "שגיאה");
+                }
+            }
+            else
+            {
+                await App.Current.MainPage.DisplayAlert("בסדר", "אלרגיה זו כבר קיימת במערכת", "שגיאה");
+            }
+
+        }
+        #endregion
+
+
+
         #region serverStatus
         private string serverStatus;
         public string ServerStatus
@@ -482,7 +657,7 @@ namespace VolunteeringApp.ViewModels
                 OnPropertyChanged("ServerStatus");
             }
         }
-        #endregion
+        #endregion serverStatus
 
 
 
@@ -514,7 +689,6 @@ namespace VolunteeringApp.ViewModels
             ShowConditions = false;
 
             this.SubmitCommand = new Command(OnSubmit);
-            this.ProfileImgSrc = DEFAULT_PHOTO_SRC;
             this.imageFileResult = null;
 
         }
