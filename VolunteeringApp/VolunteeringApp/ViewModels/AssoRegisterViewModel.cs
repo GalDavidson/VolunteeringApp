@@ -181,10 +181,7 @@ namespace VolunteeringApp.ViewModels
 
             this.ShowUsernameError = string.IsNullOrEmpty(Username);
             if (ShowUsernameError)
-                UsernameError = "השם אינו תקין";
-            else
-                UsernameError = ERROR_MESSAGES.REQUIRED_FIELD; 
-
+                UsernameError = ERROR_MESSAGES.REQUIRED_FIELD;
         }
         #endregion
 
@@ -233,8 +230,6 @@ namespace VolunteeringApp.ViewModels
 
             this.ShowInformationAboutError = string.IsNullOrEmpty(InformationAbout);
             if (ShowInformationAboutError)
-                InformationAboutError = "השם אינו תקין";
-            else
                 InformationAboutError = ERROR_MESSAGES.REQUIRED_FIELD;
 
         }
@@ -284,13 +279,13 @@ namespace VolunteeringApp.ViewModels
         {
             this.ShowConditions = false;
 
-            this.ShowEmailError = string.IsNullOrEmpty(PhoneNum);
-            if (ShowEmailError)
-                this.EmailError = "זהו שדה חובה";
+            this.ShowPhoneNumError = string.IsNullOrEmpty(PhoneNum);
+            if (ShowPhoneNumError)
+                this.PhoneNumError = ERROR_MESSAGES.REQUIRED_FIELD;
             else
             {
                 if (PhoneNum.Length < 10)
-                    this.EmailError = "מס' הטלפון קצר מדי, הוא צריך להכיל בעל 10 ספרות לפחות ";
+                    this.PhoneNumError = "מס' הטלפון קצר מדי, הוא צריך להכיל בעל 10 ספרות לפחות ";
             }
         }
 
@@ -347,13 +342,13 @@ namespace VolunteeringApp.ViewModels
             if (string.IsNullOrEmpty(Password))
                 this.PasswordError = ERROR_MESSAGES.REQUIRED_FIELD;
 
-            if (!Regex.IsMatch(this.Password, @"^ (?=.*?[A - Z])(?=.*?[a - z])(?=.*?[0 - 9])(?=.*?[#?!@$%^&*-]).{8,}$"))
+            else if (!Regex.IsMatch(this.Password, @"^ (?=.*?[A - Z])(?=.*?[a - z])(?=.*?[0 - 9])(?=.*?[#?!@$%^&*-]).{8,}$"))
             {
                 this.ShowPasswordError = true;
                 this.PasswordError = "הסיסמה אינה תקינה";
             }
 
-            if (Password.Length > 0 && Password.Length < MIN_PASS_CHARS)
+            else if (Password.Length > 0 && Password.Length < MIN_PASS_CHARS)
             {
                 PasswordError = "הסיסמה חייבת לכלול לפחות 8 תווים";
                 ShowPasswordError = true;
@@ -527,8 +522,6 @@ namespace VolunteeringApp.ViewModels
                 {
                     if (!this.FilteredOccuAreas.Contains(a))
                         this.FilteredOccuAreas.Add(a);
-
-
                 }
             }
             else
@@ -571,6 +564,19 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion
 
+        #region serverStatus
+        private string serverStatus;
+        public string ServerStatus
+        {
+            get { return serverStatus; }
+            set
+            {
+                serverStatus = value;
+                OnPropertyChanged("ServerStatus");
+            }
+        }
+        #endregion serverStatus
+
         #region AreaSelection
         List<OccupationalArea> selectedOccuAreas;
         public List<OccupationalArea> SelectedOccuAreas
@@ -610,7 +616,7 @@ namespace VolunteeringApp.ViewModels
 
             if (string.IsNullOrEmpty(NewOccuArea))
             {
-                await App.Current.MainPage.DisplayAlert("שגיאה", "לא ניתן להוסיף ערך זה!", "בסדר");
+                await App.Current.MainPage.DisplayAlert("שגיאה", "!לא ניתן להוסיף ערך זה", "בסדר");
                 return;
             }
 
@@ -629,35 +635,21 @@ namespace VolunteeringApp.ViewModels
 
                 if (ok)
                 {
-                    await App.Current.MainPage.DisplayAlert("", "בסדר", "!הוספת אלרגיה בהצלחה");
+                    await App.Current.MainPage.DisplayAlert("", "בסדר", "!הוספת תחום עיסוק בהצלחה");
                 }
                 else if (!ok)
                 {
-                    await App.Current.MainPage.DisplayAlert("בסדר", "הוספת אלרגיה נכשלה", "שגיאה");
+                    await App.Current.MainPage.DisplayAlert("בסדר", "הוספת תחום עיסוק נכשלה", "שגיאה");
                 }
             }
             else
             {
-                await App.Current.MainPage.DisplayAlert("בסדר", "אלרגיה זו כבר קיימת במערכת", "שגיאה");
+                await App.Current.MainPage.DisplayAlert("בסדר", "תחום עיסוק זה כבר קיים במערכת", "שגיאה");
             }
 
         }
         #endregion
 
-
-
-        #region serverStatus
-        private string serverStatus;
-        public string ServerStatus
-        {
-            get { return serverStatus; }
-            set
-            {
-                serverStatus = value;
-                OnPropertyChanged("ServerStatus");
-            }
-        }
-        #endregion serverStatus
 
 
 

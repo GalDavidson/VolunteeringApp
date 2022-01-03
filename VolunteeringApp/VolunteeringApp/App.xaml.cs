@@ -31,7 +31,7 @@ namespace VolunteeringApp
         {
             InitializeComponent();
 
-            MainPage = new LoginPage();
+            MainPage = new AssoRegisterPage();
         }
 
         protected async override void OnStart()
@@ -40,7 +40,7 @@ namespace VolunteeringApp
             this.LookupTables = await proxy.GetLookupsAsync();
             if (LookupTables != null)
             {
-                MainPage = new NavigationPage(new HomePage());
+                MainPage = new NavigationPage(new AssoRegisterPage());
             }
             else
             {

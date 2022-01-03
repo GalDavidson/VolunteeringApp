@@ -26,10 +26,28 @@
             <Setter Property="TextColor" Value="White"/>
             <Setter Property="BackgroundColor" Value="#088da5"/>
         </Style>
+
+        <ResourceDictionary>
+            <Style x:Key="labelNameStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="Small" />
+            </Style>
+            <Style x:Key="labelErrorStyle" TargetType="Label">
+                <Setter Property="HorizontalOptions" Value="End" />
+                <Setter Property="TextColor" Value="Red" />
+                <Setter Property="FontSize" Value="Small" />
+            </Style>
+            <Style x:Key="conditionsStyle" TargetType="Label">
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="TextColor" Value="DarkBlue" />
+                <Setter Property="FontSize" Value="12" />
+            </Style>
+        </ResourceDictionary>
     </ContentPage.Resources>
+    
+    
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout Padding="0,20,0,0" Style="{StaticResource LoginStack}">
+            <StackLayout Padding="0,20,0,0" Style="{StaticResource RegisterStack}">
                 <Label Text="הרשמה" Style="{StaticResource FormTitle}"></Label>
 
                 <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
@@ -66,19 +84,55 @@
                 </Frame>
                 <Label Padding="0" Text="{Binding InformationAboutError}" HorizontalOptions="Center" IsVisible="{Binding ShowInformationAboutError}" Style="{StaticResource labelErrorStyle}"/>
 
+
+                <StackLayout Margin="60"
+                 Padding="25"
+                 BackgroundColor="White"
+                 HorizontalOptions="Center"
+                 VerticalOptions="Center">
+                    <SearchBar x:Name="searchBar" 
+                       Placeholder="חפש עיסוק" 
+                       Text="{Binding SearchTerm}"
+                       />
+                    <RefreshView x:Name="refreshView"
+             Command="{Binding RefreshCommand}"
+             IsRefreshing="{Binding IsRefreshing}">
+                        <CollectionView  x:Name="collectionName" ItemsSource="{Binding FilteredOccuAreas}" SelectionMode="Multiple" SelectedItems="{Binding SelectedOccuAreas}" BackgroundColor="White"
+                                SelectionChangedCommand="{Binding UpdateOccuArea}" SelectionChangedCommandParameter="{Binding  Source={x:Reference collectionName}, Path=SelectedItems}">
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout Span="1" Orientation="Vertical" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <SwipeView>
+                                        <Grid Margin="7">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="50"/>
+                                            </Grid.RowDefinitions>
+                                            <Label Text="{Binding Path=OccupationName, StringFormat='{0}'}" HorizontalTextAlignment="Start" FontSize="20" TextColor="Black" Grid.Row="0" Grid.Column="0"/>
+                                        </Grid>
+
+                                    </SwipeView>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </RefreshView>
+                  
+                    <Entry Placeholder="רשום תחום עיסוק חדש שתרצה להוסיף" MaxLength="30" Text="{Binding NewOccuArea}" Style="{StaticResource labelErrorStyle}"></Entry>
+                    <Button Text=" הוסף תחום עיסוק לרשימה" Command="{Binding AddOccuArea}"></Button>
+
+                    <Button Text="הרשמה" Command="{Binding SubmitCommand}" BackgroundColor="#bee9e8" TextColor="Black"  Margin="15" FontAttributes="Bold" Padding="5" FontSize="17" CornerRadius="30"/>
+                </StackLayout>
                 
-                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
-                    <Entry Placeholder="מידע על העמותה" Text="{Binding PhoneNum}"/>
-                </Frame>
-                <Label Padding="0" Text="{Binding InformationAboutError}" HorizontalOptions="Center" IsVisible="{Binding ShowInformationAboutError}" Style="{StaticResource labelErrorStyle}"/>
-
-
-                <Label Text="אלרגיות" HorizontalTextAlignment="Start" Style="{StaticResource labelNameStyle}"/>
-                <Button Text="רשימת אלרגיות" Clicked="Allergy_Clicked" BackgroundColor="#bee9e8" FontSize="16" CornerRadius="10"></Button>
-
+                
 
 
                 <Label Padding="0" Text="{Binding NextError}" HorizontalOptions="Center" IsVisible="{Binding ShowNextError}" Style="{StaticResource labelErrorStyle}"/>
+                
+                
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
