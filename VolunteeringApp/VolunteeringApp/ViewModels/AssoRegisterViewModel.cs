@@ -342,16 +342,16 @@ namespace VolunteeringApp.ViewModels
             if (string.IsNullOrEmpty(Password))
                 this.PasswordError = ERROR_MESSAGES.REQUIRED_FIELD;
 
-            else if (!Regex.IsMatch(this.Password, @"^ (?=.*?[A - Z])(?=.*?[a - z])(?=.*?[0 - 9])(?=.*?[#?!@$%^&*-]).{8,}$"))
+            if (!Regex.IsMatch(this.Password, @"^ (?=.*?[A - Z])(?=.*?[a - z])(?=.*?[0 - 9])(?=.*?[#?!@$%^&*-]).{8,}$"))
             {
                 this.ShowPasswordError = true;
                 this.PasswordError = "הסיסמה אינה תקינה";
             }
 
-            else if (Password.Length > 0 && Password.Length < MIN_PASS_CHARS)
+            if (Password.Length > 0 && Password.Length < MIN_PASS_CHARS)
             {
-                PasswordError = "הסיסמה חייבת לכלול לפחות 8 תווים";
-                ShowPasswordError = true;
+                this.PasswordError = "הסיסמה חייבת לכלול לפחות 8 תווים";
+                this.ShowPasswordError = true;
             }
             else
                 ShowPasswordError = false;
@@ -594,17 +594,42 @@ namespace VolunteeringApp.ViewModels
             }
         }
 
+        private string occupationalAreas;
+
+        public string OccupationalAreas
+        {
+            get => occupationalAreas;
+            set
+            {
+                occupationalAreas = value;
+                OnPropertyChanged("OccupationalAreas");
+            }
+        }
+
+
+
         public ICommand UpdateOccuArea => new Command(OnPressedOccuArea);
         public async void OnPressedOccuArea(object occuAreasList)
         {
-            if (occuAreasList is List<OccupationalArea>)
+            SelectedOccuAreas.Clear();
+            OccupationalAreas = string.Empty;
+            if (occuAreasList is IList<Object>)
             {
-                SelectedOccuAreas.Clear();
-                List<OccupationalArea> occupationalAreas = (List<OccupationalArea>)occuAreasList;
-                foreach (OccupationalArea a in occupationalAreas)
+                List<object> list = ((IList<object>)occuAreasList).ToList();
+                foreach (object a in list)
                 {
-                    SelectedOccuAreas.Add(a);
+                    SelectedOccuAreas.Add((OccupationalArea)a);
+
                 }
+                if (selectedOccuAreas.Count == 0) { OccupationalAreas = "לא נבחרו תחומי עיסוק"; }
+            }
+
+
+
+            List<OccupationalArea> occupationalAreas = (List<OccupationalArea>)occuAreasList;
+            foreach (OccupationalArea a in occupationalAreas)
+            {
+                SelectedOccuAreas.Add(a);
             }
         }
         #endregion
