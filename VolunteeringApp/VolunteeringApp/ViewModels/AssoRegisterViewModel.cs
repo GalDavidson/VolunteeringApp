@@ -706,12 +706,14 @@ namespace VolunteeringApp.ViewModels
             ShowConditions = false;
 
             this.SubmitCommand = new Command(OnSubmit);
+
             this.imageFileResult = null;
 
         }
 
         public async void OnSubmit()
         {
+            App app = (App)App.Current;
             if (ValidateForm())
             {
                 Association association = new Association
@@ -733,16 +735,16 @@ namespace VolunteeringApp.ViewModels
                 }
                 else
                 {
-                    if (this.imageFileResult != null)
-                    {
-                        ServerStatus = "מעלה תמונה...";
+                    //if (this.imageFileResult != null)
+                    //{
+                    //    ServerStatus = "מעלה תמונה...";
 
-                        bool success = await proxy.UploadImage(new FileInfo()
-                        {
-                            Name = this.imageFileResult.FullPath
-                        }, $"{asso.AssociationId}.jpg");
-                    }
-                    ServerStatus = "שומר נתונים...";
+                    //    bool success = await proxy.UploadImage(new FileInfo()
+                    //    {
+                    //        Name = this.imageFileResult.FullPath
+                    //    }, $"{asso.AssociationId}.jpg");
+                    //}
+                    //ServerStatus = "שומר נתונים...";
 
                     //if someone registered to get the contact added event, fire the event
                     //if (this.ContactUpdatedEvent != null)

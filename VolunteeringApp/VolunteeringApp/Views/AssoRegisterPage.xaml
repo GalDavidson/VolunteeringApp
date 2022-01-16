@@ -124,7 +124,7 @@
                     <Entry Placeholder="רשום תחום עיסוק חדש שתרצה להוסיף" MaxLength="30" Text="{Binding NewOccuArea}" TextColor="Black"></Entry>
                     <Button Text=" הוסף תחום עיסוק לרשימה" Command="{Binding AddOccuArea}"></Button>
 
-                    <Button Text="הרשמה" Command="{Binding SubmitCommand}" BackgroundColor="#bee9e8" TextColor="Black"  Margin="15" FontAttributes="Bold" Padding="5" FontSize="17" CornerRadius="30"/>
+                    <Button Text="הרשמה" Command="{Binding SubmitCommand}" BackgroundColor="Beige" TextColor="Black"  Margin="15" FontAttributes="Bold" Padding="5" FontSize="17" CornerRadius="30"/>
                 </StackLayout>
                 
                 
