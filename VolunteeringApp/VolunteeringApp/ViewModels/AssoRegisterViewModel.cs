@@ -340,21 +340,30 @@ namespace VolunteeringApp.ViewModels
             this.ShowConditions = false;
 
             if (string.IsNullOrEmpty(Password))
+            {
+                this.ShowPasswordError = true;
                 this.PasswordError = ERROR_MESSAGES.REQUIRED_FIELD;
-
-            if (!Regex.IsMatch(this.Password, @"^ (?=.*?[A - Z])(?=.*?[a - z])(?=.*?[0 - 9])(?=.*?[#?!@$%^&*-]).{8,}$"))
-            {
-                this.ShowPasswordError = true;
-                this.PasswordError = "הסיסמה אינה תקינה";
+                return;
             }
 
-            if (Password.Length > 0 && Password.Length < MIN_PASS_CHARS)
-            {
-                this.PasswordError = "הסיסמה חייבת לכלול לפחות 8 תווים";
-                this.ShowPasswordError = true;
-            }
             else
+            {
+                if (!Regex.IsMatch(this.Password, @"^ (?=.*?[A - Z])(?=.*?[a - z])(?=.*?[0 - 9])(?=.*?[#?!@$%^&*-]).{8,}$"))
+                {
+                    this.ShowPasswordError = true;
+                    this.PasswordError = "הסיסמה אינה תקינה";
+                    return;
+                }
+
+                else if (Password.Length > 0 && Password.Length < MIN_PASS_CHARS)
+                {
+                    this.PasswordError = "הסיסמה חייבת לכלול לפחות 8 תווים";
+                    this.ShowPasswordError = true;
+                    return;
+                }
+
                 ShowPasswordError = false;
+            }
         }
       
 
@@ -407,7 +416,11 @@ namespace VolunteeringApp.ViewModels
 
 
             if (string.IsNullOrEmpty(VerPassword))
+            {
+                this.ShowVerPasswordError = true;
                 this.VerPasswordError = ERROR_MESSAGES.REQUIRED_FIELD;
+                return;
+            }
 
             else if (VerPassword != Password)
             {
@@ -613,7 +626,7 @@ namespace VolunteeringApp.ViewModels
         {
             SelectedOccuAreas.Clear();
             OccupationalAreas = string.Empty;
-            if (occuAreasList is IList<Object>)
+            if (occuAreasList is IList<object>)
             {
                 List<object> list = ((IList<object>)occuAreasList).ToList();
                 foreach (object a in list)
@@ -626,13 +639,34 @@ namespace VolunteeringApp.ViewModels
 
 
 
-            List<OccupationalArea> occupationalAreas = (List<OccupationalArea>)occuAreasList;
-            foreach (OccupationalArea a in occupationalAreas)
-            {
-                SelectedOccuAreas.Add(a);
-            }
+            //List<OccupationalArea> occupationalAreas = (List<OccupationalArea>)occuAreasList;
+            //foreach (OccupationalArea a in occupationalAreas)
+            //{
+            //    SelectedOccuAreas.Add(a);
+            //}
         }
         #endregion
+
+        #region SaveAreas
+        public ICommand SaveAreas => new Command(OnSaveOccupationalArea);
+        public async void OnSaveOccupationalArea()
+        {
+            foreach (OccupationalArea a in selectedOccuAreas)
+            {
+                OccupationalAreas += a.OccupationName + "," + " ";
+            }
+            OccupationalAreas = OccupationalAreas.Substring(0, OccupationalAreas.Length - 2);
+            if (selectedOccuAreas.Count == 0) { OccupationalAreas = "לא נבחרו אלרגיות"; }
+
+            //await PopupNavigation.Instance.PopAsync();
+        }
+
+        #endregion
+
+
+
+
+
 
         #region Add New Area
         public ICommand AddOccuArea => new Command(OnAddOccuArea);
@@ -714,6 +748,7 @@ namespace VolunteeringApp.ViewModels
         public async void OnSubmit()
         {
             App app = (App)App.Current;
+
             if (ValidateForm())
             {
                 Association association = new Association
