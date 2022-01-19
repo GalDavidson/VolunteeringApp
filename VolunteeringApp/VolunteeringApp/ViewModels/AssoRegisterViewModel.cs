@@ -637,8 +637,6 @@ namespace VolunteeringApp.ViewModels
                 if (selectedOccuAreas.Count == 0) { OccupationalAreas = "לא נבחרו תחומי עיסוק"; }
             }
 
-
-
             //List<OccupationalArea> occupationalAreas = (List<OccupationalArea>)occuAreasList;
             //foreach (OccupationalArea a in occupationalAreas)
             //{
@@ -656,17 +654,12 @@ namespace VolunteeringApp.ViewModels
                 OccupationalAreas += a.OccupationName + "," + " ";
             }
             OccupationalAreas = OccupationalAreas.Substring(0, OccupationalAreas.Length - 2);
-            if (selectedOccuAreas.Count == 0) { OccupationalAreas = "לא נבחרו אלרגיות"; }
+            if (selectedOccuAreas.Count == 0) { OccupationalAreas = "לא נבחרו תחומי עיסוק"; }
 
             //await PopupNavigation.Instance.PopAsync();
         }
 
         #endregion
-
-
-
-
-
 
         #region Add New Area
         public ICommand AddOccuArea => new Command(OnAddOccuArea);
@@ -710,8 +703,6 @@ namespace VolunteeringApp.ViewModels
         #endregion
 
 
-
-
         public ICommand SubmitCommand { protected set; get; }
 
         private bool ValidateForm()
@@ -738,7 +729,11 @@ namespace VolunteeringApp.ViewModels
             this.ShowPasswordError = false;
             this.ShowVerPasswordError = false;
             ShowConditions = false;
+            this.selectedOccuAreas = new List<OccupationalArea>();
 
+            filteredOccuAreas = new ObservableCollection<OccupationalArea>();
+
+            InitOccuAreas();
             this.SubmitCommand = new Command(OnSubmit);
 
             this.imageFileResult = null;

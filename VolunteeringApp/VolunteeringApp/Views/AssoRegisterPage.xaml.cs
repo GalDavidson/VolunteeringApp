@@ -16,6 +16,7 @@ namespace VolunteeringApp.Views
         public AssoRegisterPage()
         {
             this.BindingContext = new AssoRegisterViewModel();
+
             InitializeComponent();
         }
     }

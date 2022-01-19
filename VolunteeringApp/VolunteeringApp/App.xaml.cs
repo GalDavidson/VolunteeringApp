@@ -31,7 +31,8 @@ namespace VolunteeringApp
         {
             InitializeComponent();
 
-            MainPage = new AssoRegisterPage();
+            OnStart();
+            
         }
 
         protected async override void OnStart()
