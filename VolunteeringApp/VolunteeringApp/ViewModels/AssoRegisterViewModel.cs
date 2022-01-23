@@ -703,6 +703,7 @@ namespace VolunteeringApp.ViewModels
         #endregion
 
 
+        public event Action<Association, Association> ContactUpdatedEvent;
         public ICommand SubmitCommand { protected set; get; }
 
         private bool ValidateForm()
@@ -720,6 +721,8 @@ namespace VolunteeringApp.ViewModels
             return true;
         }
 
+
+        private Association theAssociation;
         public AssoRegisterViewModel()
         {
             this.ShowEmailError = false;
@@ -765,23 +768,21 @@ namespace VolunteeringApp.ViewModels
                 }
                 else
                 {
-                    //if (this.imageFileResult != null)
-                    //{
-                    //    ServerStatus = "מעלה תמונה...";
+                    if (this.imageFileResult != null)
+                    {
+                        ServerStatus = "מעלה תמונה...";
 
-                    //    bool success = await proxy.UploadImage(new FileInfo()
-                    //    {
-                    //        Name = this.imageFileResult.FullPath
-                    //    }, $"{asso.AssociationId}.jpg");
-                    //}
-                    //ServerStatus = "שומר נתונים...";
-
+                        bool success = await proxy.UploadImage(new FileInfo()
+                        {
+                            Name = this.imageFileResult.FullPath
+                        }, $"{asso.AssociationId}.jpg");
+                    }
+                    ServerStatus = "שומר נתונים...";
                     //if someone registered to get the contact added event, fire the event
-                    //if (this.ContactUpdatedEvent != null)
-                    //{
-                    //    this.ContactUpdatedEvent(newUC, this.theContact);
-                    //} 
-
+                    if (this.ContactUpdatedEvent != null)
+                    {
+                        this.ContactUpdatedEvent(asso, this.theAssociation);
+                    }
 
                     Page p = new NavigationPage(new Views.HomePage());
                     App.Current.MainPage = p;
