@@ -133,7 +133,6 @@ namespace VolunteeringApp.ViewModels
             }
             else
                 this.EmailError = ERROR_MESSAGES.REQUIRED_FIELD;
-                //this.emailError = null;
         }
         #endregion
 
@@ -702,8 +701,24 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion
 
+        #region מקור התמונה
+        private string assoImgSrc;
 
-        public event Action<Association, Association> ContactUpdatedEvent;
+        public string AssoImgSrc
+        {
+            get => assoImgSrc;
+            set
+            {
+                assoImgSrc = value;
+                OnPropertyChanged("AssoImgSrc");
+            }
+        }
+        private const string DEFAULT_PHOTO_SRC = "defaultphoto.jpg";
+        #endregion
+
+
+
+        public event Action<Association, Association> VolunteerEvent;
         public ICommand SubmitCommand { protected set; get; }
 
         private bool ValidateForm()
@@ -732,15 +747,14 @@ namespace VolunteeringApp.ViewModels
             this.ShowPasswordError = false;
             this.ShowVerPasswordError = false;
             ShowConditions = false;
+
             this.selectedOccuAreas = new List<OccupationalArea>();
-
             filteredOccuAreas = new ObservableCollection<OccupationalArea>();
-
             InitOccuAreas();
             this.SubmitCommand = new Command(OnSubmit);
 
-            this.imageFileResult = null;
-
+            this.AssoImgSrc = DEFAULT_PHOTO_SRC;
+            this.imageFileResult = null; //mark that no picture was chosen
         }
 
         public async void OnSubmit()
@@ -779,9 +793,9 @@ namespace VolunteeringApp.ViewModels
                     }
                     ServerStatus = "שומר נתונים...";
                     //if someone registered to get the contact added event, fire the event
-                    if (this.ContactUpdatedEvent != null)
+                    if (this.VolunteerEvent != null)
                     {
-                        this.ContactUpdatedEvent(asso, this.theAssociation);
+                        this.VolunteerEvent(asso, theAssociation);
                     }
 
                     Page p = new NavigationPage(new Views.HomePage());
