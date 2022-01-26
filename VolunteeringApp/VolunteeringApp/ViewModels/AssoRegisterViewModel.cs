@@ -280,7 +280,12 @@ namespace VolunteeringApp.ViewModels
 
             this.ShowPhoneNumError = string.IsNullOrEmpty(PhoneNum);
             if (ShowPhoneNumError)
+            {
                 this.PhoneNumError = ERROR_MESSAGES.REQUIRED_FIELD;
+                this.showPhoneNumError = true;
+                return;
+            }
+
             else
             {
                 if (PhoneNum.Length < 10)
@@ -347,21 +352,17 @@ namespace VolunteeringApp.ViewModels
 
             else
             {
-                if (!Regex.IsMatch(this.Password, @"^ (?=.*?[A - Z])(?=.*?[a - z])(?=.*?[0 - 9])(?=.*?[#?!@$%^&*-]).{8,}$"))
-                {
-                    this.ShowPasswordError = true;
-                    this.PasswordError = "הסיסמה אינה תקינה";
-                    return;
-                }
-
-                else if (Password.Length > 0 && Password.Length < MIN_PASS_CHARS)
+                 if (Password.Length > 0 && Password.Length < MIN_PASS_CHARS)
                 {
                     this.PasswordError = "הסיסמה חייבת לכלול לפחות 8 תווים";
                     this.ShowPasswordError = true;
-                    return;
+                    //return;
                 }
 
-                ShowPasswordError = false;
+                else
+                {
+                    ShowPasswordError = false;
+                }
             }
         }
       
@@ -635,12 +636,6 @@ namespace VolunteeringApp.ViewModels
                 }
                 if (selectedOccuAreas.Count == 0) { OccupationalAreas = "לא נבחרו תחומי עיסוק"; }
             }
-
-            //List<OccupationalArea> occupationalAreas = (List<OccupationalArea>)occuAreasList;
-            //foreach (OccupationalArea a in occupationalAreas)
-            //{
-            //    SelectedOccuAreas.Add(a);
-            //}
         }
         #endregion
 
@@ -772,6 +767,17 @@ namespace VolunteeringApp.ViewModels
                     Pass = Password,
                     ActionDate = DateTime.Today
                 };
+
+                foreach(OccupationalArea o in selectedOccuAreas)
+                {
+                    OccupationalAreasOfAssociation oc = new OccupationalAreasOfAssociation
+                    {
+                        OccupationalArea = o,
+                        Association = association
+                    };
+                    association.OccupationalAreasOfAssociations.Add(oc);
+                }
+                
 
                 VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
                 Association asso = await proxy.RegAssoAsync(association);

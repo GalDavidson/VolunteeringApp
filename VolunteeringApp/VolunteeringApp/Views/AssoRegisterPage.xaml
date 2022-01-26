@@ -147,21 +147,6 @@
                     <Button Text="שמור תחומי עיסוק" Command="{Binding SaveAreas}"></Button>
                     <Entry Placeholder="רשום תחום עיסוק חדש שתרצה להוסיף" MaxLength="30" Text="{Binding NewOccuArea}" TextColor="Black"></Entry>
                     <Button Text=" הוסף תחום עיסוק לרשימה" Command="{Binding AddOccuArea}"></Button>
-                   
-                    <!--תחומי עיסוק-->
-                    <Label Text="תחומי עיסוק" HorizontalTextAlignment="Start" Style="{StaticResource labelNameStyle}"/>
-                    
-                    <Label Text="" HorizontalOptions="Start" TextColor="DarkSlateGray" FontSize="16"/>
-                    <Label TextColor="DarkSlateGray" LineBreakMode="WordWrap" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Start" >
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="תחומי העיסוק שנבחרו: " FontSize="16"/>
-                                <Span Text="{Binding Allergies}" FontSize="16" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
-                    
-
 
                     <Button Text="הרשמה" Command="{Binding SubmitCommand}" BackgroundColor="Beige" TextColor="Black"  Margin="15" FontAttributes="Bold" Padding="5" FontSize="17" CornerRadius="30"/>
                 </StackLayout>
