@@ -144,7 +144,7 @@
                     </RefreshView>
                  
 
-                    <Button Text="שמור תחומי עיסוק" Command="{Binding SaveAreas}"></Button>
+                    
                     <Entry Placeholder="רשום תחום עיסוק חדש שתרצה להוסיף" MaxLength="30" Text="{Binding NewOccuArea}" TextColor="Black"></Entry>
                     <Button Text=" הוסף תחום עיסוק לרשימה" Command="{Binding AddOccuArea}"></Button>
 

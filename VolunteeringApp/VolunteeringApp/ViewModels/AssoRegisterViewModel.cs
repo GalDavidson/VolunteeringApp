@@ -282,14 +282,13 @@ namespace VolunteeringApp.ViewModels
             if (ShowPhoneNumError)
             {
                 this.PhoneNumError = ERROR_MESSAGES.REQUIRED_FIELD;
-                this.showPhoneNumError = true;
+                this.ShowPhoneNumError = true;
                 return;
             }
-
-            else
+            else if (PhoneNum.Length < 10)
             {
-                if (PhoneNum.Length < 10)
-                    this.PhoneNumError = "מס' הטלפון קצר מדי, הוא צריך להכיל בעל 10 ספרות לפחות ";
+                this.PhoneNumError = "מס' הטלפון קצר מדי, הוא צריך להכיל 10 ספרות לפחות ";
+                this.ShowPhoneNumError = true;
             }
         }
 
@@ -434,27 +433,212 @@ namespace VolunteeringApp.ViewModels
         #endregion
 
         #region סניפים
-        public List<Branch> Branches
+        private List<Branch> allBranches;
+        private ObservableCollection<Branch> filteredBranches;
+        public ObservableCollection<Branch> FilteredBranches
         {
             get
             {
-                if (((App)App.Current).LookupTables!= null)
-                    return ((App)App.Current).LookupTables.Branches;
-                return new List<Branch>();
+                return this.filteredBranches;
+            }
+            set
+            {
+                if (this.filteredBranches != value)
+                {
+
+                    this.filteredBranches = value;
+                    OnPropertyChanged("FilteredBranches");
+                }
             }
         }
 
-        private Branch branch;
-        public Branch Branch
+        private string searchBranch;
+        public string SearchBranch
         {
-            get { return branch; }
+            get
+            {
+                return this.searchBranch;
+            }
             set
             {
-                branch = value;
-                OnPropertyChanged("Branch");
+                if (this.searchBranch != value)
+                {
+
+                    this.searchBranch = value;
+                    OnTextChanged(value);
+                    OnPropertyChanged("SearchBranch");
+                }
+            }
+        }
+
+        private void InitBranches()
+        {
+            IsRefresh = true;
+            App theApp = (App)App.Current;
+            this.allBranches = theApp.LookupTables.Branches;
+
+
+            //Copy list to the filtered list
+            this.filteredBranches = new ObservableCollection<Branch>(this.allBranches.OrderBy(b => b.BranchLocation));
+            SearchBranch = String.Empty;
+            IsRefresh = false;
+        }
+
+        private string newBranch;
+        public string NewBranch
+        {
+            get => newBranch;
+            set
+            {
+                newBranch = value;
+                OnPropertyChanged("NewBranch");
             }
         }
         #endregion סניפים
+
+        #region Search Branches
+        public void OnTypeChanged(string searching)
+        {
+            //Filter the list of contacts based on the search term
+            if (this.allBranches == null)
+                return;
+            if (String.IsNullOrWhiteSpace(searching) || String.IsNullOrEmpty(searching))
+            {
+                foreach (Branch b in this.allBranches)
+                {
+                    if (!this.FilteredBranches.Contains(b))
+                        this.FilteredBranches.Add(b);
+                }
+            }
+            else
+            {
+                foreach (Branch b in this.allBranches)
+                {
+                    string branchesString = $"{b.BranchLocation}";
+
+                    if (!this.FilteredBranches.Contains(b) &&
+                        branchesString.Contains(searching))
+                        this.FilteredBranches.Add(b);
+                    else if (this.FilteredBranches.Contains(b) &&
+                        !branchesString.Contains(searching))
+                        this.FilteredBranches.Remove(b);
+                }
+            }
+
+            this.FilteredBranches = new ObservableCollection<Branch>(this.FilteredBranches.OrderBy(b => b.BranchLocation));
+        }
+        #endregion
+
+        #region Refresh Branches
+        private bool isRefresh;
+        public bool IsRefresh
+        {
+            get => isRefresh;
+            set
+            {
+                if (this.isRefresh != value)
+                {
+                    this.isRefresh = value;
+                    OnPropertyChanged(nameof(IsRefresh));
+                }
+            }
+        }
+        public ICommand RefreshBranchesCommand => new Command(OnRefreshBranches);
+        public void OnRefreshBranches()
+        {
+            InitBranches();
+        }
+        #endregion
+
+        #region BranchSelection
+        List<Branch> selectedBranches;
+        public List<Branch> SelectedBranches
+        {
+            get
+            {
+                return selectedBranches;
+            }
+            set
+            {
+                if (selectedBranches != value)
+                {
+                    selectedBranches = value;
+                }
+            }
+        }
+
+        private string branches;
+
+        public string Branches
+        {
+            get => branches;
+            set
+            {
+                branches = value;
+                OnPropertyChanged("branches");
+            }
+        }
+
+
+
+        public ICommand UpdateBranches => new Command(OnPressedBranches);
+        public async void OnPressedBranches(object branchesList)
+        {
+            SelectedBranches.Clear();
+            Branches = string.Empty;
+            if (branchesList is IList<object>)
+            {
+                List<object> list = ((IList<object>)branchesList).ToList();
+                foreach (object b in list)
+                {
+                    SelectedBranches.Add((Branch)b);
+
+                }
+                if (selectedBranches.Count == 0) { Branches = "לא נבחרו סניפים"; }
+            }
+        }
+        #endregion
+
+        #region Add New Branch
+        public ICommand AddBranch => new Command(OnAddBranch);
+        public async void OnAddBranch()
+        {
+
+            if (string.IsNullOrEmpty(NewBranch))
+            {
+                await App.Current.MainPage.DisplayAlert("שגיאה", "!לא ניתן להוסיף ערך זה", "בסדר");
+                return;
+            }
+
+            Branch newBranches = new Branch
+            {
+                BranchLocation = NewBranch
+            };
+
+            bool IsExist = false;
+            if (allBranches.Contains(newBranches)) { IsExist = true; }
+
+            if (!IsExist)
+            {
+                VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
+                bool ok = await proxy.AddBranch(newBranches);
+
+                if (ok)
+                {
+                    await App.Current.MainPage.DisplayAlert("", "בסדר", "!הוספת מיקום בהצלחה");
+                }
+                else if (!ok)
+                {
+                    await App.Current.MainPage.DisplayAlert("בסדר", "הוספת המיקום נכשלה", "שגיאה");
+                }
+            }
+            else
+            {
+                await App.Current.MainPage.DisplayAlert("בסדר", "מיקום זה כבר קיים במערכת", "שגיאה");
+            }
+
+        }
+        #endregion
 
         #region תחומי עיסוק
 
@@ -495,8 +679,6 @@ namespace VolunteeringApp.ViewModels
                 }
             }
         }
-
-       
 
         private void InitOccuAreas()
         {
@@ -639,21 +821,21 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion
 
-        #region SaveAreas
-        public ICommand SaveAreas => new Command(OnSaveOccupationalArea);
-        public async void OnSaveOccupationalArea()
-        {
-            foreach (OccupationalArea a in selectedOccuAreas)
-            {
-                OccupationalAreas += a.OccupationName + "," + " ";
-            }
-            OccupationalAreas = OccupationalAreas.Substring(0, OccupationalAreas.Length - 2);
-            if (selectedOccuAreas.Count == 0) { OccupationalAreas = "לא נבחרו תחומי עיסוק"; }
+        //#region SaveAreas
+        //public ICommand SaveAreas => new Command(OnSaveOccupationalArea);
+        //public async void OnSaveOccupationalArea()
+        //{
+        //    foreach (OccupationalArea a in selectedOccuAreas)
+        //    {
+        //        OccupationalAreas += a.OccupationName + "," + " ";
+        //    }
+        //    OccupationalAreas = OccupationalAreas.Substring(0, OccupationalAreas.Length - 2);
+        //    if (selectedOccuAreas.Count == 0) { OccupationalAreas = "לא נבחרו תחומי עיסוק"; }
 
-            //await PopupNavigation.Instance.PopAsync();
-        }
+        //    //await PopupNavigation.Instance.PopAsync();
+        //}
 
-        #endregion
+        //#endregion
 
         #region Add New Area
         public ICommand AddOccuArea => new Command(OnAddOccuArea);
