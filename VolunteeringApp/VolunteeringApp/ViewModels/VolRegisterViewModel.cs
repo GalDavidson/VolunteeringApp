@@ -7,6 +7,8 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using VolunteeringApp.Services;
 using VolunteeringApp.Models;
+using VolunteeringApp.ViewModels;
+using VolunteeringApp.Views;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -38,6 +40,32 @@ namespace VolunteeringApp.ViewModels
             }
         }
         #endregion
+
+        #region הבעיה הבאה
+        private string nextError;
+
+        public string NextError
+        {
+            get => nextError;
+            set
+            {
+                nextError = value;
+                OnPropertyChanged("NextError");
+            }
+        }
+
+        private bool showNextError;
+
+        public bool ShowNextError
+        {
+            get => showNextError;
+            set
+            {
+                showNextError = value;
+                OnPropertyChanged("ShowNextError");
+            }
+        }
+        #endregion הבעיה הבאה
 
         #region דואר אלקטרוני
         private bool showEmailError;
@@ -240,61 +268,6 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion
 
-        #region מס טלפון
-
-        private bool showPhoneNumError;
-
-        public bool ShowPhoneNumError
-        {
-            get => showPhoneNumError;
-            set
-            {
-                showPhoneNumError = value;
-                OnPropertyChanged("ShowPhoneNumError");
-            }
-        }
-
-        private string phoneNum;
-
-        public string PhoneNum
-        {
-            get => phoneNum;
-            set
-            {
-                phoneNum = value;
-                ValidatePhoneNum();
-                OnPropertyChanged("PhoneNum");
-            }
-        }
-
-        private string phoneNumError;
-
-        public string PhoneNumError
-        {
-            get => phoneNumError;
-            set
-            {
-                phoneNumError = value;
-                OnPropertyChanged("PhoneNumError");
-            }
-        }
-
-        private void ValidatePhoneNum()
-        {
-            this.ShowConditions = false;
-
-            this.ShowPhoneNumError = string.IsNullOrEmpty(PhoneNum);
-            if (ShowPhoneNumError)
-                this.PhoneNumError = ERROR_MESSAGES.REQUIRED_FIELD;
-            else
-            {
-                if (PhoneNum.Length < 10)
-                    this.PhoneNumError = "מס' הטלפון קצר מדי, הוא צריך להכיל בעל 10 ספרות לפחות ";
-            }
-        }
-
-        #endregion
-
         #region סיסמה
 
         private const int MIN_PASS_CHARS = 8;
@@ -475,39 +448,145 @@ namespace VolunteeringApp.ViewModels
         private const string DEFAULT_PHOTO_SRC = "defaultphoto.jpg";
         #endregion
 
+        #region serverStatus
+        private string serverStatus;
+        public string ServerStatus
+        {
+            get { return serverStatus; }
+            set
+            {
+                serverStatus = value;
+                OnPropertyChanged("ServerStatus");
+            }
+        }
+        #endregion serverStatus
+
+        public event Action<Volunteer, Volunteer> VolunteerEvent;
         public ICommand SubmitCommand { protected set; get; }
 
         private bool ValidateForm()
         {
+            ValidateName();
+            ValidateLastName();
             ValidateEmail();
             ValidateUsername();
-            ValidatePhoneNum();
             ValidatePassword();
             ValidateVerPassword();
 
             //check if any validation failed
-            if (ShowUsernameError || ShowEmailError || ShowPhoneNumError || ShowPasswordError || ShowVerPasswordError)
+            if (ShowNameError || ShowLastNameError || ShowUsernameError || ShowEmailError || ShowPasswordError || ShowVerPasswordError)
                 return false;
             return true;
         }
 
+        private Volunteer theVolunteer;
         public VolRegisterViewModel()
         {
+            this.ShowNameError = false;
+            this.ShowLastNameError = false;
             this.ShowEmailError = false;
             this.ShowUsernameError = false;
-            this.ShowPhoneNumError = false;
             this.ShowPasswordError = false;
             this.ShowVerPasswordError = false;
-            ShowConditions = false;
-            //this.selectedOccuAreas = new List<OccupationalArea>();
+            this.ShowConditions = false;
+            this.SubmitCommand = new Command(OnSubmit);
 
-            //filteredOccuAreas = new ObservableCollection<OccupationalArea>();
+            this.profileImgSrc = DEFAULT_PHOTO_SRC;
+            this.imageFileResult = null; //mark that no picture was chosen
+        }
 
-            //InitOccuAreas();
-            //this.SubmitCommand = new Command(OnSubmit);
+        public async void OnSubmit()
+        {
+            App app = (App)App.Current;
 
-            //this.AssoImgSrc = DEFAULT_PHOTO_SRC;
-            //this.imageFileResult = null; //mark that no picture was chosen
+            if (ValidateForm())
+            {
+                Volunteer volunteer = new Volunteer
+                {
+                    FName = Name,
+                    LName = LastName,
+                    Email = Email,
+                    UserName = Username,
+                    Pass = Password,
+                    ActionDate = DateTime.Today
+                };
+
+                VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
+                Volunteer v = await proxy.RegVolAsync(volunteer);
+
+                if (v == null)
+                {
+                    await App.Current.MainPage.DisplayAlert("שגיאה", "הרשמה נכשלה, בדוק את הפרטים המוקלדים", "בסדר");
+                }
+                else
+                {
+                    if (this.imageFileResult != null)
+                    {
+                        ServerStatus = "מעלה תמונה...";
+
+                        bool success = await proxy.UploadImage(new FileInfo()
+                        {
+                            Name = this.imageFileResult.FullPath
+                        }, $"{v.VolunteerId}.jpg");
+                    }
+
+                    ServerStatus = "שומר נתונים...";
+                    //if someone registered to get the contact added event, fire the event
+                    if (this.VolunteerEvent != null)
+                    {
+                        this.VolunteerEvent(v, theVolunteer);
+                    }
+
+                    Page p = new NavigationPage(new Views.HomePage());
+                    App.Current.MainPage = p;
+                }
+            }
+            else
+            {
+                ShowNextError = true;
+                NextError = "אירעה שגיאה! לא ניתן להמשיך בהרשמה";
+            }
+        }
+
+
+        FileResult imageFileResult;
+        public event Action<ImageSource> SetImageSourceEvent;
+        public ICommand PickImageCommand => new Command(OnPickImage);
+        public async void OnPickImage()
+        {
+            FileResult result = await MediaPicker.PickPhotoAsync(new MediaPickerOptions()
+            {
+                Title = "בחר תמונה"
+            });
+
+            if (result != null)
+            {
+                this.imageFileResult = result;
+
+                var stream = await result.OpenReadAsync();
+                ImageSource imgSource = ImageSource.FromStream(() => stream);
+                if (SetImageSourceEvent != null)
+                    SetImageSourceEvent(imgSource);
+            }
+        }
+
+        ///The following command handle the take photo button
+        public ICommand CameraImageCommand => new Command(OnCameraImage);
+        public async void OnCameraImage()
+        {
+            var result = await MediaPicker.CapturePhotoAsync(new MediaPickerOptions()
+            {
+                Title = "צלם תמונה"
+            });
+
+            if (result != null)
+            {
+                this.imageFileResult = result;
+                var stream = await result.OpenReadAsync();
+                ImageSource imgSource = ImageSource.FromStream(() => stream);
+                if (SetImageSourceEvent != null)
+                    SetImageSourceEvent(imgSource);
+            }
         }
     }
 }

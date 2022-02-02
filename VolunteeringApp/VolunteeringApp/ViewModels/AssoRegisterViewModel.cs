@@ -821,22 +821,6 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion
 
-        //#region SaveAreas
-        //public ICommand SaveAreas => new Command(OnSaveOccupationalArea);
-        //public async void OnSaveOccupationalArea()
-        //{
-        //    foreach (OccupationalArea a in selectedOccuAreas)
-        //    {
-        //        OccupationalAreas += a.OccupationName + "," + " ";
-        //    }
-        //    OccupationalAreas = OccupationalAreas.Substring(0, OccupationalAreas.Length - 2);
-        //    if (selectedOccuAreas.Count == 0) { OccupationalAreas = "לא נבחרו תחומי עיסוק"; }
-
-        //    //await PopupNavigation.Instance.PopAsync();
-        //}
-
-        //#endregion
-
         #region Add New Area
         public ICommand AddOccuArea => new Command(OnAddOccuArea);
         public async void OnAddOccuArea()
@@ -895,7 +879,7 @@ namespace VolunteeringApp.ViewModels
 
 
 
-        public event Action<Association, Association> VolunteerEvent;
+        public event Action<Association, Association> AssociationEvent;
         public ICommand SubmitCommand { protected set; get; }
 
         private bool ValidateForm()
@@ -995,9 +979,9 @@ namespace VolunteeringApp.ViewModels
                     }
                     ServerStatus = "שומר נתונים...";
                     //if someone registered to get the contact added event, fire the event
-                    if (this.VolunteerEvent != null)
+                    if (this.AssociationEvent != null)
                     {
-                        this.VolunteerEvent(asso, theAssociation);
+                        this.AssociationEvent(asso, theAssociation);
                     }
 
                     Page p = new NavigationPage(new Views.HomePage());

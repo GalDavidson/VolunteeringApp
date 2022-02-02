@@ -31,8 +31,10 @@ namespace VolunteeringApp
         {
             InitializeComponent();
 
-           
-            
+            ViewModels.ServerStatusViewModel vm = new ViewModels.ServerStatusViewModel();
+            vm.ServerStatus = "טוען נתונים...";
+            MainPage = new Views.ServerStatusPage(vm);
+
         }
 
         protected async override void OnStart()
