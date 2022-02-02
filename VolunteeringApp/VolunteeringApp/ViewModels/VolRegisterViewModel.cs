@@ -458,7 +458,6 @@ namespace VolunteeringApp.ViewModels
                 OnPropertyChanged("Gender");
             }
         }
-
         #endregion
 
         #region מקור התמונה

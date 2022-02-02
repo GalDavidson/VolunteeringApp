@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="VolunteeringApp.Views.AssoRegisterPage"
+             x:Class="VolunteeringApp.Views.VolRegisterPage"
              FlowDirection="RightToLeft">
-    
+
     <ContentPage.Resources>
         <Style TargetType="StackLayout" x:Key="RegisterStack">
             <Setter Property="Orientation" Value="Vertical"/>
@@ -45,8 +45,8 @@
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
-    
-    
+
+
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Padding="0,20,0,0" Style="{StaticResource RegisterStack}">
@@ -95,7 +95,7 @@
                 </Frame>
                 <Label Padding="0" Text="{Binding PhoneNumError}" HorizontalOptions="Center" IsVisible="{Binding ShowPhoneNumError}" Style="{StaticResource labelErrorStyle}"/>
 
-                
+
                 <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
                     <Entry Placeholder="מידע על העמותה" Text="{Binding InformationAbout}"/>
                 </Frame>
@@ -147,48 +147,48 @@
                        Text="{Binding SearchBranch}"
                        />
 
-                        <RefreshView x:Name="refreshView2"
+                    <RefreshView x:Name="refreshView2"
              Command="{Binding RefreshBranchesCommand}"
              IsRefreshing="{Binding IsRefresh}">
 
-                            <CollectionView  x:Name="collection" ItemsSource="{Binding FilteredBranches}" SelectionMode="Multiple" SelectedItems="{Binding SelectedBranches}" BackgroundColor="White"
+                        <CollectionView  x:Name="collection" ItemsSource="{Binding FilteredBranches}" SelectionMode="Multiple" SelectedItems="{Binding SelectedBranches}" BackgroundColor="White"
                                 SelectionChangedCommand="{Binding UpdateBranches}" SelectionChangedCommandParameter="{Binding Source={x:Reference collection}, Path=SelectedItems}">
-                                <CollectionView.ItemsLayout>
-                                    <GridItemsLayout Span="1" Orientation="Vertical" />
-                                </CollectionView.ItemsLayout>
-                                <CollectionView.ItemTemplate>
-                                    <DataTemplate>
-                                        <SwipeView>
-                                            <Grid Margin="7">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="*" />
-                                                </Grid.ColumnDefinitions>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="50"/>
-                                                </Grid.RowDefinitions>
-                                                <Label Text="{Binding Path=BranchLocation, StringFormat='{0}'}" HorizontalTextAlignment="End" FontSize="20" TextColor="Black" Grid.Row="0" Grid.Column="0"/>
-                                            </Grid>
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout Span="1" Orientation="Vertical" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <SwipeView>
+                                        <Grid Margin="7">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="50"/>
+                                            </Grid.RowDefinitions>
+                                            <Label Text="{Binding Path=BranchLocation, StringFormat='{0}'}" HorizontalTextAlignment="End" FontSize="20" TextColor="Black" Grid.Row="0" Grid.Column="0"/>
+                                        </Grid>
 
-                                        </SwipeView>
-                                    </DataTemplate>
-                                </CollectionView.ItemTemplate>
-                            </CollectionView>
-                        </RefreshView>
+                                    </SwipeView>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </RefreshView>
 
 
-                        <Entry Placeholder="רשום מיקום חדש שתרצה להוסיף" MaxLength="30" Text="{Binding NewBranch}" TextColor="Black"></Entry>
-                        <Button Text=" הוסף סניף לרשימה" Command="{Binding AddBranch}"></Button>
+                    <Entry Placeholder="רשום מיקום חדש שתרצה להוסיף" MaxLength="30" Text="{Binding NewBranch}" TextColor="Black"></Entry>
+                    <Button Text=" הוסף סניף לרשימה" Command="{Binding AddBranch}"></Button>
 
                     <Button Text="הרשמה" Command="{Binding SubmitCommand}" BackgroundColor="Beige" TextColor="Black"  Margin="15" FontAttributes="Bold" Padding="5" FontSize="17" CornerRadius="30"/>
                 </StackLayout>
-                
-                
 
 
-           <Label Padding="0" Text="{Binding NextError}" HorizontalOptions="Center" IsVisible="{Binding ShowNextError}" Style="{StaticResource labelErrorStyle}"/>
-                
-                
-        </StackLayout> 
+
+
+                <Label Padding="0" Text="{Binding NextError}" HorizontalOptions="Center" IsVisible="{Binding ShowNextError}" Style="{StaticResource labelErrorStyle}"/>
+
+
+            </StackLayout>
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>

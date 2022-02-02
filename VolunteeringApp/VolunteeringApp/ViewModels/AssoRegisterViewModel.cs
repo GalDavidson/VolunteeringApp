@@ -926,8 +926,13 @@ namespace VolunteeringApp.ViewModels
             ShowConditions = false;
 
             this.selectedOccuAreas = new List<OccupationalArea>();
-            filteredOccuAreas = new ObservableCollection<OccupationalArea>();
+            this.filteredOccuAreas = new ObservableCollection<OccupationalArea>();
+
+            this.selectedBranches = new List<Branch>();
+            this.filteredBranches = new ObservableCollection<Branch>();
+
             InitOccuAreas();
+            InitBranches();
             this.SubmitCommand = new Command(OnSubmit);
 
             this.AssoImgSrc = DEFAULT_PHOTO_SRC;
@@ -959,7 +964,16 @@ namespace VolunteeringApp.ViewModels
                     };
                     association.OccupationalAreasOfAssociations.Add(oc);
                 }
-                
+
+                foreach (Branch b in selectedBranches)
+                {
+                    BranchesOfAssociation br = new BranchesOfAssociation
+                    {
+                        Branch = b,
+                        Association = association
+                    };
+                    association.BranchesOfAssociations.Add(br);
+                }
 
                 VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
                 Association asso = await proxy.RegAssoAsync(association);
