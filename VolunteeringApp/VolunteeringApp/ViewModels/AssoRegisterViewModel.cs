@@ -625,6 +625,8 @@ namespace VolunteeringApp.ViewModels
 
                 if (ok)
                 {
+                    allBranches.Add(newBranches);
+                    SearchBranch = "";
                     await App.Current.MainPage.DisplayAlert("", "בסדר", "!הוספת מיקום בהצלחה");
                 }
                 else if (!ok)
@@ -879,7 +881,7 @@ namespace VolunteeringApp.ViewModels
 
 
 
-        public event Action<Association, Association> AssociationEvent;
+        public event Action<Association> AssociationEvent;
         public ICommand SubmitCommand { protected set; get; }
 
         private bool ValidateForm()
@@ -898,7 +900,7 @@ namespace VolunteeringApp.ViewModels
         }
 
 
-        private Association theAssociation;
+        //private Association theAssociation;
         public AssoRegisterViewModel()
         {
             this.ShowEmailError = false;
@@ -975,14 +977,20 @@ namespace VolunteeringApp.ViewModels
                         bool success = await proxy.UploadImage(new FileInfo()
                         {
                             Name = this.imageFileResult.FullPath
-                        }, $"{asso.AssociationId}.jpg");
+                        }, $"A{asso.AssociationId}.jpg");
+
+                        if (success)
+                        {
+                            AssoImgSrc = asso.ImgSource;
+                        }
                     }
                     ServerStatus = "שומר נתונים...";
+                    
                     //if someone registered to get the contact added event, fire the event
-                    if (this.AssociationEvent != null)
-                    {
-                        this.AssociationEvent(asso, theAssociation);
-                    }
+                    //if (this.AssociationEvent != null)
+                    //{
+                    //    this.AssociationEvent(asso);
+                    //}
 
                     Page p = new NavigationPage(new Views.HomePage());
                     App.Current.MainPage = p;

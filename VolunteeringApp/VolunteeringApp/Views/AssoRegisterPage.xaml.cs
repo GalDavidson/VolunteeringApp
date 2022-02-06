@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using VolunteeringApp.ViewModels;
+using VolunteeringApp.Models;
 
 namespace VolunteeringApp.Views
 {
@@ -15,9 +16,16 @@ namespace VolunteeringApp.Views
     {
         public AssoRegisterPage()
         {
-            this.BindingContext = new AssoRegisterViewModel();
+            AssoRegisterViewModel vm = new AssoRegisterViewModel();
+            vm.SetImageSourceEvent += OnSetImageSource;
+            this.BindingContext = vm;
 
             InitializeComponent();
+        }
+
+        public void OnSetImageSource(ImageSource source)
+        {
+            theImage.Source = source;
         }
     }
 }

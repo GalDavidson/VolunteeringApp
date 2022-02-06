@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
+using VolunteeringApp.Services;
 
 namespace VolunteeringApp.Models
 {
@@ -22,7 +22,15 @@ namespace VolunteeringApp.Models
         public string PhoneNum { get; set; }
         public string Pass { get; set; }
         public DateTime? ActionDate { get; set; }
-        public string ProfilePic { get; set; }
+        public string ProfilePic 
+        { 
+            get
+            {
+                VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
+                string url = $"{proxy.GetBasePhotoUri()}A{this.AssociationId}.jpg";
+                return url;
+            }
+        }
 
         public virtual List<BranchesOfAssociation> BranchesOfAssociations { get; set; }
         public virtual List<DailyEvent> DailyEvents { get; set; }
