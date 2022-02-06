@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Xamarin.Essentials;
 
+
 namespace VolunteeringApp.ViewModels
 {
 
@@ -881,7 +882,7 @@ namespace VolunteeringApp.ViewModels
 
 
 
-        public event Action<Association> AssociationEvent;
+        //public event Action<Association> AssociationEvent;
         public ICommand SubmitCommand { protected set; get; }
 
         private bool ValidateForm()
@@ -899,8 +900,6 @@ namespace VolunteeringApp.ViewModels
             return true;
         }
 
-
-        //private Association theAssociation;
         public AssoRegisterViewModel()
         {
             this.ShowEmailError = false;
