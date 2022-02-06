@@ -235,7 +235,39 @@ namespace VolunteeringApp.Services
             }
         }
 
+        public async Task<Volunteer> RegVolAsync(Volunteer volunteer)
+        {
+            try
+            {
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve,
+                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.Hebrew, UnicodeRanges.BasicLatin),
+                    PropertyNameCaseInsensitive = true
+                };
+                string jsonObject = JsonSerializer.Serialize<Volunteer>(volunteer, options);
+                StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
 
+                HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/RegisterVolunteer", content);
+                if (response.IsSuccessStatusCode)
+                {
+
+                    string str = await response.Content.ReadAsStringAsync();
+
+                    Volunteer v = JsonSerializer.Deserialize<Volunteer>(str, options);
+                    return v;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
 
         public async Task<bool> UploadImage(Models.FileInfo fileInfo, string targetFileName)
         {
