@@ -65,41 +65,49 @@
                     <ImageButton Source="camera.png" HorizontalOptions="Start" Grid.Column="1" Grid.Row="0" BackgroundColor="White" Command="{Binding CameraImageCommand}"/>
                 </Grid>
 
-                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
+                <Frame CornerRadius="10" BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
                     <Entry Placeholder="שם פרטי" Text="{Binding Name}"/>
                 </Frame>
                 <Label Padding="0" Text="{Binding NameError}" HorizontalOptions="Center" IsVisible="{Binding ShowNameError}" Style="{StaticResource labelErrorStyle}"/>
 
-                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
+                <Frame CornerRadius="10" BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
                     <Entry Placeholder="שם משפחה" Text="{Binding LastName}"/>
                 </Frame>
                 <Label Padding="0" Text="{Binding LastNameError}" HorizontalOptions="Center" IsVisible="{Binding ShowLastNameError}" Style="{StaticResource labelErrorStyle}"/>
 
-                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
+                <Frame CornerRadius="10" BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
                     <Entry Placeholder="אימייל" Text="{Binding Email}"/>
                 </Frame>
                 <Label Padding="0" Text="{Binding EmailError}"  HorizontalOptions="Center" IsVisible="{Binding ShowEmailError}" Style="{StaticResource labelErrorStyle}"/>
 
-                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
+                <Frame CornerRadius="10" BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
                     <Entry Placeholder="שם משתמש" Text="{Binding Username}" Keyboard="Email"/>
                 </Frame>
                 <Label Padding="0" Text="{Binding UsernameError}" HorizontalOptions="Center" IsVisible="{Binding ShowUsernameError}"  Style="{StaticResource labelErrorStyle}"/>
 
 
-                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
+                <Frame CornerRadius="10" BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
                     <Entry Placeholder="סיסמה" Text="{Binding Password}"/>
                 </Frame>
                 <Label Padding="0" Text="{Binding PasswordError}" HorizontalOptions="Center" IsVisible="{Binding ShowPasswordError}"  Style="{StaticResource labelErrorStyle}"/>
 
-                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
+                <Frame CornerRadius="10" BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
                     <Entry Placeholder="אימות סיסמה" Text="{Binding VerPassword}"/>
                 </Frame>
                 <Label Padding="0" Text="{Binding VerPasswordError}" HorizontalOptions="Center" IsVisible="{Binding ShowVerPasswordError}"  Style="{StaticResource labelErrorStyle}"/>
 
-                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
-                    <Picker Title="מגדר" FontAttributes="Bold" ItemsSource="{Binding Genders}" ItemDisplayBinding="{Binding GenderType}" SelectedItem="{Binding Gender}">
+                <Frame CornerRadius="10" BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
+                    <Picker Title="מגדר" ItemsSource="{Binding Genders}" ItemDisplayBinding="{Binding GenderType}" SelectedItem="{Binding Gender}">
                     </Picker>
                 </Frame>
+
+                <Frame CornerRadius="10" BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
+                    <StackLayout>
+                        <Label Text="תאריך לידה"></Label>
+                        <DatePicker TextColor="Black" Date="{Binding EntryBirthDate}" HorizontalOptions="Start"></DatePicker>
+                    </StackLayout>
+                </Frame>
+
 
 
                 <Button Text="הרשמה" Command="{Binding SubmitCommand}" BackgroundColor="Beige" TextColor="Black"  Margin="15" FontAttributes="Bold" Padding="5" FontSize="17" CornerRadius="30"/>

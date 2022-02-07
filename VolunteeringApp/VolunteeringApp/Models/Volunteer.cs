@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using VolunteeringApp.Services;
 
 namespace VolunteeringApp.Models
 {
@@ -17,7 +18,16 @@ namespace VolunteeringApp.Models
         public string Email { get; set; }
         public string UserName { get; set; }
         public string Pass { get; set; }
-        public string ProfilePic { get; set; }
+        public string ProfilePic
+        {
+            get
+            {
+                VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
+                string url = $"{proxy.GetBasePhotoUri()}V{this.VolunteerId}.jpg";
+                return url;
+            }
+        }
+
         public int? GenderId { get; set; }
         public DateTime BirthDate { get; set; }
         public DateTime? ActionDate { get; set; }

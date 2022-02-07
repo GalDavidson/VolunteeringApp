@@ -325,21 +325,13 @@ namespace VolunteeringApp.ViewModels
 
             else
             {
-                if (!Regex.IsMatch(this.Password, @"^ (?=.*?[A - Z])(?=.*?[a - z])(?=.*?[0 - 9])(?=.*?[#?!@$%^&*-]).{8,}$"))
-                {
-                    this.ShowPasswordError = true;
-                    this.PasswordError = "הסיסמה אינה תקינה";
-                    return;
-                }
-
-                else if (Password.Length > 0 && Password.Length < MIN_PASS_CHARS)
+                if (Password.Length > 0 && Password.Length < MIN_PASS_CHARS)
                 {
                     this.PasswordError = "הסיסמה חייבת לכלול לפחות 8 תווים";
                     this.ShowPasswordError = true;
-                    return;
                 }
-
-                ShowPasswordError = false;
+                else
+                    ShowPasswordError = false;
             }
         }
 
@@ -431,6 +423,66 @@ namespace VolunteeringApp.ViewModels
                 OnPropertyChanged("Gender");
             }
         }
+
+        #endregion
+
+        #region תאריך לידה
+
+        private DateTime entryBirthDate;
+        public DateTime EntryBirthDate
+        {
+            get => this.entryBirthDate;
+            set
+            {
+                if (value != this.entryBirthDate)
+                {
+                    this.entryBirthDate = value;
+                    OnPropertyChanged("EntryBirthDate");
+                }
+            }
+        }
+
+        private bool showBirthDateError;
+        private bool ShowBirthDateError
+        {
+            get => showBirthDateError;
+            set
+            {
+                showBirthDateError = value;
+                OnPropertyChanged("ShowBirthDateError");
+            }
+        }
+
+        private DateTime birthdate;
+        private DateTime Birthdate
+        {
+            get => birthdate;
+            set
+            {
+                birthdate = value;
+                ValidateBirthDate();
+                OnPropertyChanged("Birthdate");
+            }
+        }
+
+        private bool birthDateError;
+        private bool BirthDateError
+        {
+            get => birthDateError;
+            set
+            {
+                birthDateError = value;
+                OnPropertyChanged("BirthDateError");
+            }
+        }
+
+        private const int MIN_AGE = 14;
+
+        private void ValidateBirthDate()
+        {
+            TimeSpan ts = DateTime.Now - this.EntryBirthDate;
+            this.ShowBirthDateError = ts.TotalDays < (MIN_AGE * 365);
+        }
         #endregion
 
         #region מקור התמונה
@@ -461,7 +513,6 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion serverStatus
 
-        public event Action<Volunteer, Volunteer> VolunteerEvent;
         public ICommand SubmitCommand { protected set; get; }
 
         private bool ValidateForm()
@@ -479,7 +530,6 @@ namespace VolunteeringApp.ViewModels
             return true;
         }
 
-        private Volunteer theVolunteer;
         public VolRegisterViewModel()
         {
             this.ShowNameError = false;
@@ -508,7 +558,9 @@ namespace VolunteeringApp.ViewModels
                     Email = Email,
                     UserName = Username,
                     Pass = Password,
-                    ActionDate = DateTime.Today
+                    ActionDate = DateTime.Today,
+                    GenderId = Gender.GenderId,
+                    BirthDate = EntryBirthDate
                 };
 
                 VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
@@ -527,18 +579,18 @@ namespace VolunteeringApp.ViewModels
                         bool success = await proxy.UploadImage(new FileInfo()
                         {
                             Name = this.imageFileResult.FullPath
-                        }, $"{v.VolunteerId}.jpg");
-                    }
+                        }, $"V{v.VolunteerId}.jpg");
 
-                    ServerStatus = "שומר נתונים...";
-                    //if someone registered to get the contact added event, fire the event
-                    if (this.VolunteerEvent != null)
-                    {
-                        this.VolunteerEvent(v, theVolunteer);
+                        if (success)
+                        {
+                            ProfileImgSrc = v.ImgSource;
+                        }
                     }
+                    ServerStatus = "שומר נתונים...";
 
                     Page p = new NavigationPage(new Views.HomePage());
                     App.Current.MainPage = p;
+                
                 }
             }
             else

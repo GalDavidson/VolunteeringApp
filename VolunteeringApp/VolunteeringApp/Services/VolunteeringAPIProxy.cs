@@ -67,7 +67,6 @@ namespace VolunteeringApp.Services
             return proxy;
         }
 
-
         private VolunteeringAPIProxy(string baseUri, string basePhotosUri)
         {
             //Set client handler to support cookies!!
