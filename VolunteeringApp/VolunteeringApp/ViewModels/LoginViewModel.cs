@@ -7,8 +7,11 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using VolunteeringApp.Services;
 using VolunteeringApp.Models;
-using Xamarin.Essentials;
+using VolunteeringApp.Views;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text.RegularExpressions;
+using Xamarin.Essentials;
 
 namespace VolunteeringApp.ViewModels
 {
@@ -22,26 +25,148 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion
 
+        #region הצגת בעיות
+        private bool showConditions;
+
+        public bool ShowConditions
+        {
+            get => showConditions;
+            set
+            {
+                showConditions = value;
+                OnPropertyChanged("ShowConditions");
+            }
+        }
+        #endregion
+
+        #region דואר אלקטרוני
+        private bool showEmailError;
+
+        public bool ShowEmailError
+        {
+            get => showEmailError;
+            set
+            {
+                showEmailError = value;
+                OnPropertyChanged("ShowEmailError");
+            }
+        }
+
         private string email;
+
         public string Email
         {
-            get { return email; }
+            get => email;
             set
             {
                 email = value;
+                ValidateEmail();
                 OnPropertyChanged("Email");
             }
         }
+
+        private string emailError;
+
+        public string EmailError
+        {
+            get => emailError;
+            set
+            {
+                emailError = value;
+                OnPropertyChanged("EmailError");
+            }
+        }
+
+        private void ValidateEmail()
+        {
+
+            this.ShowConditions = false;
+
+            this.ShowEmailError = string.IsNullOrEmpty(Email);
+            if (!this.ShowEmailError)
+            {
+                if (!Regex.IsMatch(this.Email, @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$"))
+                {
+                    this.ShowEmailError = true;
+                    this.EmailError = ERROR_MESSAGES.BAD_EMAIL;
+                }
+            }
+            else
+                this.EmailError = ERROR_MESSAGES.REQUIRED_FIELD;
+        }
+        #endregion
+
+        #region סיסמה
+        private const int MIN_PASS_CHARS = 8;
         private string password;
         public string Password
         {
-            get { return password; }
+            get
+            {
+                return this.password;
+            }
             set
             {
-                password = value;
-                OnPropertyChanged("Password");
+                if (this.password != value)
+                {
+                    this.password = value;
+                    ValidatePassword();
+
+                    OnPropertyChanged("Password");
+                }
             }
         }
+
+        private bool showPasswordError;
+        public bool ShowPasswordError
+        {
+            get => showPasswordError;
+            set
+            {
+                showPasswordError = value;
+                OnPropertyChanged("ShowPasswordError");
+            }
+        }
+
+        private string passwordError;
+        public string PasswordError
+        {
+            get => passwordError;
+            set
+            {
+                passwordError = value;
+                OnPropertyChanged("PasswordError");
+            }
+        }
+
+        private void ValidatePassword()
+        {
+            this.ShowConditions = false;
+
+            if (string.IsNullOrEmpty(Password))
+            {
+                this.ShowPasswordError = true;
+                this.PasswordError = ERROR_MESSAGES.REQUIRED_FIELD;
+                return;
+            }
+
+            else
+            {
+                if (Password.Length > 0 && Password.Length < MIN_PASS_CHARS)
+                {
+                    this.PasswordError = "הסיסמה חייבת לכלול לפחות 8 תווים";
+                    this.ShowPasswordError = true;
+                    //return;
+                }
+
+                else
+                {
+                    ShowPasswordError = false;
+                }
+            }
+        }
+        #endregion
+
         public ICommand SubmitCommand { protected set; get; }
 
         public LoginViewModel()
@@ -60,6 +185,8 @@ namespace VolunteeringApp.ViewModels
             }
             else
             {
+                App app = (App)Application.Current;
+                app.CurrentUser = user;
                 if (user is Association)
                 {
                     Page p = new NavigationPage(new Views.HomePage());

@@ -101,10 +101,11 @@
                     </Picker>
                 </Frame>
 
-                <Frame CornerRadius="10" BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
+                <Frame AnchorX="100" AnchorY="100" CornerRadius="10" BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
                     <StackLayout>
                         <Label Text="תאריך לידה"></Label>
                         <DatePicker TextColor="Black" Date="{Binding EntryBirthDate}" HorizontalOptions="Start"></DatePicker>
+                        <Label Text="ll"></Label>
                     </StackLayout>
                 </Frame>
 

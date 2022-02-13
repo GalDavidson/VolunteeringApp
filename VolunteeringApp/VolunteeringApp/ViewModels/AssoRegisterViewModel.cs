@@ -916,8 +916,9 @@ namespace VolunteeringApp.ViewModels
             this.selectedBranches = new List<Branch>();
             this.filteredBranches = new ObservableCollection<Branch>();
 
-            InitOccuAreas();
             InitBranches();
+            InitOccuAreas();
+           
             this.SubmitCommand = new Command(OnSubmit);
 
             this.AssoImgSrc = DEFAULT_PHOTO_SRC;

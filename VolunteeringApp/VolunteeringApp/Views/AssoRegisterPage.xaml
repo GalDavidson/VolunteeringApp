@@ -143,7 +143,7 @@
                     </RefreshView>
 
                     <Entry Placeholder="רשום תחום עיסוק חדש שתרצה להוסיף" MaxLength="30" Text="{Binding NewOccuArea}" TextColor="Black"></Entry>
-                    <Button Text=" הוסף סניף לרשימה" Command="{Binding AddOccuArea}"></Button>
+                    <Button Text=" הוסף תחום עיסוק לרשימה" Command="{Binding AddOccuArea}"></Button>
 
 
                     <SearchBar x:Name="searchBar2" 
@@ -181,7 +181,7 @@
 
 
                         <Entry Placeholder="רשום מיקום חדש שתרצה להוסיף" MaxLength="30" Text="{Binding NewBranch}" TextColor="Black"></Entry>
-                        <Button Text=" הוסף סניף לרשימה" Command="{Binding AddBranch}"></Button>
+                        <Button Text="הוסף סניף לרשימה" Command="{Binding AddBranch}"></Button>
 
                     <Button Text="הרשמה" Command="{Binding SubmitCommand}" BackgroundColor="Beige" TextColor="Black"  Margin="15" FontAttributes="Bold" Padding="5" FontSize="17" CornerRadius="30"/>
                 </StackLayout>
