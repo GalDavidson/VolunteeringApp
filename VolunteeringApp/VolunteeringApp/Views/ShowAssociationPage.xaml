@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VolunteeringApp.Views.ShowAssociationPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="{Binding Email}" HorizontalTextAlignment="Center" FontSize="Large"/>
+            <Label Text="{Binding UserName}" HorizontalTextAlignment="Center" FontSize="Large"/>
+            <Label Text="{Binding InformationAbout}" HorizontalTextAlignment="Center" FontSize="Caption"/>
+            <Label Text="{Binding PhoneNum}" HorizontalTextAlignment="Center" FontSize="Body"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

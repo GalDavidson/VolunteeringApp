@@ -8,7 +8,7 @@
              Command="{Binding RefreshCommand}"
              IsRefreshing="{Binding IsRefreshing}">
                 <CollectionView x:Name="collectionName" 
-                            ItemsSource="{Binding MonkeyList}" SelectionMode="Single"
+                            ItemsSource="{Binding AssociationList}" SelectionMode="Single"
                         SelectionChangedCommand="{Binding SelctionChanged}"
                         SelectionChangedCommandParameter="{Binding Source={x:Reference collectionName}, Path=SelectedItem}">
                     <CollectionView.ItemTemplate>
@@ -26,20 +26,18 @@
                                 <Grid Padding="10" HorizontalOptions="FillAndExpand">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="100" />
-                                        <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="100" />
-                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="100" />
+                                        <ColumnDefinition Width="100" />
+                                        <ColumnDefinition Width="100" />
                                     </Grid.ColumnDefinitions>
-                                    <Image Grid.Column="0" Grid.Row="0"
-                                   Source="{Binding ImageUrl}"/>
-                                    <Label Grid.Column="0" Grid.Row="1"
-                                   Text="{Binding Name}" 
-                                   FontAttributes="Bold" HorizontalOptions="Center"/>
-                                    <Label Grid.Column="1" Grid.Row="0" Grid.RowSpan="2"
-                                   Text="{Binding Details}" 
-                                   FontAttributes="Italic"/>
+                                    <Label Grid.Column="0" Grid.Row="0" Text="{Binding Email}" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                    <Label Grid.Column="0" Grid.Row="0" Text="{Binding Username}" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                    <Label Grid.Column="0" Grid.Row="0" Text="{Binding InformationAbout}" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                    <Label Grid.Column="0" Grid.Row="0" Text="{Binding PhoneNum}" FontAttributes="Bold" HorizontalOptions="Center"/>
+
                                 </Grid>
                             </SwipeView>
                         </DataTemplate>

@@ -63,6 +63,36 @@ namespace VolunteeringApp.ViewModels
             }
         }
 
+        public ICommand SelctionChanged => new Command<Object>(OnSelectionChanged);
+        public void OnSelectionChanged(Object obj)
+        {
+            if (obj is Association)
+            {
+                Association chosenAsso = (Association)obj;
+                Page associationPage = new ShowAssociationPage();
+                ShowAssociationViewModel assoContext = new ShowAssociationViewModel
+                {
+                    Email = chosenAsso.Email,
+                    Username = chosenAsso.UserName,
+                    InformationAbout = chosenAsso.InformationAbout,
+                    PhoneNum = chosenAsso.PhoneNum
+                };
+                associationPage.BindingContext = assoContext;
+                associationPage.Title = assoContext.Username;
+                if (NavigateToPageEvent != null)
+                    NavigateToPageEvent(associationPage);
+            }
+        }
+        //Delete association
+        public ICommand DeleteCommand => new Command<Association>(RemoveAsso);
+        void RemoveAsso(Association a)
+        {
+            if (AssociationsList.Contains(a))
+            {
+                AssociationsList.Remove(a);
+            }
+
+        }
         public ICommand RefreshCommand => new Command(RefreshAssociations);
 
         async void RefreshAssociations()
@@ -76,5 +106,10 @@ namespace VolunteeringApp.ViewModels
             }
             this.IsRefreshing = false;
         }
+
+
+
+
+        public Action<Page> NavigateToPageEvent;
     }
 }
