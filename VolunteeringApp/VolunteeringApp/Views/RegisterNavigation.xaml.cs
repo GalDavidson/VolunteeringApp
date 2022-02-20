@@ -6,16 +6,14 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using VolunteeringApp.ViewModels;
 
 namespace VolunteeringApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class LoginPage : ContentPage
+    public partial class RegisterNavigation : TabbedPage
     {
-        public LoginPage()
+        public RegisterNavigation()
         {
-            this.BindingContext = new LoginViewModel();
             InitializeComponent();
         }
     }

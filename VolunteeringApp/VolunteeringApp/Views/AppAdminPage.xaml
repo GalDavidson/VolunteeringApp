@@ -34,9 +34,9 @@
                                         <ColumnDefinition Width="100" />
                                     </Grid.ColumnDefinitions>
                                     <Label Grid.Column="0" Grid.Row="0" Text="{Binding Email}" FontAttributes="Bold" HorizontalOptions="Center"/>
-                                    <Label Grid.Column="0" Grid.Row="0" Text="{Binding Username}" FontAttributes="Bold" HorizontalOptions="Center"/>
-                                    <Label Grid.Column="0" Grid.Row="0" Text="{Binding InformationAbout}" FontAttributes="Bold" HorizontalOptions="Center"/>
-                                    <Label Grid.Column="0" Grid.Row="0" Text="{Binding PhoneNum}" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                    <Label Grid.Column="1" Grid.Row="0" Text="{Binding Username}" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                    <Label Grid.Column="2" Grid.Row="0" Text="{Binding InformationAbout}" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                    <Label Grid.Column="3" Grid.Row="0" Text="{Binding PhoneNum}" FontAttributes="Bold" HorizontalOptions="Center"/>
 
                                 </Grid>
                             </SwipeView>

@@ -462,13 +462,12 @@ namespace VolunteeringApp.ViewModels
             }
             set
             {
-                if (this.searchBranch != value)
-                {
-
+                //if (this.searchBranch != value)
+                //{
                     this.searchBranch = value;
-                    OnTextChanged(value);
+                    OnTypeChanged(value);
                     OnPropertyChanged("SearchBranch");
-                }
+                //}
             }
         }
 
@@ -496,7 +495,7 @@ namespace VolunteeringApp.ViewModels
             }
         }
         #endregion סניפים
-
+        
         #region Search Branches
         public void OnTypeChanged(string searching)
         {
@@ -627,7 +626,7 @@ namespace VolunteeringApp.ViewModels
                 if (ok)
                 {
                     allBranches.Add(newBranches);
-                    SearchBranch = "";
+                    //SearchBranch = "";
                     await App.Current.MainPage.DisplayAlert("", "בסדר", "!הוספת מיקום בהצלחה");
                 }
                 else if (!ok)
@@ -673,13 +672,12 @@ namespace VolunteeringApp.ViewModels
             }
             set
             {
-                if (this.searchTerm != value)
-                {
-
+                //if (this.searchTerm != value)
+                //{
                     this.searchTerm = value;
                     OnTextChanged(value);
                     OnPropertyChanged("SearchTerm");
-                }
+                //}
             }
         }
 
@@ -850,6 +848,7 @@ namespace VolunteeringApp.ViewModels
 
                 if (ok)
                 {
+                    allOccupationalAreas.Add(NewOccuAr);
                     await App.Current.MainPage.DisplayAlert("", "בסדר", "!הוספת תחום עיסוק בהצלחה");
                 }
                 else if (!ok)
@@ -881,8 +880,6 @@ namespace VolunteeringApp.ViewModels
         #endregion
 
 
-
-        //public event Action<Association> AssociationEvent;
         public ICommand SubmitCommand { protected set; get; }
 
         private bool ValidateForm()
@@ -908,7 +905,7 @@ namespace VolunteeringApp.ViewModels
             this.ShowPhoneNumError = false;
             this.ShowPasswordError = false;
             this.ShowVerPasswordError = false;
-            ShowConditions = false;
+            this.ShowConditions = false;
 
             this.selectedOccuAreas = new List<OccupationalArea>();
             this.filteredOccuAreas = new ObservableCollection<OccupationalArea>();

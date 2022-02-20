@@ -41,6 +41,20 @@
             </Frame>
             <Button Command="{Binding SubmitCommand}" Text="התחבר" Style="{StaticResource LoginButton}" />
 
+            <Grid Padding="10" HorizontalOptions="FillAndExpand">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" Grid.Row="0" Margin="-14,0" Padding="0" Text="אין לך חשבון?" TextColor="Black" HorizontalOptions="End" FontAttributes="Bold"/>
+                <Button Grid.Column="1" Grid.Row="0" Padding="0" Command="{Binding MoveToRegister}" Text="הירשם" FontAttributes="Bold" HorizontalOptions="Start" BackgroundColor="Transparent"  Margin="-7,-17" HeightRequest="50"/>
+                
+            </Grid>
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

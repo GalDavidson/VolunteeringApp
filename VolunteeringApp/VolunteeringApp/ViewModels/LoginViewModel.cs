@@ -168,10 +168,18 @@ namespace VolunteeringApp.ViewModels
         #endregion
 
         public ICommand SubmitCommand { protected set; get; }
+        public ICommand MoveToRegister { protected set; get; }
 
         public LoginViewModel()
         {
             SubmitCommand = new Command(OnSubmit);
+            MoveToRegister = new Command(OnTap);
+        }
+
+        public void OnTap()
+        {
+            Page p = new NavigationPage(new Views.AssoRegisterPage());
+            App.Current.MainPage = p;
         }
 
         public async void OnSubmit()

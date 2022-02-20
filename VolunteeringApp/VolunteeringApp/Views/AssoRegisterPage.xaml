@@ -67,36 +67,36 @@
                 </Grid>
 
 
-                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
+                <Frame CornerRadius="10" BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
                     <Entry Placeholder="אימייל" Text="{Binding Email}"/>
                 </Frame>
                 <Label Padding="0" Text="{Binding EmailError}"  HorizontalOptions="Center" IsVisible="{Binding ShowEmailError}" Style="{StaticResource labelErrorStyle}"/>
 
 
-                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
+                <Frame CornerRadius="10" BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
                     <Entry Placeholder="שם משתמש" Text="{Binding Username}" Keyboard="Email"/>
                 </Frame>
                 <Label Padding="0" Text="{Binding UsernameError}" HorizontalOptions="Center" IsVisible="{Binding ShowUsernameError}"  Style="{StaticResource labelErrorStyle}"/>
 
 
-                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
+                <Frame CornerRadius="10" BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
                     <Entry Placeholder="סיסמה" Text="{Binding Password}"/>
                 </Frame>
                 <Label Padding="0" Text="{Binding PasswordError}" HorizontalOptions="Center" IsVisible="{Binding ShowPasswordError}"  Style="{StaticResource labelErrorStyle}"/>
 
-                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
+                <Frame CornerRadius="10" BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
                     <Entry Placeholder="אימות סיסמה" Text="{Binding VerPassword}"/>
                 </Frame>
                 <Label Padding="0" Text="{Binding VerPasswordError}" HorizontalOptions="Center" IsVisible="{Binding ShowVerPasswordError}"  Style="{StaticResource labelErrorStyle}"/>
 
 
-                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
+                <Frame CornerRadius="10" BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
                     <Entry Placeholder="מספר טלפון" Text="{Binding PhoneNum}"/>
                 </Frame>
                 <Label Padding="0" Text="{Binding PhoneNumError}" HorizontalOptions="Center" IsVisible="{Binding ShowPhoneNumError}" Style="{StaticResource labelErrorStyle}"/>
 
-                
-                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
+
+                <Frame CornerRadius="10" BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
                     <Entry Placeholder="מידע על העמותה" Text="{Binding InformationAbout}"/>
                 </Frame>
                 <Label Padding="0" Text="{Binding InformationAboutError}" HorizontalOptions="Center" IsVisible="{Binding ShowInformationAboutError}" Style="{StaticResource labelErrorStyle}"/>

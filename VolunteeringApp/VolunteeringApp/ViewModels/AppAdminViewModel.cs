@@ -25,8 +25,7 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion
 
-        #region Properties
-        //Properties
+        #region IsRefreshing
         private bool isRefreshing;
         public bool IsRefreshing
         {
@@ -46,13 +45,15 @@ namespace VolunteeringApp.ViewModels
 
         public ObservableCollection<Association> AssociationsList { get; }
         #endregion
-        //Constructor
+
         public AppAdminViewModel()
         {
             AssociationsList = new ObservableCollection<Association>();
             this.isRefreshing = false;
             CreateAssociationsCollection();
         }
+
+        #region Associasions
         async void CreateAssociationsCollection()
         {
             VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
@@ -106,9 +107,7 @@ namespace VolunteeringApp.ViewModels
             }
             this.IsRefreshing = false;
         }
-
-
-
+        #endregion
 
         public Action<Page> NavigateToPageEvent;
     }
