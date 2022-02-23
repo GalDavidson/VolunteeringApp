@@ -4,12 +4,16 @@
              x:Class="VolunteeringApp.Views.AppAdminPage">
     <ContentPage.Content>
         <StackLayout>
+
+            <Label Text="רשימת עמותות" TextColor="Black" Padding="0" HeightRequest="30" TextDecorations="Underline"/>
+            
             <RefreshView x:Name="refreshView"
              Command="{Binding RefreshCommand}"
              IsRefreshing="{Binding IsRefreshing}">
+
                 <CollectionView x:Name="collectionName" 
-                            ItemsSource="{Binding AssociationList}" SelectionMode="Single"
-                        SelectionChangedCommand="{Binding SelctionChanged}"
+                            ItemsSource="{Binding AssociationsList}" SelectionMode="Single"
+                        SelectionChangedCommand="{Binding SelectionAssociationChanged}"
                         SelectionChangedCommandParameter="{Binding Source={x:Reference collectionName}, Path=SelectedItem}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
@@ -25,7 +29,7 @@
                                 </SwipeView.LeftItems>
                                 <Grid Padding="10" HorizontalOptions="FillAndExpand">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="100" />
+                                        <RowDefinition Height="20" />
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="100" />
@@ -34,7 +38,7 @@
                                         <ColumnDefinition Width="100" />
                                     </Grid.ColumnDefinitions>
                                     <Label Grid.Column="0" Grid.Row="0" Text="{Binding Email}" FontAttributes="Bold" HorizontalOptions="Center"/>
-                                    <Label Grid.Column="1" Grid.Row="0" Text="{Binding Username}" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                    <Label Grid.Column="1" Grid.Row="0" Text="{Binding UserName}" FontAttributes="Bold" HorizontalOptions="Center"/>
                                     <Label Grid.Column="2" Grid.Row="0" Text="{Binding InformationAbout}" FontAttributes="Bold" HorizontalOptions="Center"/>
                                     <Label Grid.Column="3" Grid.Row="0" Text="{Binding PhoneNum}" FontAttributes="Bold" HorizontalOptions="Center"/>
 

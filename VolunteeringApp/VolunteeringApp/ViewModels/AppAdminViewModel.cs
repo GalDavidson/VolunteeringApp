@@ -42,8 +42,6 @@ namespace VolunteeringApp.ViewModels
                 }
             }
         }
-
-        public ObservableCollection<Association> AssociationsList { get; }
         #endregion
 
         public AppAdminViewModel()
@@ -54,6 +52,7 @@ namespace VolunteeringApp.ViewModels
         }
 
         #region Associasions
+        public ObservableCollection<Association> AssociationsList { get; }
         async void CreateAssociationsCollection()
         {
             VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
@@ -64,8 +63,8 @@ namespace VolunteeringApp.ViewModels
             }
         }
 
-        public ICommand SelctionChanged => new Command<Object>(OnSelectionChanged);
-        public void OnSelectionChanged(Object obj)
+        public ICommand SelectionAssociationChanged => new Command<Object>(OnSelectionAssociationChanged);
+        public void OnSelectionAssociationChanged(Object obj)
         {
             if (obj is Association)
             {
@@ -74,12 +73,71 @@ namespace VolunteeringApp.ViewModels
                 ShowAssociationViewModel assoContext = new ShowAssociationViewModel
                 {
                     Email = chosenAsso.Email,
-                    Username = chosenAsso.UserName,
+                    UserName = chosenAsso.UserName,
                     InformationAbout = chosenAsso.InformationAbout,
                     PhoneNum = chosenAsso.PhoneNum
                 };
                 associationPage.BindingContext = assoContext;
-                associationPage.Title = assoContext.Username;
+                associationPage.Title = assoContext.UserName;
+                if (NavigateToPageEvent != null)
+                    NavigateToPageEvent(associationPage);
+            }
+        }
+        //Delete association
+        public ICommand DeleteCommand => new Command<Association>(RemoveAsso);
+        void RemoveAsso(Association a)
+        {
+            if (AssociationsList.Contains(a))
+            {
+                AssociationsList.Remove(a);
+            }
+
+        }
+        public ICommand RefreshCommand => new Command(RefreshAssociations);
+
+        async void RefreshAssociations()
+        {
+            VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
+            List<Association> theAssociations = await proxy.GetAssociations();
+            this.AssociationsList.Clear();
+            foreach (Association a in theAssociations)
+            {
+                AssociationsList.Add(a);
+            }
+            this.IsRefreshing = false;
+        }
+        #endregion
+
+        #region Volunteers
+        public ObservableCollection<Volunteer> VolunteersList { get; }
+        async void CreatevolunteersCollection()
+        {
+            VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
+            List<Volunteer> theVolunteers = await proxy.GetVolunteers();
+            foreach (Volunteer v in theVolunteers)
+            {
+                this.VolunteersList.Add(v);
+            }
+        }
+
+        public ICommand SelectionVolunteerChanged => new Command<Object>(OnSelectionVolunteerChanged);
+        public void OnSelectionVolunteerChanged(Object obj)
+        {
+            if (obj is Volunteer)
+            {
+                Volunteer chosenVol = (Volunteer)obj;
+                Page volunteerPage = new ShowVolunteerPage();
+                ShowVolunteerViewModel volContext = new ShowVolunteerViewModel
+                {
+                    LName = chosenVol.LName,
+                    FName = chosenVol.FName,
+                    Email = chosenVol.Email,
+                    UserName = chosenVol.UserName,
+                    BirthDate = chosenVol.BirthDate,
+                    GenderID = (int)chosenVol.GenderId
+                };
+                associationPage.BindingContext = assoContext;
+                associationPage.Title = assoContext.UserName;
                 if (NavigateToPageEvent != null)
                     NavigateToPageEvent(associationPage);
             }

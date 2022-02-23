@@ -8,7 +8,7 @@ using Xamarin.Forms;
 
 namespace VolunteeringApp.ViewModels
 {
-    public class ShowAssociationViewModel
+    public class ShowVolunteerViewModel
     {
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -18,10 +18,12 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion
 
+        public string FName { get; set; }
+        public string LName { get; set; }
         public string Email { get; set; }
         public string UserName { get; set; }
-        public string InformationAbout { get; set; }
-        public string PhoneNum { get; set; }
-    }
+        public DateTime BirthDate { get; set; }
+        public int GenderID { get; set; }
 
+    }
 }
