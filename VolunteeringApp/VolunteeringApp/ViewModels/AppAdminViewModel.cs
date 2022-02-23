@@ -47,8 +47,10 @@ namespace VolunteeringApp.ViewModels
         public AppAdminViewModel()
         {
             AssociationsList = new ObservableCollection<Association>();
+            VolunteersList = new ObservableCollection<Volunteer>();
             this.isRefreshing = false;
             CreateAssociationsCollection();
+            CreatevolunteersCollection();
         }
 
         #region Associasions
@@ -84,7 +86,7 @@ namespace VolunteeringApp.ViewModels
             }
         }
         //Delete association
-        public ICommand DeleteCommand => new Command<Association>(RemoveAsso);
+        public ICommand DeleteAssoCommand => new Command<Association>(RemoveAsso);
         void RemoveAsso(Association a)
         {
             if (AssociationsList.Contains(a))
@@ -93,7 +95,7 @@ namespace VolunteeringApp.ViewModels
             }
 
         }
-        public ICommand RefreshCommand => new Command(RefreshAssociations);
+        public ICommand RefreshAssoCommand => new Command(RefreshAssociations);
 
         async void RefreshAssociations()
         {
@@ -136,32 +138,32 @@ namespace VolunteeringApp.ViewModels
                     BirthDate = chosenVol.BirthDate,
                     GenderID = (int)chosenVol.GenderId
                 };
-                associationPage.BindingContext = assoContext;
-                associationPage.Title = assoContext.UserName;
+                volunteerPage.BindingContext = volContext;
+                volunteerPage.Title = volContext.UserName;
                 if (NavigateToPageEvent != null)
-                    NavigateToPageEvent(associationPage);
+                    NavigateToPageEvent(volunteerPage);
             }
         }
-        //Delete association
-        public ICommand DeleteCommand => new Command<Association>(RemoveAsso);
-        void RemoveAsso(Association a)
+        //Delete volunteer
+        public ICommand DeleteVolCommand => new Command<Volunteer>(RemoveVol);
+        void RemoveVol(Volunteer v)
         {
-            if (AssociationsList.Contains(a))
+            if (VolunteersList.Contains(v))
             {
-                AssociationsList.Remove(a);
+                VolunteersList.Remove(v);
             }
 
         }
-        public ICommand RefreshCommand => new Command(RefreshAssociations);
+        public ICommand RefreshVolCommand => new Command(RefreshVolunteers);
 
-        async void RefreshAssociations()
+        async void RefreshVolunteers()
         {
             VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
-            List<Association> theAssociations = await proxy.GetAssociations();
-            this.AssociationsList.Clear();
-            foreach (Association a in theAssociations)
+            List<Volunteer> theVolunteers = await proxy.GetVolunteers();
+            this.VolunteersList.Clear();
+            foreach (Volunteer v in theVolunteers)
             {
-                AssociationsList.Add(a);
+                VolunteersList.Add(v);
             }
             this.IsRefreshing = false;
         }
