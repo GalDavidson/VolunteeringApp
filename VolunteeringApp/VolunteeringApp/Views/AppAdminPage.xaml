@@ -5,12 +5,6 @@
     <ContentPage.Content>
         <StackLayout>
 
-            <RefreshView x:Name="refreshView"
-             Command="{Binding RefreshAssoCommand}"
-             IsRefreshing="{Binding IsRefreshing}">
-
-                <StackLayout>
-
                     <Label Text="רשימת עמותות" TextColor="Black" Padding="0" HeightRequest="30" TextDecorations="Underline"/>
 
                     <CollectionView x:Name="collectionName" 
@@ -94,7 +88,6 @@
                     </CollectionView>
                     
                 </StackLayout>
-            </RefreshView>
-        </StackLayout>
+
     </ContentPage.Content>
 </ContentPage>

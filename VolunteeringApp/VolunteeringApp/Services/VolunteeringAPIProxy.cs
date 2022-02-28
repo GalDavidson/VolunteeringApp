@@ -206,7 +206,7 @@ namespace VolunteeringApp.Services
         }
 
 
-            public async Task<bool> AddOccupationalArea(OccupationalArea a)
+        public async Task<bool> AddOccupationalArea(OccupationalArea a)
         {
             try
             {
@@ -246,6 +246,64 @@ namespace VolunteeringApp.Services
                 string json = JsonSerializer.Serialize<Branch>(b, options);
                 StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/AddBranch", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    string jsonContent = await response.Content.ReadAsStringAsync();
+                    bool success = JsonSerializer.Deserialize<bool>(jsonContent, options);
+                    return success;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+
+        public async Task<bool> RemoveAsso(Association a)
+        {
+            try
+            {
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+                string json = JsonSerializer.Serialize<Association>(a, options);
+                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/RemoveAsso", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    string jsonContent = await response.Content.ReadAsStringAsync();
+                    bool success = JsonSerializer.Deserialize<bool>(jsonContent, options);
+                    return success;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+
+        public async Task<bool> RemoveVol(Volunteer v)
+        {
+            try
+            {
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+                string json = JsonSerializer.Serialize<Volunteer>(v, options);
+                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/RemoveVol", content);
                 if (response.IsSuccessStatusCode)
                 {
                     string jsonContent = await response.Content.ReadAsStringAsync();

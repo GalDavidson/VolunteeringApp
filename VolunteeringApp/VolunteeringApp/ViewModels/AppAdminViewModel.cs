@@ -87,27 +87,29 @@ namespace VolunteeringApp.ViewModels
         }
         //Delete association
         public ICommand DeleteAssoCommand => new Command<Association>(RemoveAsso);
-        void RemoveAsso(Association a)
+        public async void RemoveAsso(Association a)
         {
-            if (AssociationsList.Contains(a))
+            bool result = await App.Current.MainPage.DisplayAlert("את.ה בטוח.ה?", "", "כן", "לא", FlowDirection.RightToLeft);
+            if (result)
             {
-                AssociationsList.Remove(a);
+                VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
+                bool ok = await proxy.RemoveAsso(a);
+
+                if (ok)
+                {
+                    AssociationsList.Remove(a);
+                }
+                else
+                {
+                    await App.Current.MainPage.DisplayAlert("שגיאה", "לא בוצע", "אישור");
+                }
             }
-
-        }
-        public ICommand RefreshAssoCommand => new Command(RefreshAssociations);
-
-        async void RefreshAssociations()
-        {
-            VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
-            List<Association> theAssociations = await proxy.GetAssociations();
-            this.AssociationsList.Clear();
-            foreach (Association a in theAssociations)
+            else
             {
-                AssociationsList.Add(a);
+                await App.Current.MainPage.DisplayAlert("שגיאה", "לא בוצע", "אישור");
             }
-            this.IsRefreshing = false;
         }
+
         #endregion
 
         #region Volunteers
@@ -146,27 +148,30 @@ namespace VolunteeringApp.ViewModels
         }
         //Delete volunteer
         public ICommand DeleteVolCommand => new Command<Volunteer>(RemoveVol);
-        void RemoveVol(Volunteer v)
+     
+        public async void RemoveVol(Volunteer v)
         {
-            if (VolunteersList.Contains(v))
+            bool result = await App.Current.MainPage.DisplayAlert("את.ה בטוח.ה?", "", "כן", "לא", FlowDirection.RightToLeft);
+            if (result)
             {
-                VolunteersList.Remove(v);
+                VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
+                bool ok = await proxy.RemoveVol(v);
+
+                if (ok)
+                {
+                    VolunteersList.Remove(v);
+                }
+                else
+                {
+                    await App.Current.MainPage.DisplayAlert("שגיאה", "לא בוצע", "אישור");
+                }
             }
-
-        }
-        public ICommand RefreshVolCommand => new Command(RefreshVolunteers);
-
-        async void RefreshVolunteers()
-        {
-            VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
-            List<Volunteer> theVolunteers = await proxy.GetVolunteers();
-            this.VolunteersList.Clear();
-            foreach (Volunteer v in theVolunteers)
+            else
             {
-                VolunteersList.Add(v);
+                await App.Current.MainPage.DisplayAlert("שגיאה", "לא בוצע", "אישור");
             }
-            this.IsRefreshing = false;
         }
+ 
         #endregion
 
         public Action<Page> NavigateToPageEvent;
