@@ -113,6 +113,29 @@ namespace VolunteeringApp.ViewModels
         #endregion
 
         #region Volunteers
+
+        private string gender;
+        public string Gender
+        {
+            get { return gender; }
+            set
+            {
+                gender = value;
+                OnPropertyChanged("Gender");
+            }
+        }
+
+        private List<Gender> genders;
+        public List<Gender> Genders
+        {
+            get
+            {
+                if (((App)App.Current).LookupTables != null)
+                    return ((App)App.Current).LookupTables.Genders;
+                return new List<Gender>();
+            }
+        }
+
         public ObservableCollection<Volunteer> VolunteersList { get; }
         async void CreatevolunteersCollection()
         {
@@ -138,8 +161,11 @@ namespace VolunteeringApp.ViewModels
                     Email = chosenVol.Email,
                     UserName = chosenVol.UserName,
                     BirthDate = chosenVol.BirthDate,
-                    GenderID = (int)chosenVol.GenderId
+                    GenderID = (int)chosenVol.GenderId,
                 };
+
+                gender = genders[(int)chosenVol.GenderId].GenderType;
+
                 volunteerPage.BindingContext = volContext;
                 volunteerPage.Title = volContext.UserName;
                 if (NavigateToPageEvent != null)

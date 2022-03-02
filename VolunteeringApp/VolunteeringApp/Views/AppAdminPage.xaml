@@ -67,19 +67,20 @@
                                             <RowDefinition Height="20" />
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="30" />
                                             <ColumnDefinition Width="50" />
                                             <ColumnDefinition Width="50" />
+                                            <ColumnDefinition Width="130" />
                                             <ColumnDefinition Width="50" />
-                                            <ColumnDefinition Width="170" />
-                                            <ColumnDefinition Width="50" />
-                                            
+                                            <ColumnDefinition Width="20" />
+
                                         </Grid.ColumnDefinitions>
                                         <Label Grid.Column="0" Grid.Row="0" Text="{Binding FName}" FontAttributes="Bold" HorizontalOptions="Center"/>
                                         <Label Grid.Column="1" Grid.Row="0" Text="{Binding LName}" FontAttributes="Bold" HorizontalOptions="Center"/>
                                         <Label Grid.Column="2" Grid.Row="0" Text="{Binding UserName}" FontAttributes="Bold" HorizontalOptions="Center"/>
                                         <Label Grid.Column="3" Grid.Row="0" Text="{Binding Email}" FontAttributes="Bold" HorizontalOptions="Center"/>
                                         <Label Grid.Column="4" Grid.Row="0" Text="{Binding BirthDate}" FontAttributes="Bold" HorizontalOptions="Center"/>
-                                        <Label Grid.Column="5" Grid.Row="0" Text="{Binding GenderID}" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                        <Label Grid.Column="5" Grid.Row="0" Text="{Binding Gender}" FontAttributes="Bold" HorizontalOptions="Center"/>
 
                                     </Grid>
                                 </SwipeView>

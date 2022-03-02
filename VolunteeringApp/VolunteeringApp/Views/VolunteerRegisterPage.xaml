@@ -101,6 +101,9 @@
                     </Picker>
                 </Frame>
 
+                <Entry Placeholder="רשום מגדר חדש שתרצה להוסיף" MaxLength="30" Text="{Binding NewGender}" TextColor="Black"></Entry>
+                <Button Text=" הוסף מגדר לרשימה" Command="{Binding AddGender}"></Button>
+
                 <Frame CornerRadius="10" BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="70" Padding="10">
                     <StackLayout>
                         <Label Text="תאריך לידה"></Label>

@@ -426,6 +426,61 @@ namespace VolunteeringApp.ViewModels
 
         #endregion
 
+        #region Add New Gender
+
+        private string newGender;
+        public string NewGender
+        {
+            get => newGender;
+            set
+            {
+                newGender = value;
+                OnPropertyChanged("NewGender");
+            }
+        }
+
+        public ICommand AddGender => new Command(OnAddGender);
+        public async void OnAddGender()
+        {
+
+            if (string.IsNullOrEmpty(NewGender))
+            {
+                await App.Current.MainPage.DisplayAlert("שגיאה", "!לא ניתן להוסיף ערך זה", "בסדר");
+                return;
+            }
+
+            Gender newG = new Gender
+            {
+                GenderType = NewGender
+            };
+
+            bool IsExist = false;
+            if (Genders.Contains(newG)) { IsExist = true; }
+
+            if (!IsExist)
+            {
+                VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
+                bool ok = await proxy.AddGender(newG);
+
+                if (ok)
+                {
+                    Genders.Add(newG);
+                    //SearchBranch = "";
+                    await App.Current.MainPage.DisplayAlert("", "בסדר", "!הוספת מגדר בהצלחה");
+                }
+                else if (!ok)
+                {
+                    await App.Current.MainPage.DisplayAlert("בסדר", "הוספת המגדר נכשלה", "שגיאה");
+                }
+            }
+            else
+            {
+                await App.Current.MainPage.DisplayAlert("בסדר", "מגדר זה כבר קיים במערכת", "שגיאה");
+            }
+
+        }
+        #endregion
+
         #region תאריך לידה
 
         private DateTime entryBirthDate;
