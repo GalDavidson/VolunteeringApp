@@ -62,7 +62,7 @@ namespace VolunteeringApp.ViewModels
             }
         }
 
-        public void CreateTodayVolCollection()
+        private void CreateTodayVolCollection()
         {
             if (((App)App.Current).LookupTables != null)
             {
@@ -94,7 +94,7 @@ namespace VolunteeringApp.ViewModels
             }
         }
 
-        public void CreateMonthVolCollection()
+        private void CreateMonthVolCollection()
         {
             if (((App)App.Current).LookupTables != null)
             {
@@ -126,7 +126,7 @@ namespace VolunteeringApp.ViewModels
             }
         }
 
-        public void CreateTodayEventsCollection()
+        private void CreateTodayEventsCollection()
         {
             if (((App)App.Current).LookupTables != null)
             {
@@ -158,7 +158,7 @@ namespace VolunteeringApp.ViewModels
             }
         }
 
-        public void CreateMonthEventsCollection()
+        private void CreateMonthEventsCollection()
         {
             if (((App)App.Current).LookupTables != null)
             {
@@ -167,6 +167,38 @@ namespace VolunteeringApp.ViewModels
                 {
                     if (((DateTime)e.EventDate).Month == DateTime.Now.Month)
                         MonthEventsList++;
+                }
+            }
+        }
+        #endregion
+
+        #region ThisMonthVolunteersToEvents
+        private int volsInEvents;
+        public int VolsInEvents
+        {
+            get
+            {
+                return this.volsInEvents;
+            }
+            set
+            {
+                if (this.volsInEvents != value)
+                {
+                    this.volsInEvents = value;
+                    OnPropertyChanged(nameof(VolsInEvents));
+                }
+            }
+        }
+
+        private void CreateVolsInEventsCollection()
+        {
+            if (((App)App.Current).LookupTables != null)
+            {
+                List<VolunteersInEvent> volsList = ((App)App.Current).LookupTables.VolsInEvents;
+                foreach (VolunteersInEvent v in volsList)
+                {
+                    if (((DateTime)v.ActionDate).Month == DateTime.Now.Month)
+                        VolsInEvents++;
                 }
             }
         }
@@ -188,14 +220,18 @@ namespace VolunteeringApp.ViewModels
         #region Associasions
 
         public ObservableCollection<Association> AssociationsList { get; }
-        async void CreateAssociationsCollection()
+        private void CreateAssociationsCollection()
         {
             VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
-            List<Association> theAssociations = await proxy.GetAssociations();
-            foreach (Association a in theAssociations)
+            if (((App)App.Current).LookupTables != null)
             {
-                this.AssociationsList.Add(a);
+                List<Association> assoList = ((App)App.Current).LookupTables.Associations;
+                foreach (Association a in assoList)
+                {
+                    this.AssociationsList.Add(a);
+                }
             }
+            
         }
 
         public ICommand SelectionAssociationChanged => new Command<Object>(OnSelectionAssociationChanged);
@@ -247,36 +283,38 @@ namespace VolunteeringApp.ViewModels
 
         #region Volunteers
 
-        private string gender;
-        public string Gender
-        {
-            get { return gender; }
-            set
-            {
-                gender = value;
-                OnPropertyChanged("Gender");
-            }
-        }
+        //private string gender;
+        //public string Gender
+        //{
+        //    get { return gender; }
+        //    set
+        //    {
+        //        gender = value;
+        //        OnPropertyChanged("Gender");
+        //    }
+        //}
 
-        private List<Gender> genders;
-        public List<Gender> Genders
-        {
-            get
-            {
-                if (((App)App.Current).LookupTables != null)
-                    return ((App)App.Current).LookupTables.Genders;
-                return new List<Gender>();
-            }
-        }
+        //private List<Gender> genders;
+        //public List<Gender> Genders
+        //{
+        //    get
+        //    {
+        //        if (((App)App.Current).LookupTables != null)
+        //            return ((App)App.Current).LookupTables.Genders;
+        //        return new List<Gender>();
+        //    }
+        //}
 
         public ObservableCollection<Volunteer> VolunteersList { get; }
-        async void CreateVolunteersCollection()
+        private void CreateVolunteersCollection()
         {
-            VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
-            List<Volunteer> theVolunteers = await proxy.GetVolunteers();
-            foreach (Volunteer v in theVolunteers)
+            if (((App)App.Current).LookupTables != null)
             {
-                this.VolunteersList.Add(v);
+                List<Volunteer> volsList = ((App)App.Current).LookupTables.Volunteers;
+                foreach (Volunteer v in volsList)
+                {
+                    this.VolunteersList.Add(v);
+                }
             }
         }
 
@@ -297,7 +335,7 @@ namespace VolunteeringApp.ViewModels
                     GenderID = (int)chosenVol.GenderId,
                 };
 
-                gender = genders[(int)chosenVol.GenderId].GenderType;
+                //Gender = genders[(int)chosenVol.GenderId].GenderType;
 
                 volunteerPage.BindingContext = volContext;
                 volunteerPage.Title = volContext.UserName;

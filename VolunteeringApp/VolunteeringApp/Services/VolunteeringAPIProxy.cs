@@ -148,63 +148,6 @@ namespace VolunteeringApp.Services
             }
         }
 
-        public async Task<List<Association>> GetAssociations()
-        {
-            try
-            {
-                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetAllAssociations");
-                if (response.IsSuccessStatusCode)
-                {
-                    JsonSerializerOptions options = new JsonSerializerOptions
-                    {
-                        ReferenceHandler = ReferenceHandler.Preserve, //avoid reference loops!
-                        PropertyNameCaseInsensitive = true
-                    };
-                    string content = await response.Content.ReadAsStringAsync();
-                    List<Association> lst = JsonSerializer.Deserialize<List<Association>>(content, options);
-                    return lst;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return null;
-            }
-        }
-
-
-        public async Task<List<Volunteer>> GetVolunteers()
-        {
-            try
-            {
-                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetAllVolunteers");
-                if (response.IsSuccessStatusCode)
-                {
-                    JsonSerializerOptions options = new JsonSerializerOptions
-                    {
-                        ReferenceHandler = ReferenceHandler.Preserve, //avoid reference loops!
-                        PropertyNameCaseInsensitive = true
-                    };
-                    string content = await response.Content.ReadAsStringAsync();
-                    List<Volunteer> lst = JsonSerializer.Deserialize<List<Volunteer>>(content, options);
-                    return lst;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return null;
-            }
-        }
-
 
         public async Task<bool> AddOccupationalArea(OccupationalArea a)
         {
