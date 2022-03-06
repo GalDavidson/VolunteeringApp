@@ -403,13 +403,18 @@ namespace VolunteeringApp.ViewModels
         #endregion
 
         #region מגדר
-        public List<Gender> Genders
+
+        public ObservableCollection<Gender> Genders { get; }
+
+        public void CreateGenderCollection()
         {
-            get
+            if (((App)App.Current).LookupTables != null)
             {
-                if (((App)App.Current).LookupTables != null)
-                    return ((App)App.Current).LookupTables.Genders;
-                return new List<Gender>();
+                List<Gender> gendersList = ((App)App.Current).LookupTables.Genders;
+                foreach (Gender g in gendersList)
+                {
+                    this.Genders.Add(g);
+                }
             }
         }
 
@@ -598,6 +603,8 @@ namespace VolunteeringApp.ViewModels
 
             this.profileImgSrc = DEFAULT_PHOTO_SRC;
             this.imageFileResult = null; //mark that no picture was chosen
+            Genders = new ObservableCollection<Gender>();
+            CreateGenderCollection();
         }
 
         public async void OnSubmit()
