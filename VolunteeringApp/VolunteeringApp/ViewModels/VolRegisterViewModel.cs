@@ -403,7 +403,6 @@ namespace VolunteeringApp.ViewModels
         #endregion
 
         #region מגדר
-
         public ObservableCollection<Gender> Genders { get; }
 
         public void CreateGenderCollection()

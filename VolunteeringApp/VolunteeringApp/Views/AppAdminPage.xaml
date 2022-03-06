@@ -5,90 +5,94 @@
     <ContentPage.Content>
         <StackLayout>
 
-                    <Label Text="רשימת עמותות" TextColor="Black" Padding="0" HeightRequest="30" TextDecorations="Underline"/>
+            <Label Text="רשימת עמותות" TextColor="Black" Padding="0" HeightRequest="30" TextDecorations="Underline"/>
 
-                    <CollectionView x:Name="collectionName" 
+            <CollectionView x:Name="collectionName" 
                             ItemsSource="{Binding AssociationsList}" SelectionMode="Single"
                         SelectionChangedCommand="{Binding SelectionAssociationChanged}"
                         SelectionChangedCommandParameter="{Binding Source={x:Reference collectionName}, Path=SelectedItem}">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <SwipeView>
-                                    <SwipeView.LeftItems>
-                                        <SwipeItems>
-                                            <SwipeItem Text="Delete"
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <SwipeView>
+                            <SwipeView.LeftItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="Delete"
                                            IconImageSource="delete.png"
                                            BackgroundColor="LightPink"
                                            Command="{Binding Source={x:Reference collectionName}, Path=BindingContext.DeleteAssoCommand}"
                                            CommandParameter="{Binding}" />
-                                        </SwipeItems>
-                                    </SwipeView.LeftItems>
-                                    <Grid Padding="10" HorizontalOptions="FillAndExpand">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="20" />
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="100" />
-                                            <ColumnDefinition Width="100" />
-                                            <ColumnDefinition Width="100" />
-                                            <ColumnDefinition Width="100" />
-                                        </Grid.ColumnDefinitions>
-                                        <Label Grid.Column="0" Grid.Row="0" Text="{Binding Email}" FontAttributes="Bold" HorizontalOptions="Center"/>
-                                        <Label Grid.Column="1" Grid.Row="0" Text="{Binding UserName}" FontAttributes="Bold" HorizontalOptions="Center"/>
-                                        <Label Grid.Column="2" Grid.Row="0" Text="{Binding InformationAbout}" FontAttributes="Bold" HorizontalOptions="Center"/>
-                                        <Label Grid.Column="3" Grid.Row="0" Text="{Binding PhoneNum}" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                </SwipeItems>
+                            </SwipeView.LeftItems>
+                            <Grid Padding="10" HorizontalOptions="FillAndExpand">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="100" />
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Grid.Row="0" Text="{Binding Email}" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                <Label Grid.Column="1" Grid.Row="0" Text="{Binding UserName}" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                <Label Grid.Column="2" Grid.Row="0" Text="{Binding InformationAbout}" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                <Label Grid.Column="3" Grid.Row="0" Text="{Binding PhoneNum}" FontAttributes="Bold" HorizontalOptions="Center"/>
 
-                                    </Grid>
-                                </SwipeView>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
+                            </Grid>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
-                    <Label Text="רשימת מתנדבים" TextColor="Black" Padding="0" HeightRequest="30" TextDecorations="Underline"/>
+            <Label Text="רשימת מתנדבים" TextColor="Black" Padding="0" HeightRequest="30" TextDecorations="Underline"/>
 
-                    <CollectionView x:Name="collectionName2" 
+            <CollectionView x:Name="collectionName2" 
                             ItemsSource="{Binding VolunteersList}" SelectionMode="Single"
                         SelectionChangedCommand="{Binding SelectionVolunteerChanged}"
                         SelectionChangedCommandParameter="{Binding Source={x:Reference collectionName2}, Path=SelectedItem}">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <SwipeView>
-                                    <SwipeView.LeftItems>
-                                        <SwipeItems>
-                                            <SwipeItem Text="Delete"
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <SwipeView>
+                            <SwipeView.LeftItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="Delete"
                                            IconImageSource="delete.png"
                                            BackgroundColor="LightPink"
                                            Command="{Binding Source={x:Reference collectionName}, Path=BindingContext.DeleteVolCommand}"
                                            CommandParameter="{Binding}" />
-                                        </SwipeItems>
-                                    </SwipeView.LeftItems>
-                                    <Grid Padding="10" HorizontalOptions="FillAndExpand">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="20" />
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="30" />
-                                            <ColumnDefinition Width="50" />
-                                            <ColumnDefinition Width="50" />
-                                            <ColumnDefinition Width="130" />
-                                            <ColumnDefinition Width="50" />
-                                            <ColumnDefinition Width="20" />
+                                </SwipeItems>
+                            </SwipeView.LeftItems>
+                            <Grid Padding="10" HorizontalOptions="FillAndExpand">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30" />
+                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition Width="130" />
+                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition Width="20" />
 
-                                        </Grid.ColumnDefinitions>
-                                        <Label Grid.Column="0" Grid.Row="0" Text="{Binding FName}" FontAttributes="Bold" HorizontalOptions="Center"/>
-                                        <Label Grid.Column="1" Grid.Row="0" Text="{Binding LName}" FontAttributes="Bold" HorizontalOptions="Center"/>
-                                        <Label Grid.Column="2" Grid.Row="0" Text="{Binding UserName}" FontAttributes="Bold" HorizontalOptions="Center"/>
-                                        <Label Grid.Column="3" Grid.Row="0" Text="{Binding Email}" FontAttributes="Bold" HorizontalOptions="Center"/>
-                                        <Label Grid.Column="4" Grid.Row="0" Text="{Binding BirthDate}" FontAttributes="Bold" HorizontalOptions="Center"/>
-                                        <Label Grid.Column="5" Grid.Row="0" Text="{Binding Gender}" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Grid.Row="0" Text="{Binding FName}" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                <Label Grid.Column="1" Grid.Row="0" Text="{Binding LName}" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                <Label Grid.Column="2" Grid.Row="0" Text="{Binding UserName}" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                <Label Grid.Column="3" Grid.Row="0" Text="{Binding Email}" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                <Label Grid.Column="4" Grid.Row="0" Text="{Binding BirthDate}" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                <Label Grid.Column="5" Grid.Row="0" Text="{Binding Gender}" FontAttributes="Bold" HorizontalOptions="Center"/>
 
-                                    </Grid>
-                                </SwipeView>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-                    
-                </StackLayout>
+                            </Grid>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Label Text="{Binding TodayVolList}" TextColor="Black" Padding="0" HeightRequest="30"/>
+
+
+
+        </StackLayout>
 
     </ContentPage.Content>
 </ContentPage>

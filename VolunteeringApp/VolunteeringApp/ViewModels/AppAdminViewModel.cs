@@ -44,16 +44,149 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion
 
+        #region TodayVolunteers
+        private int todayVolList;
+        public int TodayVolList
+        {
+            get
+            {
+                return this.todayVolList;
+            }
+            set
+            {
+                if (this.todayVolList != value)
+                {
+                    this.todayVolList = value;
+                    OnPropertyChanged(nameof(TodayVolList));
+                }
+            }
+        }
+
+        public void CreateTodayVolCollection()
+        {
+            if (((App)App.Current).LookupTables != null)
+            {
+                List<Volunteer> volunteersList = ((App)App.Current).LookupTables.Volunteers;
+                foreach (Volunteer v in volunteersList)
+                {
+                    if (((DateTime)v.ActionDate).Day == DateTime.Now.Day)
+                        TodayVolList++;
+                }
+            }
+        }
+        #endregion
+
+        #region MonthVolunteers
+        private int monthVolList;
+        public int MonthVolList
+        {
+            get
+            {
+                return this.monthVolList;
+            }
+            set
+            {
+                if (this.monthVolList != value)
+                {
+                    this.monthVolList = value;
+                    OnPropertyChanged(nameof(MonthVolList));
+                }
+            }
+        }
+
+        public void CreateMonthVolCollection()
+        {
+            if (((App)App.Current).LookupTables != null)
+            {
+                List<Volunteer> volunteersList = ((App)App.Current).LookupTables.Volunteers;
+                foreach (Volunteer v in volunteersList)
+                {
+                    if (((DateTime)v.ActionDate).Month == DateTime.Now.Month)
+                        MonthVolList++;
+                }
+            }
+        }
+        #endregion
+
+        #region TodayEvents
+        private int todayEventsList;
+        public int TodayEventsList
+        {
+            get
+            {
+                return this.todayEventsList;
+            }
+            set
+            {
+                if (this.todayEventsList != value)
+                {
+                    this.todayEventsList = value;
+                    OnPropertyChanged(nameof(TodayEventsList));
+                }
+            }
+        }
+
+        public void CreateTodayEventsCollection()
+        {
+            if (((App)App.Current).LookupTables != null)
+            {
+                List<DailyEvent> eventsList = ((App)App.Current).LookupTables.Events;
+                foreach (DailyEvent e in eventsList)
+                {
+                    if (((DateTime)e.EventDate).Day == DateTime.Now.Day)
+                        TodayEventsList++;
+                }
+            }
+        }
+        #endregion
+
+        #region MonthEvents
+        private int monthEventsList;
+        public int MonthEventsList
+        {
+            get
+            {
+                return this.monthEventsList;
+            }
+            set
+            {
+                if (this.monthEventsList != value)
+                {
+                    this.monthEventsList = value;
+                    OnPropertyChanged(nameof(MonthEventsList));
+                }
+            }
+        }
+
+        public void CreateMonthEventsCollection()
+        {
+            if (((App)App.Current).LookupTables != null)
+            {
+                List<DailyEvent> eventsList = ((App)App.Current).LookupTables.Events;
+                foreach (DailyEvent e in eventsList)
+                {
+                    if (((DateTime)e.EventDate).Month == DateTime.Now.Month)
+                        MonthEventsList++;
+                }
+            }
+        }
+        #endregion
+
         public AppAdminViewModel()
         {
             AssociationsList = new ObservableCollection<Association>();
             VolunteersList = new ObservableCollection<Volunteer>();
             this.isRefreshing = false;
             CreateAssociationsCollection();
-            CreatevolunteersCollection();
+            CreateVolunteersCollection();
+            CreateTodayVolCollection();
+            CreateMonthVolCollection();
+            CreateTodayEventsCollection();
+            CreateMonthEventsCollection();
         }
 
         #region Associasions
+
         public ObservableCollection<Association> AssociationsList { get; }
         async void CreateAssociationsCollection()
         {
@@ -137,7 +270,7 @@ namespace VolunteeringApp.ViewModels
         }
 
         public ObservableCollection<Volunteer> VolunteersList { get; }
-        async void CreatevolunteersCollection()
+        async void CreateVolunteersCollection()
         {
             VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
             List<Volunteer> theVolunteers = await proxy.GetVolunteers();
