@@ -43,7 +43,7 @@ namespace VolunteeringApp
             this.LookupTables = await proxy.GetLookupsAsync();
             if (LookupTables != null)
             {
-                MainPage = new NavigationPage(new LoginPage());
+                MainPage = new NavigationPage(new UpdateAssoPage());
             }
             else
             {

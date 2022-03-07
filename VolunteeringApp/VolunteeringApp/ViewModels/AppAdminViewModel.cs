@@ -220,18 +220,15 @@ namespace VolunteeringApp.ViewModels
         #region Associasions
 
         public ObservableCollection<Association> AssociationsList { get; }
-        private void CreateAssociationsCollection()
+        private async void CreateAssociationsCollection()
         {
             VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
-            if (((App)App.Current).LookupTables != null)
+
+            List<Association> assoList = await proxy.GetAssociations();
+            foreach (Association a in assoList)
             {
-                List<Association> assoList = ((App)App.Current).LookupTables.Associations;
-                foreach (Association a in assoList)
-                {
-                    this.AssociationsList.Add(a);
-                }
+                this.AssociationsList.Add(a);
             }
-            
         }
 
         public ICommand SelectionAssociationChanged => new Command<Object>(OnSelectionAssociationChanged);

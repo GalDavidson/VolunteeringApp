@@ -739,40 +739,6 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion
 
-        #region Refresh
-        private bool isRefreshing;
-        public bool IsRefreshing
-        {
-            get => isRefreshing;
-            set
-            {
-                if (this.isRefreshing != value)
-                {
-                    this.isRefreshing = value;
-                    OnPropertyChanged(nameof(IsRefreshing));
-                }
-            }
-        }
-        public ICommand RefreshCommand => new Command(OnRefresh);
-        public void OnRefresh()
-        {
-            InitOccuAreas();
-        }
-        #endregion
-
-        #region serverStatus
-        private string serverStatus;
-        public string ServerStatus
-        {
-            get { return serverStatus; }
-            set
-            {
-                serverStatus = value;
-                OnPropertyChanged("ServerStatus");
-            }
-        }
-        #endregion serverStatus
-
         #region AreaSelection
         List<OccupationalArea> selectedOccuAreas;
         public List<OccupationalArea> SelectedOccuAreas
@@ -863,6 +829,40 @@ namespace VolunteeringApp.ViewModels
 
         }
         #endregion
+
+        #region Refresh
+        private bool isRefreshing;
+        public bool IsRefreshing
+        {
+            get => isRefreshing;
+            set
+            {
+                if (this.isRefreshing != value)
+                {
+                    this.isRefreshing = value;
+                    OnPropertyChanged(nameof(IsRefreshing));
+                }
+            }
+        }
+        public ICommand RefreshCommand => new Command(OnRefresh);
+        public void OnRefresh()
+        {
+            InitOccuAreas();
+        }
+        #endregion
+
+        #region serverStatus
+        private string serverStatus;
+        public string ServerStatus
+        {
+            get { return serverStatus; }
+            set
+            {
+                serverStatus = value;
+                OnPropertyChanged("ServerStatus");
+            }
+        }
+        #endregion serverStatus
 
         #region מקור התמונה
         private string assoImgSrc;
