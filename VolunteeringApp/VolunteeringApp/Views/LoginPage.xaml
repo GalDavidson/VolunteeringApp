@@ -51,7 +51,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Grid.Column="0" Grid.Row="0" Margin="-14,0" Padding="0" Text="אין לך חשבון?" TextColor="Black" HorizontalOptions="End" FontAttributes="Bold"/>
-                <Button Grid.Column="1" Grid.Row="0" Padding="0" Command="{Binding MoveToRegister}" Text="הירשם" FontAttributes="Bold" HorizontalOptions="Start" BackgroundColor="Transparent"  Margin="-7,-17" HeightRequest="50"/>
+                <Button Grid.Column="1" Grid.Row="0" Padding="0" Command="{Binding MoveToRegister}" Text="הירשמ.י" FontAttributes="Bold" HorizontalOptions="Start" BackgroundColor="Transparent"  Margin="-7,-17" HeightRequest="50"/>
                 
             </Grid>
 

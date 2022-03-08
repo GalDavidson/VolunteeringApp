@@ -4,30 +4,6 @@
              x:Class="VolunteeringApp.Views.UpdateAssoPage">
 
     <ContentPage.Resources>
-        <Style TargetType="StackLayout" x:Key="RegisterStack">
-            <Setter Property="Orientation" Value="Vertical"/>
-            <Setter Property="Padding" Value="30"/>
-            <Setter Property="Spacing" Value="40"/>
-            <Setter Property="FlowDirection" Value="RightToLeft"/>
-        </Style>
-        <Style TargetType="Label" x:Key="FormTitle">
-            <Setter Property="HorizontalOptions" Value="Center"/>
-            <Setter Property="FontSize" Value="Large"/>
-            <Setter Property="FontAttributes" Value="Bold"/>
-        </Style>
-        <Style TargetType="Entry" x:Key="entry">
-            <Setter Property="PlaceholderColor" Value="White"/>
-            <Setter Property="HeightRequest" Value="40"/>
-            <Setter Property="TextColor" Value="White"/>
-        </Style>
-        <Style TargetType="Button" x:Key="RegisterButton">
-            <Setter Property="FontAttributes" Value="Bold"/>
-            <Setter Property="FontSize" Value="Large"/>
-            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
-            <Setter Property="TextColor" Value="White"/>
-            <Setter Property="BackgroundColor" Value="#088da5"/>
-        </Style>
-
         <ResourceDictionary>
             <Style x:Key="labelNameStyle" TargetType="Label">
                 <Setter Property="FontSize" Value="Small" />
@@ -51,9 +27,9 @@
             
            <!-- <RefreshView x:Name="refreshView" Command="{Binding RefreshCommand}"  IsRefreshing="{Binding IsRefreshing}"> -->
                 <ScrollView>
-                    <StackLayout>
+                     <StackLayout>
 
-                        <!-- Photo 
+                        <!-- Photo -->
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -68,10 +44,10 @@
                             <Frame Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="1">
                                 <Image x:Name="theImage" Source="{Binding UserImgSrc}" />
                             </Frame>
-                            <ImageButton Padding="0" Margin="0" Source="galleryIcon.png" HorizontalOptions="End" BackgroundColor="Transparent" Grid.Column="1" Grid.Row="0" Command="{Binding PickImageCommand}"/>
-                            <ImageButton Padding="0" Margin="0" Source="cameraIcon.png" HorizontalOptions="Start" Grid.Column="2" Grid.Row="0" BackgroundColor="Transparent" Command="{Binding CameraImageCommand}"/>
+                            <ImageButton Padding="0" Margin="0" Source="photogallery.png" HorizontalOptions="End" BackgroundColor="Transparent" Grid.Column="1" Grid.Row="0" Command="{Binding PickImageCommand}"/>
+                            <ImageButton Padding="0" Margin="0" Source="camera.png" HorizontalOptions="Start" Grid.Column="2" Grid.Row="0" BackgroundColor="Transparent" Command="{Binding CameraImageCommand}"/>
                         </Grid>
-                        -->
+                        
 
                   
                         <StackLayout>
@@ -87,7 +63,7 @@
                                     <Label Text="מייל" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
                                     <Label Text="{Binding EmailError}" IsVisible="{Binding ShowEmailError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
                                 </Grid>
-                                <Label Text="{Binding Email}" Style="{StaticResource entry}"/>
+                        <Label Text="{Binding Email}" Style="{StaticResource conditionsStyle}"/>
 
                                 <!-- User Name-->
                                 <Grid>
@@ -101,7 +77,7 @@
                                     <Label Text="שם משתמש" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
                                     <Label Text="{Binding UsernameError}" IsVisible="{Binding ShowUsernameError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
                                 </Grid>
-                                <Label Text="{Binding Username}" Style="{StaticResource entry}"/>
+                        <Label Text="{Binding Username}" Style="{StaticResource conditionsStyle}"/>
 
                                 <!-- Password-->
                                 <Grid>
@@ -115,7 +91,7 @@
                                     <Label Text="סיסמה" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
                                     <Label Text="{Binding PasswordError}" IsVisible="{Binding ShowPasswordError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
                                 </Grid>
-                                <Entry Placeholder="סיסמה" MaxLength="30" IsPassword="True" Text="{Binding Password}" Style="{StaticResource entry}"/>
+                                <Entry Placeholder="סיסמה" MaxLength="30" IsPassword="True" Text="{Binding Password}"/>
 
                                 <!-- Phone Number -->
                                 <Grid>
@@ -129,18 +105,18 @@
                                     <Label Text="טלפון" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
                                     <Label Text="{Binding PhoneNumError}" IsVisible="{Binding ShowPhoneNumError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
                                 </Grid>
-                                <Entry Placeholder="טלפון" MaxLength="30" Text="{Binding PhoneNum}" Style="{StaticResource entry}"/>
+                                <Entry Placeholder="טלפון" MaxLength="30" Text="{Binding PhoneNum}" />
 
-                            </StackLayout>
+                        </StackLayout>
                        
 
 
 
-                            <!-- <ImageButton Padding="0" Margin="0" Source="clearIcon.png" HorizontalOptions="End" BackgroundColor="Transparent" Grid.Column="0" Grid.Row="0" Command="{Binding ClearCommand}"/> -->
+                            <ImageButton Padding="0" Margin="0" Source="clearIcon.png" HorizontalOptions="End" BackgroundColor="Transparent" Grid.Column="0" Grid.Row="0" Command="{Binding ClearCommand}"/> 
                     <Button Padding="0" Margin="0" Text="press me !" HorizontalOptions="Start" Grid.Column="1" Grid.Row="0" BackgroundColor="Transparent" Command="{Binding SaveDataCommand}"/>
-                        
-                        
-                </StackLayout>
+
+
+                  </StackLayout>
                 </ScrollView>
            <!-- </RefreshView> -->
         </StackLayout>

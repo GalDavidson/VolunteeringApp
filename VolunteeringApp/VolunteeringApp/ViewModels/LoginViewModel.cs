@@ -195,14 +195,14 @@ namespace VolunteeringApp.ViewModels
             {
                 App app = (App)Application.Current;
                 app.CurrentUser = user;
-                if (user is AppAdmin)
+                if (user is Association)
                 {
-                    Page p = new NavigationPage(new Views.AppAdminPage());
+                    Page p = new NavigationPage(new Views.UpdateAssoPage());
                     App.Current.MainPage = p;
                 }
-                else
+                else if (user is AppAdmin) 
                 {
-                    Page p = new NavigationPage(new Views.HomePage());
+                    Page p = new NavigationPage(new Views.AppAdminPage());
                     App.Current.MainPage = p;
                 }
             }

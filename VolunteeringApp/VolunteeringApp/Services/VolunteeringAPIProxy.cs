@@ -96,12 +96,12 @@ namespace VolunteeringApp.Services
                     string content = await response.Content.ReadAsStringAsync();
                     //Check if app admin
                     AppAdmin appAdmin = JsonSerializer.Deserialize<AppAdmin>(content, options);
-                    if (appAdmin.AdminName != "")
+                    if (appAdmin.AdminName != null)
                     {
                         return appAdmin;
                     }
                     Volunteer u = JsonSerializer.Deserialize<Volunteer>(content, options);
-                    if (u.FName != "")
+                    if (u.FName != null)
                     {
                         return u;
                     }

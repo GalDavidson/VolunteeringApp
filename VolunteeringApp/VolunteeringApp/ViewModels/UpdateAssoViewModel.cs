@@ -25,44 +25,6 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion
 
-        private List<string> allCities;
-        private ObservableCollection<string> filteredCities;
-        public ObservableCollection<string> FilteredCities
-        {
-            get
-            {
-                return this.filteredCities;
-            }
-            set
-            {
-                if (this.filteredCities != value)
-                {
-
-                    this.filteredCities = value;
-                    OnPropertyChanged("FilteredCities");
-                }
-            }
-        }
-
-        private List<string> allStreets;
-        private ObservableCollection<string> filteredStreets;
-        public ObservableCollection<string> FilteredStreets
-        {
-            get
-            {
-                return this.filteredStreets;
-            }
-            set
-            {
-                if (this.filteredStreets != value)
-                {
-
-                    this.filteredStreets = value;
-                    OnPropertyChanged("FilteredStreets");
-                }
-            }
-        }
-
         #region הצגת בעיות
         private bool showConditions;
 
