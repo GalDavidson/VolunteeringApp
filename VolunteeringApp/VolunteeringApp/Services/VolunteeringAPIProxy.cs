@@ -133,7 +133,7 @@ namespace VolunteeringApp.Services
                 string jsonObject = JsonSerializer.Serialize<Association>(user, options);
                 StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
 
-                HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/UpdateAsso", content);
+                HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/UpdateAssociation", content);
                 if (response.IsSuccessStatusCode)
                 {
                     jsonObject = await response.Content.ReadAsStringAsync();
@@ -165,7 +165,7 @@ namespace VolunteeringApp.Services
                 string jsonObject = JsonSerializer.Serialize<Volunteer>(user, options);
                 StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
 
-                HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/UpdateAsso", content);
+                HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/UpdateVolunteer", content);
                 if (response.IsSuccessStatusCode)
                 {
                     jsonObject = await response.Content.ReadAsStringAsync();

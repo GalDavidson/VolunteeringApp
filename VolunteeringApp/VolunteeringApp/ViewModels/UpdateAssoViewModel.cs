@@ -65,6 +65,20 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion הבעיה הבאה
 
+        #region תמונה
+        private string userImgSrc;
+        public string UserImgSrc
+        {
+            get => userImgSrc;
+            set
+            {
+                userImgSrc = value;
+                OnPropertyChanged("UserImgSrc");
+            }
+        }
+        private const string DEFAULT_PHOTO_SRC = "defaultphoto.jpg";
+        #endregion
+
         #region דואר אלקטרוני
         private bool showEmailError;
 
@@ -350,72 +364,6 @@ namespace VolunteeringApp.ViewModels
                 }
             }
         }
-
-
-        private string verPassword;
-        public string VerPassword
-        {
-            get
-            {
-                return this.verPassword;
-            }
-            set
-            {
-                if (this.verPassword != value)
-                {
-                    this.verPassword = value;
-                    ValidateVerPassword();
-
-                    OnPropertyChanged("VerPassword");
-                }
-            }
-        }
-
-        private bool showVerPasswordError;
-        public bool ShowVerPasswordError
-        {
-            get => showVerPasswordError;
-            set
-            {
-                showVerPasswordError = value;
-                OnPropertyChanged("ShowVerPasswordError");
-            }
-        }
-
-        private string verPasswordError;
-        public string VerPasswordError
-        {
-            get => verPasswordError;
-            set
-            {
-                verPasswordError = value;
-                OnPropertyChanged("VerPasswordError");
-            }
-        }
-
-
-        private void ValidateVerPassword()
-        {
-
-            this.ShowConditions = false;
-
-
-            if (string.IsNullOrEmpty(VerPassword))
-            {
-                this.ShowVerPasswordError = true;
-                this.VerPasswordError = ERROR_MESSAGES.REQUIRED_FIELD;
-                return;
-            }
-
-            else if (VerPassword != Password)
-            {
-                VerPasswordError = "הסיסמאות חייבות להיות תואמות";
-                ShowVerPasswordError = true;
-            }
-            else
-                this.ShowVerPasswordError = false;
-
-        }
         #endregion
 
         #region serverStatus
@@ -442,21 +390,25 @@ namespace VolunteeringApp.ViewModels
             App theApp = (App)App.Current;
 
             Association currentUser = (Association)theApp.CurrentUser;
+            VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
 
             this.Email = currentUser.Email;
             this.Username = currentUser.UserName;
             this.Password = currentUser.Pass;
+            //this.UserImgSrc = 
             this.PhoneNum = currentUser.PhoneNum;
             this.InformationAbout = currentUser.InformationAbout;
 
             //set the path url to the contact photo
+           
+            //Create a source with cache busting!
+
 
             this.ShowEmailError = false;
             this.ShowUsernameError = false;
             this.ShowInformationAboutError = false;
             this.ShowPhoneNumError = false;
             this.ShowPasswordError = false;
-            this.ShowVerPasswordError = false;
             this.ShowConditions = false;
 
             this.SaveDataCommand = new Command(() => SaveData());
@@ -472,10 +424,9 @@ namespace VolunteeringApp.ViewModels
             ValidateInformationAbout();
             ValidatePhoneNum();
             ValidatePassword();
-            ValidateVerPassword();
 
             //check if any validation failed
-            if (ShowUsernameError || ShowEmailError || ShowInformationAboutError || ShowPhoneNumError || ShowPasswordError || ShowVerPasswordError)
+            if (ShowUsernameError || ShowEmailError || ShowInformationAboutError || ShowPhoneNumError || ShowPasswordError)
                 return false;
             return true;
         }
@@ -531,7 +482,8 @@ namespace VolunteeringApp.ViewModels
                     theApp.CurrentUser = user;
                     await App.Current.MainPage.Navigation.PopModalAsync();
 
-                    Page page = new Views.HomePage();
+                    Page p = new Views.HomePage();
+                    App.Current.MainPage = p;
                     //await App.Current.MainPage.DisplayAlert("עדכון", "העדכון בוצע בהצלחה", "אישור", FlowDirection.RightToLeft);
                 }
             }
