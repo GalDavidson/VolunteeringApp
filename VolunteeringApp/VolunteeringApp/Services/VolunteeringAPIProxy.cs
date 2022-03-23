@@ -27,7 +27,7 @@ namespace VolunteeringApp.Services
         private const string DEV_WINDOWS_PHOTOS_URL = "http://localhost:64340/Images/"; //API url when using windoes on development
 
         private HttpClient client;
-        private string baseUri;
+        public string baseUri;
         private string basePhotosUri;
         private static VolunteeringAPIProxy proxy = null;
 

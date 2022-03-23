@@ -395,7 +395,7 @@ namespace VolunteeringApp.ViewModels
             this.Email = currentUser.Email;
             this.Username = currentUser.UserName;
             this.Password = currentUser.Pass;
-            //this.UserImgSrc = 
+            this.UserImgSrc = proxy.baseUri +$"/Images/A{currentUser.AssociationId}.png";
             this.PhoneNum = currentUser.PhoneNum;
             this.InformationAbout = currentUser.InformationAbout;
 
