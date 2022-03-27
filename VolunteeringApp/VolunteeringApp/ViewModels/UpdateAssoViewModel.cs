@@ -380,8 +380,6 @@ namespace VolunteeringApp.ViewModels
         #endregion serverStatus
 
         public Command SaveDataCommand { protected set; get; }
-        public ICommand ClearCommand { protected set; get; }
-
         public ICommand LogOutCommand { protected set; get; }
 
         #region Constructor
@@ -419,14 +417,14 @@ namespace VolunteeringApp.ViewModels
         private bool ValidateForm()
         {
             //Validate all fields first
-            ValidateEmail();
-            ValidateUsername();
+            //ValidateEmail();
+            //ValidateUsername();
             ValidateInformationAbout();
             ValidatePhoneNum();
             ValidatePassword();
 
             //check if any validation failed
-            if (ShowUsernameError || ShowEmailError || ShowInformationAboutError || ShowPhoneNumError || ShowPasswordError)
+            if (/*ShowUsernameError || ShowEmailError ||*/ ShowInformationAboutError || ShowPhoneNumError || ShowPasswordError)
                 return false;
             return true;
         }

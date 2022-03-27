@@ -15,7 +15,7 @@
             </Style>
             <Style x:Key="conditionsStyle" TargetType="Label">
                 <Setter Property="HorizontalOptions" Value="Center" />
-                <Setter Property="TextColor" Value="DarkBlue" />
+                <Setter Property="TextColor" Value="Black" />
                 <Setter Property="FontSize" Value="12" />
             </Style>
         </ResourceDictionary>
@@ -79,41 +79,26 @@
                                 </Grid>
                         <Label Text="{Binding Username}" Style="{StaticResource conditionsStyle}"/>
 
-                                <!-- Password-->
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>
-                                    <Label Text="סיסמה" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
-                                    <Label Text="{Binding PasswordError}" IsVisible="{Binding ShowPasswordError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
-                                </Grid>
-                                <Entry Placeholder="סיסמה" MaxLength="30" IsPassword="True" Text="{Binding Password}"/>
+                        <!-- InformationAbout-->
+                        <Label Text="מידע על העמותה" HorizontalOptions="Center" Style="{StaticResource labelNameStyle}"/>
+                        <Entry Placeholder="מידע" MaxLength="30" Text="{Binding InformationAbout}"/>
+                        <Label Text="{Binding InformationAboutError}" IsVisible="{Binding ShowInformationAboutError}" Style="{StaticResource labelErrorStyle}"/>
 
-                                <!-- Phone Number -->
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>
-                                    <Label Text="טלפון" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
-                                    <Label Text="{Binding PhoneNumError}" IsVisible="{Binding ShowPhoneNumError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
-                                </Grid>
-                                <Entry Placeholder="טלפון" MaxLength="30" Text="{Binding PhoneNum}" />
 
+                        <!-- Password-->
+                        <Label Text="סיסמה" HorizontalOptions="Center" Style="{StaticResource labelNameStyle}"/>
+                        <Entry Placeholder="סיסמה" MaxLength="30" IsPassword="True" Text="{Binding Password}"/>
+                        <Label Text="{Binding PasswordError}" IsVisible="{Binding ShowPasswordError}" Style="{StaticResource labelErrorStyle}"/>
+
+                        <!-- Phone Number -->
+                        <Label Text="טלפון" HorizontalOptions="Center" Style="{StaticResource labelNameStyle}"/>
+                        <Entry Placeholder="טלפון" MaxLength="30" Text="{Binding PhoneNum}" />
+                        <Label Text="{Binding PhoneNumError}" IsVisible="{Binding ShowPhoneNumError}"  Style="{StaticResource labelErrorStyle}"/>
+                        
                         </StackLayout>
                        
 
-
-
-                            <ImageButton Padding="0" Margin="0" Source="clearIcon.png" HorizontalOptions="End" BackgroundColor="Transparent" Grid.Column="0" Grid.Row="0" Command="{Binding ClearCommand}"/> 
-                    <Button Padding="0" Margin="0" Text="press me !" HorizontalOptions="Start" Grid.Column="1" Grid.Row="0" BackgroundColor="Transparent" Command="{Binding SaveDataCommand}"/>
+                    <Button BorderColor="Black" Padding="0" Margin="0" Text="עדכן נתונים" HorizontalOptions="Center" Command="{Binding SaveDataCommand}"/>
 
 
                   </StackLayout>
