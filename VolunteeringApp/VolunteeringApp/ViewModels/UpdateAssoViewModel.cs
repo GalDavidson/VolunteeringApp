@@ -380,7 +380,6 @@ namespace VolunteeringApp.ViewModels
         #endregion serverStatus
 
         public Command SaveDataCommand { protected set; get; }
-        public ICommand LogOutCommand { protected set; get; }
 
         #region Constructor
         public UpdateAssoViewModel()
@@ -393,14 +392,9 @@ namespace VolunteeringApp.ViewModels
             this.Email = currentUser.Email;
             this.Username = currentUser.UserName;
             this.Password = currentUser.Pass;
-            this.UserImgSrc = proxy.baseUri +$"/Images/A{currentUser.AssociationId}.png";
+            this.UserImgSrc = proxy.GetBasePhotoUri() + $"A{currentUser.AssociationId}.jpg";
             this.PhoneNum = currentUser.PhoneNum;
             this.InformationAbout = currentUser.InformationAbout;
-
-            //set the path url to the contact photo
-           
-            //Create a source with cache busting!
-
 
             this.ShowEmailError = false;
             this.ShowUsernameError = false;
@@ -489,8 +483,6 @@ namespace VolunteeringApp.ViewModels
                 await App.Current.MainPage.DisplayAlert("שמירת נתונים", " יש בעיה עם הנתונים בדוק ונסה שוב", "אישור", FlowDirection.RightToLeft);
         }
         #endregion   
-
-
 
         FileResult imageFileResult;
         public event Action<ImageSource> SetImageSourceEvent;

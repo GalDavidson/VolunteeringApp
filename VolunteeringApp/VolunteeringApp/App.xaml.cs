@@ -41,16 +41,14 @@ namespace VolunteeringApp
         {
             VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
             this.LookupTables = await proxy.GetLookupsAsync();
-            if (LookupTables != null)
-            {
-                MainPage = new NavigationPage(new LoginPage());
-            }
-            else
+            if (LookupTables == null)
             {
                 ViewModels.ServerStatusViewModel vm = new ViewModels.ServerStatusViewModel();
                 vm.ServerStatus = "אירעה שגיאה בהתחברות לשרת";
                 MainPage = new Views.ServerStatusPage(vm);
             }
+            else
+                MainPage = new NavigationPage(new LoginPage());
         }
 
         protected override void OnSleep()

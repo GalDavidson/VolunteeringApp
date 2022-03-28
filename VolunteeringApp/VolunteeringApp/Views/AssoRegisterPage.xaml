@@ -149,7 +149,7 @@
                     <SearchBar x:Name="searchBar2" 
                        Placeholder="חפש סניף" 
                        Text="{Binding SearchBranch}"
-                       />
+                    />
 
                         <RefreshView x:Name="refreshView2"
              Command="{Binding RefreshBranchesCommand}"

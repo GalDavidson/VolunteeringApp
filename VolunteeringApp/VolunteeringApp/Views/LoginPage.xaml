@@ -35,7 +35,7 @@
                     <Entry x:Name="Email" Text="{Binding Email}" Placeholder="דואר אלקטרוני"   
                            Keyboard="Email"  
                            Style="{StaticResource LoginEntry}"/>
-                    <Entry x:Name="Password" Text="{Binding Password}" Placeholder="סיסמה" 
+                    <Entry x:Name="Password" IsPassword="True" Text="{Binding Password}" Placeholder="סיסמה" 
                            Style="{StaticResource LoginEntry}"/>
                 </StackLayout>
             </Frame>

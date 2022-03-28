@@ -178,7 +178,7 @@ namespace VolunteeringApp.ViewModels
 
         public void OnTap()
         {
-            Page p = new NavigationPage(new Views.AssoRegisterPage());
+            Page p = new NavigationPage(new Views.RegisterNavigation());
             App.Current.MainPage = p;
         }
 

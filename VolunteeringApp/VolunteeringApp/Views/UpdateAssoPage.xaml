@@ -47,58 +47,42 @@
                             <ImageButton Padding="0" Margin="0" Source="photogallery.png" HorizontalOptions="End" BackgroundColor="Transparent" Grid.Column="1" Grid.Row="0" Command="{Binding PickImageCommand}"/>
                             <ImageButton Padding="0" Margin="0" Source="camera.png" HorizontalOptions="Start" Grid.Column="2" Grid.Row="0" BackgroundColor="Transparent" Command="{Binding CameraImageCommand}"/>
                         </Grid>
-                        
 
-                  
-                        <StackLayout>
-                                <!-- Email-->
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>
-                                    <Label Text="מייל" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
-                                    <Label Text="{Binding EmailError}" IsVisible="{Binding ShowEmailError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
-                                </Grid>
+
+
+                     <StackLayout>
+                        <!-- Email-->
+                        <Label Text="מייל" HorizontalOptions="Center" Style="{StaticResource labelNameStyle}"/>
+                        <Label Text="{Binding EmailError}" IsVisible="{Binding ShowEmailError}" Style="{StaticResource labelErrorStyle}"/>
                         <Label Text="{Binding Email}" Style="{StaticResource conditionsStyle}"/>
 
-                                <!-- User Name-->
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>
-                                    <Label Text="שם משתמש" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
-                                    <Label Text="{Binding UsernameError}" IsVisible="{Binding ShowUsernameError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
-                                </Grid>
+                        <!-- User Name-->
+                        
+                        <Label Text="שם משתמש" HorizontalOptions="Center" Style="{StaticResource labelNameStyle}"/>
+                        <Label Text="{Binding UsernameError}" HorizontalOptions="Center" IsVisible="{Binding ShowUsernameError}" Style="{StaticResource labelErrorStyle}"/>
                         <Label Text="{Binding Username}" Style="{StaticResource conditionsStyle}"/>
 
                         <!-- InformationAbout-->
                         <Label Text="מידע על העמותה" HorizontalOptions="Center" Style="{StaticResource labelNameStyle}"/>
                         <Entry Placeholder="מידע" MaxLength="30" Text="{Binding InformationAbout}"/>
                         <Label Text="{Binding InformationAboutError}" IsVisible="{Binding ShowInformationAboutError}" Style="{StaticResource labelErrorStyle}"/>
+                         
 
 
                         <!-- Password-->
                         <Label Text="סיסמה" HorizontalOptions="Center" Style="{StaticResource labelNameStyle}"/>
                         <Entry Placeholder="סיסמה" MaxLength="30" IsPassword="True" Text="{Binding Password}"/>
-                        <Label Text="{Binding PasswordError}" IsVisible="{Binding ShowPasswordError}" Style="{StaticResource labelErrorStyle}"/>
+                        <Label Text="{Binding PasswordError}" IsVisible="{Binding ShowPasswordError}"  Style="{StaticResource labelErrorStyle}"/>
 
                         <!-- Phone Number -->
                         <Label Text="טלפון" HorizontalOptions="Center" Style="{StaticResource labelNameStyle}"/>
                         <Entry Placeholder="טלפון" MaxLength="30" Text="{Binding PhoneNum}" />
                         <Label Text="{Binding PhoneNumError}" IsVisible="{Binding ShowPhoneNumError}"  Style="{StaticResource labelErrorStyle}"/>
-                        
-                        </StackLayout>
-                       
 
-                    <Button BorderColor="Black" Padding="0" Margin="0" Text="עדכן נתונים" HorizontalOptions="Center" Command="{Binding SaveDataCommand}"/>
+                    </StackLayout>
+
+                     <Label Padding="0" Text="{Binding NextError}" HorizontalOptions="Center" IsVisible="{Binding ShowNextError}" Style="{StaticResource labelErrorStyle}"/>
+                     <Button BorderColor="Black" Padding="0" Margin="0" Text="עדכן נתונים" HorizontalOptions="Center" Command="{Binding SaveDataCommand}"/>
 
 
                   </StackLayout>
