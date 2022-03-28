@@ -30,7 +30,7 @@
     <ContentPage.Content>
         <StackLayout Style="{StaticResource LoginStack}">
             <Label Text="התחברות" Style="{StaticResource FormTitle}"></Label>
-            <Frame BackgroundColor="#BF043055" HasShadow="False">
+            <Frame BackgroundColor="#BF043055" >
                 <StackLayout>
                     <Entry x:Name="Email" Text="{Binding Email}" Placeholder="דואר אלקטרוני"   
                            Keyboard="Email"  

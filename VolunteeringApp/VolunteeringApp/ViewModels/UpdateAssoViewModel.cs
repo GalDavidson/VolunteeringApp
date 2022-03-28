@@ -457,17 +457,15 @@ namespace VolunteeringApp.ViewModels
                     {
                         ServerStatus = "מעלה תמונה...";
 
-                        bool success = await proxy.UploadImage(new Models.FileInfo()
+                        bool success = await proxy.UploadImage(new FileInfo()
                         {
                             Name = this.imageFileResult.FullPath
-                        }, $"{user.AssociationId}.jpg");
+                        }, $"A{newUser.AssociationId}.jpg");
 
-                        //if (!success)
-                        //{
-                        //    if (SetImageSourceEvent != null)
-                        //        SetImageSourceEvent(theApp.CurrentUser.PhotoURL);
-                        //    await App.Current.MainPage.DisplayAlert("עדכון", "יש בעיה בהעלאת התמונה", "אישור", FlowDirection.RightToLeft);
-                        //}
+                        if (success)
+                        {
+                            UserImgSrc = newUser.ImgSource;
+                        }
                     }
                     ServerStatus = "שומר נתונים...";
 

@@ -24,70 +24,67 @@
 
     <ContentPage.Content>
         <StackLayout>
-            
-           <!-- <RefreshView x:Name="refreshView" Command="{Binding RefreshCommand}"  IsRefreshing="{Binding IsRefreshing}"> -->
-                <ScrollView>
-                     <StackLayout>
+            <ScrollView>
+                <StackLayout>
 
-                        <!-- Photo -->
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="100"/>
-                                <ColumnDefinition Width="100"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="30" />
-                                <RowDefinition Height="150" />
-                            </Grid.RowDefinitions>
-                            <Frame Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="1">
-                                <Image x:Name="theImage" Source="{Binding UserImgSrc}" />
-                            </Frame>
-                            <ImageButton Padding="0" Margin="0" Source="photogallery.png" HorizontalOptions="End" BackgroundColor="Transparent" Grid.Column="1" Grid.Row="0" Command="{Binding PickImageCommand}"/>
-                            <ImageButton Padding="0" Margin="0" Source="camera.png" HorizontalOptions="Start" Grid.Column="2" Grid.Row="0" BackgroundColor="Transparent" Command="{Binding CameraImageCommand}"/>
-                        </Grid>
+                    <!-- Photo -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="150" />
+                        </Grid.RowDefinitions>
+                        <Frame Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="1">
+                            <Image x:Name="theImage" Source="{Binding UserImgSrc}" />
+                        </Frame>
+                        <ImageButton Padding="0" Margin="0" Source="photogallery.png" HorizontalOptions="End" BackgroundColor="Transparent" Grid.Column="1" Grid.Row="0" Command="{Binding PickImageCommand}"/>
+                        <ImageButton Padding="0" Margin="0" Source="camera.png" HorizontalOptions="Start" Grid.Column="2" Grid.Row="0" BackgroundColor="Transparent" Command="{Binding CameraImageCommand}"/>
+                    </Grid>
 
 
 
-                     <StackLayout>
-                        <!-- Email-->
-                        <Label Text="מייל" HorizontalOptions="Center" Style="{StaticResource labelNameStyle}"/>
-                        <Label Text="{Binding EmailError}" IsVisible="{Binding ShowEmailError}" Style="{StaticResource labelErrorStyle}"/>
-                        <Label Text="{Binding Email}" Style="{StaticResource conditionsStyle}"/>
+                    <!-- Email-->
+                    <Label Text="מייל" HorizontalOptions="End" Style="{StaticResource labelNameStyle}"/>
+                    <Frame CornerRadius="10" BorderColor="DarkGray" HorizontalOptions="End" BackgroundColor="Transparent" WidthRequest="140" HeightRequest="18" Padding="10" >
+                        <Label Text="{Binding Email}"/>
+                    </Frame>
+                    <Label />
 
-                        <!-- User Name-->
-                        
-                        <Label Text="שם משתמש" HorizontalOptions="Center" Style="{StaticResource labelNameStyle}"/>
-                        <Label Text="{Binding UsernameError}" HorizontalOptions="Center" IsVisible="{Binding ShowUsernameError}" Style="{StaticResource labelErrorStyle}"/>
-                        <Label Text="{Binding Username}" Style="{StaticResource conditionsStyle}"/>
+                    <!-- User Name-->
 
-                        <!-- InformationAbout-->
-                        <Label Text="מידע על העמותה" HorizontalOptions="Center" Style="{StaticResource labelNameStyle}"/>
-                        <Entry Placeholder="מידע" MaxLength="30" Text="{Binding InformationAbout}"/>
-                        <Label Text="{Binding InformationAboutError}" IsVisible="{Binding ShowInformationAboutError}" Style="{StaticResource labelErrorStyle}"/>
-                         
+                    <Label Text="שם משתמש" HorizontalOptions="End" Style="{StaticResource labelNameStyle}"/>
+                    <Frame CornerRadius="10" BorderColor="DarkGray" HorizontalOptions="End" BackgroundColor="Transparent" WidthRequest="140" HeightRequest="18" Padding="10" >
+                        <Label Text="{Binding Username}"/>
+                    </Frame>
+                    <Label />
 
+                    <!-- InformationAbout-->
+                    <Label Text="מידע על העמותה" HorizontalOptions="End" Style="{StaticResource labelNameStyle}"/>
+                    <Entry Text="{Binding InformationAbout}" HeightRequest="40" MaxLength="100" WidthRequest="20"></Entry>
+                    <Label Padding="0" Text="{Binding InformationAboutError}"  HorizontalOptions="Center" IsVisible="{Binding ShowInformationAboutError}" Style="{StaticResource labelErrorStyle}"/>
 
-                        <!-- Password-->
-                        <Label Text="סיסמה" HorizontalOptions="Center" Style="{StaticResource labelNameStyle}"/>
-                        <Entry Placeholder="סיסמה" MaxLength="30" IsPassword="True" Text="{Binding Password}"/>
-                        <Label Text="{Binding PasswordError}" IsVisible="{Binding ShowPasswordError}"  Style="{StaticResource labelErrorStyle}"/>
+                    <!-- Password-->
+                    <Label Text="סיסמה" HorizontalOptions="End" Style="{StaticResource labelNameStyle}"/>
+                    <Entry Text="{Binding Password}" IsPassword="True" HeightRequest="40" MaxLength="15" WidthRequest="20"></Entry>
+                    <Label Padding="0" Text="{Binding PasswordError}"  HorizontalOptions="Center" IsVisible="{Binding ShowPasswordError}" Style="{StaticResource labelErrorStyle}"/>
 
-                        <!-- Phone Number -->
-                        <Label Text="טלפון" HorizontalOptions="Center" Style="{StaticResource labelNameStyle}"/>
-                        <Entry Placeholder="טלפון" MaxLength="30" Text="{Binding PhoneNum}" />
-                        <Label Text="{Binding PhoneNumError}" IsVisible="{Binding ShowPhoneNumError}"  Style="{StaticResource labelErrorStyle}"/>
-
-                    </StackLayout>
-
-                     <Label Padding="0" Text="{Binding NextError}" HorizontalOptions="Center" IsVisible="{Binding ShowNextError}" Style="{StaticResource labelErrorStyle}"/>
-                     <Button BorderColor="Black" Padding="0" Margin="0" Text="עדכן נתונים" HorizontalOptions="Center" Command="{Binding SaveDataCommand}"/>
+                    <!-- Phone Number -->
+                    <Label Text="מספר טלפון" HorizontalOptions="End" Style="{StaticResource labelNameStyle}"/>
+                    <Entry Text="{Binding PhoneNum}" HeightRequest="40" MaxLength="15" WidthRequest="20"></Entry>
+                    <Label Padding="0" Text="{Binding PhoneNumError}"  HorizontalOptions="Center" IsVisible="{Binding ShowPhoneNumError}" Style="{StaticResource labelErrorStyle}"/>
 
 
-                  </StackLayout>
-                </ScrollView>
-           <!-- </RefreshView> -->
+                    <Label Padding="0" Text="{Binding NextError}" HorizontalOptions="Center" IsVisible="{Binding ShowNextError}" Style="{StaticResource labelErrorStyle}"/>
+                    <Button BorderColor="Black" Padding="0" Margin="0" Text="עדכן נתונים" HorizontalOptions="Center" Command="{Binding SaveDataCommand}"/>
+
+
+                </StackLayout>
+            </ScrollView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
