@@ -200,6 +200,11 @@ namespace VolunteeringApp.ViewModels
                     Page p = new NavigationPage(new Views.UpdateAssoPage());
                     App.Current.MainPage = p;
                 }
+                if (user is Volunteer)
+                {
+                    Page p = new NavigationPage(new Views.UpdateVolPage());
+                    App.Current.MainPage = p;
+                }
                 else if (user is AppAdmin) 
                 {
                     Page p = new NavigationPage(new Views.AppAdminPage());

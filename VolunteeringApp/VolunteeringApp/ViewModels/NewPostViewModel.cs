@@ -26,5 +26,226 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion
 
+        #region תיאור הפוסט
+        private bool showCaptionError;
+
+        public bool ShowCaptionError
+        {
+            get => showCaptionError;
+            set
+            {
+                showCaptionError = value;
+                OnPropertyChanged("ShowCaptionError");
+            }
+        }
+
+        private string caption;
+
+        public string Caption
+        {
+            get => caption;
+            set
+            {
+                caption = value;
+                ValidateCaption();
+                OnPropertyChanged("Caption");
+            }
+        }
+
+        private string captionError;
+
+        public string CaptionError
+        {
+            get => captionError;
+            set
+            {
+                captionError = value;
+                OnPropertyChanged("CaptionError");
+            }
+        }
+
+        private void ValidateCaption()
+        {
+            this.ShowConditions = false;
+
+            this.ShowCaptionError = string.IsNullOrEmpty(Caption);
+            if (ShowCaptionError)
+                CaptionError = ERROR_MESSAGES.REQUIRED_FIELD;
+        }
+        #endregion
+
+        #region הצגת בעיות
+        private bool showConditions;
+
+        public bool ShowConditions
+        {
+            get => showConditions;
+            set
+            {
+                showConditions = value;
+                OnPropertyChanged("ShowConditions");
+            }
+        }
+        #endregion
+
+        #region הבעיה הבאה
+        private string nextError;
+
+        public string NextError
+        {
+            get => nextError;
+            set
+            {
+                nextError = value;
+                OnPropertyChanged("NextError");
+            }
+        }
+
+        private bool showNextError;
+
+        public bool ShowNextError
+        {
+            get => showNextError;
+            set
+            {
+                showNextError = value;
+                OnPropertyChanged("ShowNextError");
+            }
+        }
+        #endregion הבעיה הבאה
+
+        #region מקור התמונה
+        private string imgSrc;
+
+        public string ImgSrc
+        {
+            get => imgSrc;
+            set
+            {
+                imgSrc = value;
+                OnPropertyChanged("ImgSrc");
+            }
+        }
+        private const string DEFAULT_PHOTO_SRC = "defaultphoto.jpg";
+        #endregion
+
+        #region serverStatus
+        private string serverStatus;
+        public string ServerStatus
+        {
+            get { return serverStatus; }
+            set
+            {
+                serverStatus = value;
+                OnPropertyChanged("ServerStatus");
+            }
+        }
+        #endregion serverStatus
+
+        public NewPostViewModel()
+        {
+            this.ShowCaptionError = false;
+
+            this.imgSrc = DEFAULT_PHOTO_SRC;
+            this.imageFileResult = null; //mark that no picture was chosen
+        }
+
+        public ICommand SubmitCommand { protected set; get; }
+
+        private bool ValidateForm()
+        {
+            ValidateCaption();
+
+            //check if any validation failed
+            if (ShowCaptionError)
+                return false;
+            return true;
+        }
+
+        public async void OnSubmit()
+        {
+
+            if (ValidateForm())
+            {
+                
+
+                VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
+                Volunteer v = await proxy.RegVolAsync(volunteer);
+
+                if (v == null)
+                {
+                    await App.Current.MainPage.DisplayAlert("שגיאה", "הרשמה נכשלה, בדוק את הפרטים המוקלדים", "בסדר");
+                }
+                else
+                {
+                    if (this.imageFileResult != null)
+                    {
+                        ServerStatus = "מעלה תמונה...";
+
+                        bool success = await proxy.UploadImage(new FileInfo()
+                        {
+                            Name = this.imageFileResult.FullPath
+                        }, $"V{v.VolunteerId}.jpg");
+
+                        if (success)
+                        {
+                            ProfileImgSrc = v.ImgSource;
+                        }
+                    }
+                    ServerStatus = "שומר נתונים...";
+
+                    Page p = new NavigationPage(new Views.HomePage());
+                    App.Current.MainPage = p;
+
+                }
+            }
+            else
+            {
+                ShowNextError = true;
+                NextError = "אירעה שגיאה! לא ניתן להמשיך בהרשמה";
+            }
+        }
+
+        #region new pic
+        FileResult imageFileResult;
+        public event Action<ImageSource> SetImageSourceEvent;
+        public ICommand PickImageCommand => new Command(OnPickImage);
+        public async void OnPickImage()
+        {
+            FileResult result = await MediaPicker.PickPhotoAsync(new MediaPickerOptions()
+            {
+                Title = "בחר תמונה"
+            });
+
+            if (result != null)
+            {
+                this.imageFileResult = result;
+
+                var stream = await result.OpenReadAsync();
+                ImageSource imgSource = ImageSource.FromStream(() => stream);
+                if (SetImageSourceEvent != null)
+                    SetImageSourceEvent(imgSource);
+            }
+        }
+
+        ///The following command handle the take photo button
+        public ICommand CameraImageCommand => new Command(OnCameraImage);
+        public async void OnCameraImage()
+        {
+            var result = await MediaPicker.CapturePhotoAsync(new MediaPickerOptions()
+            {
+                Title = "צלם תמונה"
+            });
+
+            if (result != null)
+            {
+                this.imageFileResult = result;
+                var stream = await result.OpenReadAsync();
+                ImageSource imgSource = ImageSource.FromStream(() => stream);
+                if (SetImageSourceEvent != null)
+                    SetImageSourceEvent(imgSource);
+            }
+        }
+        #endregion
     }
 }

@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VolunteeringApp.Views.UpdateVolPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="labelNameStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="Small" />
+            </Style>
+            <Style x:Key="labelErrorStyle" TargetType="Label">
+                <Setter Property="HorizontalOptions" Value="End" />
+                <Setter Property="TextColor" Value="Red" />
+                <Setter Property="FontSize" Value="Small" />
+            </Style>
+            <Style x:Key="conditionsStyle" TargetType="Label">
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="FontSize" Value="12" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <StackLayout>
+            <ScrollView>
+                <StackLayout>
+
+                    <Label Text="עדכון נתונים" TextDecorations="Underline"/>
+
+                    <!-- Photo -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="150" />
+                        </Grid.RowDefinitions>
+                        <Frame Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="1">
+                            <Image x:Name="theImage" Source="{Binding UserImgSrc}" />
+                        </Frame>
+                        <ImageButton Padding="0" Margin="0" Source="photogallery.png" HorizontalOptions="End" BackgroundColor="Transparent" Grid.Column="1" Grid.Row="0" Command="{Binding PickImageCommand}"/>
+                        <ImageButton Padding="0" Margin="0" Source="camera.png" HorizontalOptions="Start" Grid.Column="2" Grid.Row="0" BackgroundColor="Transparent" Command="{Binding CameraImageCommand}"/>
+                    </Grid>
+
+                    <!-- Email-->
+                    <Label Text="מייל" HorizontalOptions="End" Style="{StaticResource labelNameStyle}"/>
+                    <Frame CornerRadius="10" BorderColor="DarkGray" HorizontalOptions="End" BackgroundColor="Transparent" WidthRequest="140" HeightRequest="18" Padding="10" >
+                        <Label Text="{Binding Email}"/>
+                    </Frame>
+                    <Label />
+
+                    <!-- User Name-->
+
+                    <Label Text="שם משתמש" HorizontalOptions="End" Style="{StaticResource labelNameStyle}"/>
+                    <Frame CornerRadius="10" BorderColor="DarkGray" HorizontalOptions="End" BackgroundColor="Transparent" WidthRequest="140" HeightRequest="18" Padding="10" >
+                        <Label Text="{Binding Username}"/>
+                    </Frame>
+                    <Label />
+
+                    <!-- Name-->
+                    <Label Text="שם פרטי" HorizontalOptions="End" Style="{StaticResource labelNameStyle}"/>
+                    <Entry Text="{Binding Name}" HeightRequest="40" MaxLength="100" WidthRequest="20"></Entry>
+                    <Label Padding="0" Text="{Binding NameError}"  HorizontalOptions="Center" IsVisible="{Binding ShowNameError}" Style="{StaticResource labelErrorStyle}"/>
+
+                    <!-- LastName-->
+                    <Label Text="שם משפחה" HorizontalOptions="End" Style="{StaticResource labelNameStyle}"/>
+                    <Entry Text="{Binding LastName}" HeightRequest="40" MaxLength="100" WidthRequest="20"></Entry>
+                    <Label Padding="0" Text="{Binding LastNameError}"  HorizontalOptions="Center" IsVisible="{Binding ShowLastNameError}" Style="{StaticResource labelErrorStyle}"/>
+
+                    <!-- Password-->
+                    <Label Text="סיסמה" HorizontalOptions="End" Style="{StaticResource labelNameStyle}"/>
+                    <Entry Text="{Binding Password}" IsPassword="True" HeightRequest="40" MaxLength="15" WidthRequest="20"></Entry>
+                    <Label Padding="0" Text="{Binding PasswordError}"  HorizontalOptions="Center" IsVisible="{Binding ShowPasswordError}" Style="{StaticResource labelErrorStyle}"/>
+
+                    <Frame CornerRadius="10" BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
+                        <Picker Title="מגדר" ItemsSource="{Binding Genders}" ItemDisplayBinding="{Binding GenderType}" SelectedItem="{Binding Gender}">
+                        </Picker>
+                    </Frame>
+
+                    <Entry Placeholder="רשום מגדר חדש שתרצה להוסיף" MaxLength="30" Text="{Binding NewGender}" TextColor="Black"></Entry>
+                    <Button Text=" הוסף מגדר לרשימה" Command="{Binding AddGender}"></Button>
+
+
+                    <Frame CornerRadius="10" BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="70" Padding="10">
+                        <StackLayout>
+                            <Label Text="תאריך לידה"></Label>
+                            <DatePicker TextColor="Black" Date="{Binding EntryBirthDate}" HorizontalOptions="Start"></DatePicker>
+                        </StackLayout>
+                    </Frame>
+
+
+                    <Label Padding="0" Text="{Binding NextError}" HorizontalOptions="Center" IsVisible="{Binding ShowNextError}" Style="{StaticResource labelErrorStyle}"/>
+                    <Button BorderColor="Black" Padding="0" Margin="0" Text="עדכן נתונים" HorizontalOptions="Center" Command="{Binding SaveDataCommand}"/>
+
+                </StackLayout>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

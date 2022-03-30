@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VolunteeringApp.Views.NewPostPage">
+    <ContentPage.Content>
+        <StackLayout>
+
+            <Label Text="יצירת פוסט חדש" TextDecorations="Underline"/>
+            <Label/>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="150" />
+                </Grid.RowDefinitions>
+                <Frame Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="1" BackgroundColor="Transparent" BorderColor="Black">
+                    <Image x:Name="theImage" Source="{Binding ImgSrc}"/>
+                </Frame>
+                <ImageButton Padding="0" Margin="0" Source="photogallery.png" HorizontalOptions="End" BackgroundColor="Transparent" Grid.Column="1" Grid.Row="0" Command="{Binding PickImageCommand}"/>
+                <ImageButton Padding="0" Margin="0" Source="camera.png" HorizontalOptions="Start" Grid.Column="2" Grid.Row="0" BackgroundColor="Transparent" Command="{Binding CameraImageCommand}"/>
+            </Grid>
+
+            <Label/>
+            <Frame CornerRadius="5" BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="270" HeightRequest="80" Padding="10" >
+                <Entry Placeholder="תיאור הפוסט" Text="{Binding Caption}" FontSize="14" />
+            </Frame>
+            <Label Padding="0" Text="{Binding CaptionError}"  HorizontalOptions="Center" IsVisible="{Binding ShowCaptionError}" TextColor="Red"/>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

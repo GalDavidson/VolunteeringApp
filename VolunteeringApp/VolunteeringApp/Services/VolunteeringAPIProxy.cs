@@ -152,7 +152,7 @@ namespace VolunteeringApp.Services
             }
         }
 
-        public async Task<Volunteer> Updatevolunteer(Volunteer user)
+        public async Task<Volunteer> UpdateVolunteer(Volunteer user)
         {
             try
             {
@@ -433,6 +433,40 @@ namespace VolunteeringApp.Services
                     
                     Association assos = JsonSerializer.Deserialize<Association>(str, options);
                     return assos;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
+        public async Task<Post> NewPost(Post p)
+        {
+            try
+            {
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve,
+                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.Hebrew, UnicodeRanges.BasicLatin),
+                    PropertyNameCaseInsensitive = true
+                };
+                string jsonObject = JsonSerializer.Serialize<Post>(p, options);
+                StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/AddNewPost", content);
+                if (response.IsSuccessStatusCode)
+                {
+
+                    string str = await response.Content.ReadAsStringAsync();
+
+                    Post post = JsonSerializer.Deserialize<Post>(str, options);
+                    return post;
                 }
                 else
                 {

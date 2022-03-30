@@ -27,6 +27,8 @@
             <ScrollView>
                 <StackLayout>
 
+                    <Label Text="עדכון נתונים" TextDecorations="Underline"/>
+
                     <!-- Photo -->
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -45,8 +47,6 @@
                         <ImageButton Padding="0" Margin="0" Source="photogallery.png" HorizontalOptions="End" BackgroundColor="Transparent" Grid.Column="1" Grid.Row="0" Command="{Binding PickImageCommand}"/>
                         <ImageButton Padding="0" Margin="0" Source="camera.png" HorizontalOptions="Start" Grid.Column="2" Grid.Row="0" BackgroundColor="Transparent" Command="{Binding CameraImageCommand}"/>
                     </Grid>
-
-
 
                     <!-- Email-->
                     <Label Text="מייל" HorizontalOptions="End" Style="{StaticResource labelNameStyle}"/>
@@ -77,6 +77,80 @@
                     <Label Text="מספר טלפון" HorizontalOptions="End" Style="{StaticResource labelNameStyle}"/>
                     <Entry Text="{Binding PhoneNum}" HeightRequest="40" MaxLength="15" WidthRequest="20"></Entry>
                     <Label Padding="0" Text="{Binding PhoneNumError}"  HorizontalOptions="Center" IsVisible="{Binding ShowPhoneNumError}" Style="{StaticResource labelErrorStyle}"/>
+
+                    <SearchBar x:Name="searchBar" 
+                       Placeholder="חפש עיסוק" 
+                       Text="{Binding SearchTerm}"
+                    />
+
+                    <RefreshView x:Name="refreshView"
+             Command="{Binding RefreshCommand}"
+             IsRefreshing="{Binding IsRefreshing}">
+
+                        <CollectionView  x:Name="collectionName" ItemsSource="{Binding FilteredOccuAreas}" SelectionMode="Multiple" SelectedItems="{Binding SelectedOccuAreas}" BackgroundColor="White"
+                                SelectionChangedCommand="{Binding UpdateOccuArea}" SelectionChangedCommandParameter="{Binding Source={x:Reference collectionName}, Path=SelectedItems}">
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout Span="1" Orientation="Vertical" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <SwipeView>
+                                        <Grid Margin="7">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="50"/>
+                                            </Grid.RowDefinitions>
+                                            <Label Text="{Binding Path=OccupationName, StringFormat='{0}'}" HorizontalTextAlignment="End" FontSize="20" TextColor="Black" Grid.Row="0" Grid.Column="0"/>
+                                        </Grid>
+
+                                    </SwipeView>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </RefreshView>
+
+                    <Entry Placeholder="רשום תחום עיסוק חדש שתרצה להוסיף" MaxLength="30" Text="{Binding NewOccuArea}" TextColor="Black"></Entry>
+                    <Button Text=" הוסף תחום עיסוק לרשימה" Command="{Binding AddOccuArea}"></Button>
+
+
+                    <SearchBar x:Name="searchBar2" 
+                       Placeholder="חפש סניף" 
+                       Text="{Binding SearchBranch}"
+                    />
+
+                    <RefreshView x:Name="refreshView2"
+             Command="{Binding RefreshBranchesCommand}"
+             IsRefreshing="{Binding IsRefresh}">
+
+                        <CollectionView  x:Name="collection" ItemsSource="{Binding FilteredBranches}" SelectionMode="Multiple" SelectedItems="{Binding SelectedBranches}" BackgroundColor="White"
+                                SelectionChangedCommand="{Binding UpdateBranches}" SelectionChangedCommandParameter="{Binding Source={x:Reference collection}, Path=SelectedItems}">
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout Span="1" Orientation="Vertical" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <SwipeView>
+                                        <Grid Margin="7">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="50"/>
+                                            </Grid.RowDefinitions>
+                                            <Label Text="{Binding Path=BranchLocation, StringFormat='{0}'}" HorizontalTextAlignment="End" FontSize="20" TextColor="Black" Grid.Row="0" Grid.Column="0"/>
+                                        </Grid>
+
+                                    </SwipeView>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </RefreshView>
+
+
+                    <Entry Placeholder="רשום מיקום חדש שתרצה להוסיף" MaxLength="30" Text="{Binding NewBranch}" TextColor="Black"></Entry>
+                    <Button Text="הוסף סניף לרשימה" Command="{Binding AddBranch}"></Button>
 
 
                     <Label Padding="0" Text="{Binding NextError}" HorizontalOptions="Center" IsVisible="{Binding ShowNextError}" Style="{StaticResource labelErrorStyle}"/>

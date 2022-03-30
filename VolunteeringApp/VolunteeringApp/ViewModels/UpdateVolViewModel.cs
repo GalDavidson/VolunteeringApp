@@ -7,7 +7,6 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using VolunteeringApp.Services;
 using VolunteeringApp.Models;
-using VolunteeringApp.ViewModels;
 using VolunteeringApp.Views;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -16,9 +15,8 @@ using Xamarin.Essentials;
 
 namespace VolunteeringApp.ViewModels
 {
-    public class VolRegisterViewModel : INotifyPropertyChanged
+    class UpdateVolViewModel
     {
-
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName)
@@ -66,6 +64,20 @@ namespace VolunteeringApp.ViewModels
             }
         }
         #endregion הבעיה הבאה
+
+        #region תמונה
+        private string userImgSrc;
+        public string UserImgSrc
+        {
+            get => userImgSrc;
+            set
+            {
+                userImgSrc = value;
+                OnPropertyChanged("UserImgSrc");
+            }
+        }
+        private const string DEFAULT_PHOTO_SRC = "defaultphoto.jpg";
+        #endregion
 
         #region דואר אלקטרוני
         private bool showEmailError;
@@ -487,7 +499,7 @@ namespace VolunteeringApp.ViewModels
 
         #region תאריך לידה
 
-        private DateTime entryBirthDate = DateTime.Now;
+        private DateTime entryBirthDate;
         public DateTime EntryBirthDate
         {
             get => this.entryBirthDate;
@@ -544,21 +556,6 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion
 
-        #region מקור התמונה
-        private string profileImgSrc;
-
-        public string ProfileImgSrc
-        {
-            get => profileImgSrc;
-            set
-            {
-                profileImgSrc = value;
-                OnPropertyChanged("ProfileImgSrc");
-            }
-        }
-        private const string DEFAULT_PHOTO_SRC = "defaultphoto.jpg";
-        #endregion
-
         #region serverStatus
         private string serverStatus;
         public string ServerStatus
@@ -572,64 +569,81 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion serverStatus
 
-        public ICommand SubmitCommand { protected set; get; }
+        public Command SaveDataCommand { protected set; get; }
 
+        #region Constructor
+        public UpdateVolViewModel()
+        {
+            App theApp = (App)App.Current;
+
+            Volunteer currentUser = (Volunteer)theApp.CurrentUser;
+            VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
+
+            this.Name = currentUser.FName;
+            this.LastName = currentUser.LName;
+            this.Email = currentUser.Email;
+            this.Username = currentUser.UserName;
+            this.Password = currentUser.Pass;
+            this.UserImgSrc = proxy.GetBasePhotoUri() + $"V{currentUser.VolunteerId}.jpg";
+
+            this.ShowEmailError = false;
+            this.ShowUsernameError = false;
+            this.ShowPasswordError = false;
+            this.ShowConditions = false;
+
+            Genders = new ObservableCollection<Gender>();
+            CreateGenderCollection();
+
+            this.SaveDataCommand = new Command(() => SaveData());
+        }
+        #endregion
+
+        #region ValidateForm
         private bool ValidateForm()
         {
             ValidateName();
             ValidateLastName();
-            ValidateEmail();
-            ValidateUsername();
+            //ValidateEmail();
+            //ValidateUsername();
             ValidatePassword();
             ValidateVerPassword();
 
             //check if any validation failed
-            if (ShowNameError || ShowLastNameError || ShowUsernameError || ShowEmailError || ShowPasswordError || ShowVerPasswordError)
+            if (ShowNameError || ShowLastNameError || /*ShowUsernameError ||*//* ShowEmailError ||*/ ShowPasswordError)
                 return false;
             return true;
         }
+        #endregion
 
-        public VolRegisterViewModel()
+        #region SaveData
+        private async void SaveData()
         {
-            this.ShowNameError = false;
-            this.ShowLastNameError = false;
-            this.ShowEmailError = false;
-            this.ShowUsernameError = false;
-            this.ShowPasswordError = false;
-            this.ShowVerPasswordError = false;
-            this.ShowConditions = false;
-            this.SubmitCommand = new Command(OnSubmit);
-
-            this.profileImgSrc = DEFAULT_PHOTO_SRC;
-            this.imageFileResult = null; //mark that no picture was chosen
-            Genders = new ObservableCollection<Gender>();
-            CreateGenderCollection();
-        }
-
-        public async void OnSubmit()
-        {
-            App app = (App)App.Current;
-
             if (ValidateForm())
             {
-                Volunteer volunteer = new Volunteer
+                ServerStatus = "מתחבר לשרת...";
+                await App.Current.MainPage.Navigation.PushModalAsync(new Views.ServerStatusPage(this));
+
+                App theApp = (App)App.Current;
+                Volunteer newUser = new Volunteer()
                 {
-                    FName = Name,
-                    LName = LastName,
-                    Email = Email,
-                    UserName = Username,
-                    Pass = Password,
+                    VolunteerId = ((Volunteer)theApp.CurrentUser).VolunteerId,
+                    FName = this.Name,
+                    LName = this.LastName,
+                    Email = this.Email,
+                    UserName = this.Username,
+                    Pass = this.Password,
                     ActionDate = DateTime.Today,
                     GenderId = Gender.GenderId,
                     BirthDate = EntryBirthDate
                 };
 
                 VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
-                Volunteer v = await proxy.RegVolAsync(volunteer);
+                Volunteer user = await proxy.UpdateVolunteer(newUser);
 
-                if (v == null)
+                if (user == null)
                 {
-                    await App.Current.MainPage.DisplayAlert("שגיאה", "הרשמה נכשלה, בדוק את הפרטים המוקלדים", "בסדר");
+                    await App.Current.MainPage.Navigation.PopModalAsync();
+                    await App.Current.MainPage.DisplayAlert("שגיאה", "העדכון נכשל", "אישור", FlowDirection.RightToLeft);
                 }
                 else
                 {
@@ -640,30 +654,31 @@ namespace VolunteeringApp.ViewModels
                         bool success = await proxy.UploadImage(new FileInfo()
                         {
                             Name = this.imageFileResult.FullPath
-                        }, $"V{v.VolunteerId}.jpg");
+                        }, $"V{newUser.VolunteerId}.jpg");
 
                         if (success)
                         {
-                            ProfileImgSrc = v.ImgSource;
+                            UserImgSrc = newUser.ImgSource;
                         }
                     }
                     ServerStatus = "שומר נתונים...";
 
-                    Page p = new NavigationPage(new Views.HomePage());
+                    theApp.CurrentUser = user;
+                    await App.Current.MainPage.Navigation.PopModalAsync();
+
+                    Page p = new Views.HomePage();
                     App.Current.MainPage = p;
-                
+                    //await App.Current.MainPage.DisplayAlert("עדכון", "העדכון בוצע בהצלחה", "אישור", FlowDirection.RightToLeft);
                 }
             }
             else
-            {
-                ShowNextError = true;
-                NextError = "אירעה שגיאה! לא ניתן להמשיך בהרשמה";
-            }
+                await App.Current.MainPage.DisplayAlert("שמירת נתונים", " יש בעיה עם הנתונים בדוק ונסה שוב", "אישור", FlowDirection.RightToLeft);
         }
-
+        #endregion   
 
         FileResult imageFileResult;
         public event Action<ImageSource> SetImageSourceEvent;
+        #region PickImage
         public ICommand PickImageCommand => new Command(OnPickImage);
         public async void OnPickImage()
         {
@@ -682,8 +697,10 @@ namespace VolunteeringApp.ViewModels
                     SetImageSourceEvent(imgSource);
             }
         }
+        #endregion
 
-        ///The following command handle the take photo button
+        //The following command handle the take photo button
+        #region CameraImage
         public ICommand CameraImageCommand => new Command(OnCameraImage);
         public async void OnCameraImage()
         {
@@ -701,5 +718,6 @@ namespace VolunteeringApp.ViewModels
                     SetImageSourceEvent(imgSource);
             }
         }
+        #endregion
     }
 }
