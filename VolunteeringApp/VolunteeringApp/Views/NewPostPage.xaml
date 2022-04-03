@@ -6,7 +6,6 @@
         <StackLayout>
 
             <Label Text="יצירת פוסט חדש" TextDecorations="Underline"/>
-            <Label/>
 
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -31,6 +30,10 @@
                 <Entry Placeholder="תיאור הפוסט" Text="{Binding Caption}" FontSize="14" />
             </Frame>
             <Label Padding="0" Text="{Binding CaptionError}"  HorizontalOptions="Center" IsVisible="{Binding ShowCaptionError}" TextColor="Red"/>
+
+            <Button Text="שלח" Command="{Binding SubmitCommand}" BackgroundColor="Beige" TextColor="Black"  Margin="15" FontAttributes="Bold" Padding="5" FontSize="17" CornerRadius="30"/>
+
+            <Label Padding="0" Text="{Binding NextError}" HorizontalOptions="Center" IsVisible="{Binding ShowNextError}"/>
 
         </StackLayout>
     </ContentPage.Content>

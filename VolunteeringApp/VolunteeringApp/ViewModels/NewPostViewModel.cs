@@ -148,6 +148,7 @@ namespace VolunteeringApp.ViewModels
 
             this.imgSrc = DEFAULT_PHOTO_SRC;
             this.imageFileResult = null; //mark that no picture was chosen
+            this.SubmitCommand = new Command(OnSubmit);
         }
 
         public ICommand SubmitCommand { protected set; get; }
@@ -167,12 +168,15 @@ namespace VolunteeringApp.ViewModels
 
             if (ValidateForm())
             {
-                
+                Post newP = new Post
+                {
+                    Caption = this.Caption
+                };
 
                 VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
-                Volunteer v = await proxy.RegVolAsync(volunteer);
+                Post p = await proxy.NewPost(newP);
 
-                if (v == null)
+                if (p == null)
                 {
                     await App.Current.MainPage.DisplayAlert("שגיאה", "הרשמה נכשלה, בדוק את הפרטים המוקלדים", "בסדר");
                 }
@@ -185,17 +189,17 @@ namespace VolunteeringApp.ViewModels
                         bool success = await proxy.UploadImage(new FileInfo()
                         {
                             Name = this.imageFileResult.FullPath
-                        }, $"V{v.VolunteerId}.jpg");
+                        }, $"P{p.Caption}.jpg");
 
                         if (success)
                         {
-                            ProfileImgSrc = v.ImgSource;
+                            ImgSrc = p.ImgSource;
                         }
                     }
                     ServerStatus = "שומר נתונים...";
 
-                    Page p = new NavigationPage(new Views.HomePage());
-                    App.Current.MainPage = p;
+                    Page page = new NavigationPage(new Views.HomePage());
+                    App.Current.MainPage = page;
 
                 }
             }

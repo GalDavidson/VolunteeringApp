@@ -397,6 +397,15 @@ namespace VolunteeringApp.ViewModels
             this.FilteredOccuAreas = new ObservableCollection<OccupationalArea>(this.allOccupationalAreas.OrderBy(a => a.OccupationName));
             SearchTerm = String.Empty;
             IsRefreshing = false;
+
+            //Select the relevant Occup Area for the specific user
+            Association association = (Association)theApp.CurrentUser;
+            foreach(OccupationalAreasOfAssociation oaa in association.OccupationalAreasOfAssociations)
+            {
+                OccupationalArea area = this.FilteredOccuAreas.Where(occ => occ.OccupationalAreaId == oaa.OccupationalAreaId).FirstOrDefault();
+                if (area != null)
+                    SelectedOccuAreas.Add(area);
+            }
         }
 
         private string newOccuArea;
@@ -445,8 +454,8 @@ namespace VolunteeringApp.ViewModels
         #endregion
 
         #region AreaSelection
-        List<OccupationalArea> selectedOccuAreas;
-        public List<OccupationalArea> SelectedOccuAreas
+        ObservableCollection<Object> selectedOccuAreas;
+        public ObservableCollection<Object> SelectedOccuAreas
         {
             get
             {
@@ -457,6 +466,7 @@ namespace VolunteeringApp.ViewModels
                 if (selectedOccuAreas != value)
                 {
                     selectedOccuAreas = value;
+                    OnPropertyChanged("SelectedOccuAreas");
                 }
             }
         }
@@ -596,16 +606,26 @@ namespace VolunteeringApp.ViewModels
 
         private void InitBranches()
         {
-            IsRefresh = true;
+            IsRefreshing = true;
             App theApp = (App)App.Current;
             this.allBranches = theApp.LookupTables.Branches;
 
 
             //Copy list to the filtered list
-            this.filteredBranches = new ObservableCollection<Branch>(this.allBranches.OrderBy(b => b.BranchLocation));
-            SearchBranch = String.Empty;
-            IsRefresh = false;
+            this.FilteredBranches = new ObservableCollection<Branch>(this.allBranches.OrderBy(a => a.BranchLocation));
+            SearchTerm = String.Empty;
+            IsRefreshing = false;
+
+            //Select the relevant branch for the specific user
+            Association association = (Association)theApp.CurrentUser;
+            foreach (BranchesOfAssociation br in association.BranchesOfAssociations)
+            {
+                Branch branch = this.FilteredBranches.Where(b => b.BranchId == br.BranchId).FirstOrDefault();
+                if (branch != null)
+                    SelectedBranches.Add(branch);
+            }
         }
+    
 
         private string newBranch;
         public string NewBranch
@@ -617,7 +637,7 @@ namespace VolunteeringApp.ViewModels
                 OnPropertyChanged("NewBranch");
             }
         }
-        #endregion סניפים
+      #endregion סניפים
 
         #region Search Branches
         public void OnTypeChanged(string searching)
@@ -674,8 +694,8 @@ namespace VolunteeringApp.ViewModels
         #endregion
 
         #region BranchSelection
-        List<Branch> selectedBranches;
-        public List<Branch> SelectedBranches
+        List<Object> selectedBranches;
+        public List<Object> SelectedBranches
         {
             get
             {
@@ -686,6 +706,7 @@ namespace VolunteeringApp.ViewModels
                 if (selectedBranches != value)
                 {
                     selectedBranches = value;
+                    OnPropertyChanged("SelectedBranches");
                 }
             }
         }
@@ -698,7 +719,7 @@ namespace VolunteeringApp.ViewModels
             set
             {
                 branches = value;
-                OnPropertyChanged("branches");
+                OnPropertyChanged("Branches");
             }
         }
 
@@ -800,10 +821,10 @@ namespace VolunteeringApp.ViewModels
             this.ShowInformationAboutError = false;
             this.ShowPhoneNumError = false;
             this.ShowPasswordError = false;
-            this.selectedOccuAreas = new List<OccupationalArea>();
+            this.selectedOccuAreas = new ObservableCollection<Object>();
             this.filteredOccuAreas = new ObservableCollection<OccupationalArea>();
 
-            this.selectedBranches = new List<Branch>();
+            this.selectedBranches = new List<Object>();
             this.filteredBranches = new ObservableCollection<Branch>();
 
             InitOccuAreas();
@@ -846,7 +867,8 @@ namespace VolunteeringApp.ViewModels
                     UserName = this.Username,
                     Pass = this.Password,
                     PhoneNum = this.PhoneNum,
-                    InformationAbout = this.InformationAbout
+                    InformationAbout = this.InformationAbout,
+                    ActionDate = ((Association)theApp.CurrentUser).ActionDate
                 };
 
                 foreach (OccupationalArea o in selectedOccuAreas)
