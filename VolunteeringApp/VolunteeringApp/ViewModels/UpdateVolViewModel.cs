@@ -415,18 +415,22 @@ namespace VolunteeringApp.ViewModels
         #endregion
 
         #region מגדר
-        public ObservableCollection<Gender> Genders { get; }
+        public ObservableCollection<Object> Genders { get; }
 
         public void CreateGenderCollection()
         {
-            if (((App)App.Current).LookupTables != null)
+            App theApp = (App)App.Current;
+            if (theApp.LookupTables != null)
             {
-                List<Gender> gendersList = ((App)App.Current).LookupTables.Genders;
+                List<Gender> gendersList = theApp.LookupTables.Genders;
                 foreach (Gender g in gendersList)
                 {
                     this.Genders.Add(g);
                 }
             }
+
+            Volunteer v = (Volunteer)theApp.CurrentUser;
+            this.Gender = v.Gender;
         }
 
         private Gender gender;
@@ -513,6 +517,13 @@ namespace VolunteeringApp.ViewModels
             }
         }
 
+        public void VolBirthDate()
+        {
+            App theApp = (App)App.Current;
+            Volunteer v = (Volunteer)theApp.CurrentUser;
+            entryBirthDate = v.BirthDate;
+        }
+
         private bool showBirthDateError;
         private bool ShowBirthDateError
         {
@@ -591,8 +602,9 @@ namespace VolunteeringApp.ViewModels
             this.ShowPasswordError = false;
             this.ShowConditions = false;
 
-            Genders = new ObservableCollection<Gender>();
+            Genders = new ObservableCollection<Object>();
             CreateGenderCollection();
+            VolBirthDate();
 
             this.SaveDataCommand = new Command(() => SaveData());
         }
