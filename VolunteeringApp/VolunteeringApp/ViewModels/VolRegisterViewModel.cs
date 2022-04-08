@@ -624,11 +624,11 @@ namespace VolunteeringApp.ViewModels
                     BirthDate = EntryBirthDate
                 };
 
-                Gender gender = new Gender
+                volunteer.Gender = new Gender
                 {
-                    GenderId = this.Gender.GenderId
+                    GenderId = this.Gender.GenderId,
+                    GenderType = this.Gender.GenderType
                 };
-                volunteer.Gender = gender;
 
                 VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
                 Volunteer v = await proxy.RegVolAsync(volunteer);

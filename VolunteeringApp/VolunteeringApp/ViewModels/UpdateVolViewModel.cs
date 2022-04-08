@@ -430,7 +430,11 @@ namespace VolunteeringApp.ViewModels
             }
 
             Volunteer v = (Volunteer)theApp.CurrentUser;
-            this.Gender = v.Gender;
+            this.Gender = new Gender
+            {
+                GenderId = v.Gender.GenderId,
+                GenderType = v.Gender.GenderType
+            };
         }
 
         private Gender gender;
@@ -636,7 +640,7 @@ namespace VolunteeringApp.ViewModels
                 await App.Current.MainPage.Navigation.PushModalAsync(new Views.ServerStatusPage(this));
 
                 App theApp = (App)App.Current;
-                Volunteer newUser = new Volunteer()
+                Volunteer newVol = new Volunteer()
                 {
                     VolunteerId = ((Volunteer)theApp.CurrentUser).VolunteerId,
                     FName = this.Name,
@@ -649,8 +653,14 @@ namespace VolunteeringApp.ViewModels
                     BirthDate = EntryBirthDate
                 };
 
+                newVol.Gender = new Gender
+                {
+                    GenderId = this.Gender.GenderId,
+                    GenderType = this.Gender.GenderType
+                };
+
                 VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
-                Volunteer user = await proxy.UpdateVolunteer(newUser);
+                Volunteer user = await proxy.UpdateVolunteer(newVol);
 
                 if (user == null)
                 {
@@ -666,11 +676,11 @@ namespace VolunteeringApp.ViewModels
                         bool success = await proxy.UploadImage(new FileInfo()
                         {
                             Name = this.imageFileResult.FullPath
-                        }, $"V{newUser.VolunteerId}.jpg");
+                        }, $"V{newVol.VolunteerId}.jpg");
 
                         if (success)
                         {
-                            UserImgSrc = newUser.ImgSource;
+                            UserImgSrc = newVol.ImgSource;
                         }
                     }
                     ServerStatus = "שומר נתונים...";
