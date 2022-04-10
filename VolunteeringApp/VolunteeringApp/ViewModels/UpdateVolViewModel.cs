@@ -428,13 +428,6 @@ namespace VolunteeringApp.ViewModels
                     this.Genders.Add(g);
                 }
             }
-
-            Volunteer v = (Volunteer)theApp.CurrentUser;
-            this.Gender = new Gender
-            {
-                GenderId = v.Gender.GenderId,
-                GenderType = v.Gender.GenderType
-            };
         }
 
         private Gender gender;
@@ -600,6 +593,12 @@ namespace VolunteeringApp.ViewModels
             this.Username = currentUser.UserName;
             this.Password = currentUser.Pass;
             this.UserImgSrc = proxy.GetBasePhotoUri() + $"V{currentUser.VolunteerId}.jpg";
+
+            this.Gender = new Gender
+            {
+                GenderId = currentUser.Gender.GenderId,
+                GenderType = currentUser.Gender.GenderType
+            };
 
             this.ShowEmailError = false;
             this.ShowUsernameError = false;
