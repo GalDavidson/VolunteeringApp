@@ -441,6 +441,17 @@ namespace VolunteeringApp.ViewModels
             }
         }
 
+        private int genderIndex;
+        public int GenderIndex
+        {
+            get { return genderIndex; }
+            set
+            {
+                genderIndex = value;
+                OnPropertyChanged("GenderIndex");
+            }
+        }
+
         #endregion
 
         #region Add New Gender
@@ -599,6 +610,7 @@ namespace VolunteeringApp.ViewModels
                 GenderId = currentUser.Gender.GenderId,
                 GenderType = currentUser.Gender.GenderType
             };
+            this.GenderIndex = currentUser.Gender.GenderId - 1;
 
             this.ShowEmailError = false;
             this.ShowUsernameError = false;
