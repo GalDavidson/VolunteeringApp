@@ -2,9 +2,14 @@
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="VolunteeringApp.Views.RegisterNavigation"
-            xmlns:local="clr-namespace:VolunteeringApp.Views"
-            >
-  <!--Pages can be added as references or inline-->
+            xmlns:local="clr-namespace:VolunteeringApp.Views"  >
+
+    <TabbedPage.ToolbarItems>
+        <ToolbarItem Name="MenuItem1" Order="Secondary" Text="דף הבית" Priority="0" />
+        <ToolbarItem Name="MenuItem2" Order="Secondary" Text="הרשמה" Priority="1" />
+    </TabbedPage.ToolbarItems>
+    
+    <!--Pages can be added as references or inline-->
     <local:AssoRegisterPage Title="עמותה" />
     <local:VolunteerRegisterPage Title="מתנדב" />
 </TabbedPage>

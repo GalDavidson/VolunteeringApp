@@ -19,7 +19,7 @@
                     <RowDefinition Height="150" />
                 </Grid.RowDefinitions>
                 <Frame Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="1" BackgroundColor="Transparent" BorderColor="Black">
-                    <Image x:Name="theImage" Source="{Binding ImgSrc}"/>
+                    <Image x:Name="theImage" Source="{Binding ImgSrc}" />
                 </Frame>
                 <ImageButton Padding="0" Margin="0" Source="photogallery.png" HorizontalOptions="End" BackgroundColor="Transparent" Grid.Column="1" Grid.Row="0" Command="{Binding PickImageCommand}"/>
                 <ImageButton Padding="0" Margin="0" Source="camera.png" HorizontalOptions="Start" Grid.Column="2" Grid.Row="0" BackgroundColor="Transparent" Command="{Binding CameraImageCommand}"/>
@@ -31,7 +31,7 @@
             </Frame>
             <Label Padding="0" Text="{Binding CaptionError}"  HorizontalOptions="Center" IsVisible="{Binding ShowCaptionError}" TextColor="Red"/>
 
-            <Button Text="שלח" Command="{Binding SubmitCommand}" BackgroundColor="Beige" TextColor="Black"  Margin="15" FontAttributes="Bold" Padding="5" FontSize="17" CornerRadius="30"/>
+            <Button Text="פרסמ.י" Command="{Binding SubmitCommand}" BackgroundColor="Beige" TextColor="Black" Margin="120,40" FontSize="15" CornerRadius="30"/>
 
             <Label Padding="0" Text="{Binding NextError}" HorizontalOptions="Center" IsVisible="{Binding ShowNextError}"/>
 

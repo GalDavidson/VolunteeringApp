@@ -146,8 +146,9 @@ namespace VolunteeringApp.ViewModels
         {
             this.ShowCaptionError = false;
 
-            this.imgSrc = DEFAULT_PHOTO_SRC;
+            this.ImgSrc = DEFAULT_PHOTO_SRC;
             this.imageFileResult = null; //mark that no picture was chosen
+
             this.SubmitCommand = new Command(OnSubmit);
         }
 
@@ -189,7 +190,7 @@ namespace VolunteeringApp.ViewModels
                         bool success = await proxy.UploadImage(new FileInfo()
                         {
                             Name = this.imageFileResult.FullPath
-                        }, $"P{p.Caption}.jpg");
+                        }, $"P{p.PostId}.jpg");
 
                         if (success)
                         {
@@ -250,6 +251,7 @@ namespace VolunteeringApp.ViewModels
                     SetImageSourceEvent(imgSource);
             }
         }
+
         #endregion
     }
 }

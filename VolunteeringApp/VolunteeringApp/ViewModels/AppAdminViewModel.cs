@@ -342,7 +342,7 @@ namespace VolunteeringApp.ViewModels
         }
         //Delete volunteer
         public ICommand DeleteVolCommand => new Command<Volunteer>(RemoveVol);
-     
+
         public async void RemoveVol(Volunteer v)
         {
             bool result = await App.Current.MainPage.DisplayAlert("את.ה בטוח.ה?", "", "כן", "לא", FlowDirection.RightToLeft);
@@ -365,7 +365,7 @@ namespace VolunteeringApp.ViewModels
                 await App.Current.MainPage.DisplayAlert("שגיאה", "לא בוצע", "אישור");
             }
         }
- 
+
         #endregion
 
         public Action<Page> NavigateToPageEvent;
