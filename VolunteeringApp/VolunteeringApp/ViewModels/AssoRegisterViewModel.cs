@@ -982,13 +982,14 @@ namespace VolunteeringApp.ViewModels
                         }
                     }
                     ServerStatus = "שומר נתונים...";
-                    
+
                     //if someone registered to get the contact added event, fire the event
                     //if (this.AssociationEvent != null)
                     //{
                     //    this.AssociationEvent(asso);
                     //}
-
+     
+                    app.CurrentUser = asso;
                     Page p = new NavigationPage(new Views.HomePage());
                     App.Current.MainPage = p;
                 }

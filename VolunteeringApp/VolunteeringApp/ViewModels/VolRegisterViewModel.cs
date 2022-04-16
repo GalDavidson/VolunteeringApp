@@ -655,6 +655,7 @@ namespace VolunteeringApp.ViewModels
                     }
                     ServerStatus = "שומר נתונים...";
 
+                    app.CurrentUser = v;
                     Page p = new NavigationPage(new Views.HomePage());
                     App.Current.MainPage = p;
                 

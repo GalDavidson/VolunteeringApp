@@ -9,7 +9,7 @@ namespace VolunteeringApp.Models
         public int PostId { get; set; }
         public int OccupationalAreaId { get; set; }
 
-        public virtual DailyEvent OccupationalArea { get; set; }
+        public virtual OccupationalArea OccupationalArea { get; set; }
         public virtual Post Post { get; set; }
     }
 }

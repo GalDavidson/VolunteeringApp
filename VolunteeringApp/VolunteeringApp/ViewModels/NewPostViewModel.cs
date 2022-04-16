@@ -74,6 +74,215 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion
 
+        #region תחומי עיסוק
+
+        private List<OccupationalArea> allOccupationalAreas;
+        private ObservableCollection<OccupationalArea> filteredOccuAreas;
+        public ObservableCollection<OccupationalArea> FilteredOccuAreas
+        {
+            get
+            {
+                return this.filteredOccuAreas;
+            }
+            set
+            {
+                if (this.filteredOccuAreas != value)
+                {
+
+                    this.filteredOccuAreas = value;
+                    OnPropertyChanged("FilteredOccuAreas");
+                }
+            }
+        }
+
+        private string searchTerm;
+        public string SearchTerm
+        {
+            get
+            {
+                return this.searchTerm;
+            }
+            set
+            {
+                //if (this.searchTerm != value)
+                //{
+                this.searchTerm = value;
+                OnTextChanged(value);
+                OnPropertyChanged("SearchTerm");
+                //}
+            }
+        }
+
+        private void InitOccuAreas()
+        {
+            IsRefreshing = true;
+            App theApp = (App)App.Current;
+            this.allOccupationalAreas = theApp.LookupTables.OccupationalAreas;
+
+
+            //Copy list to the filtered list
+            this.FilteredOccuAreas = new ObservableCollection<OccupationalArea>(this.allOccupationalAreas.OrderBy(a => a.OccupationName));
+            SearchTerm = String.Empty;
+            IsRefreshing = false;
+        }
+
+        private string newOccuArea;
+        public string NewOccuArea
+        {
+            get => newOccuArea;
+            set
+            {
+                newOccuArea = value;
+                OnPropertyChanged("NewOccuArea");
+            }
+        }
+        #endregion תחומי עיסוק
+
+        #region Search
+        public void OnTextChanged(string search)
+        {
+            //Filter the list of contacts based on the search term
+            if (this.allOccupationalAreas == null)
+                return;
+            if (String.IsNullOrWhiteSpace(search) || String.IsNullOrEmpty(search))
+            {
+                foreach (OccupationalArea a in this.allOccupationalAreas)
+                {
+                    if (!this.FilteredOccuAreas.Contains(a))
+                        this.FilteredOccuAreas.Add(a);
+                }
+            }
+            else
+            {
+                foreach (OccupationalArea a in this.allOccupationalAreas)
+                {
+                    string occuAreaString = $"{a.OccupationName}";
+
+                    if (!this.FilteredOccuAreas.Contains(a) &&
+                        occuAreaString.Contains(search))
+                        this.FilteredOccuAreas.Add(a);
+                    else if (this.FilteredOccuAreas.Contains(a) &&
+                        !occuAreaString.Contains(search))
+                        this.FilteredOccuAreas.Remove(a);
+                }
+            }
+
+            this.FilteredOccuAreas = new ObservableCollection<OccupationalArea>(this.FilteredOccuAreas.OrderBy(a => a.OccupationName));
+        }
+        #endregion
+
+        #region AreaSelection
+        List<OccupationalArea> selectedOccuAreas;
+        public List<OccupationalArea> SelectedOccuAreas
+        {
+            get
+            {
+                return selectedOccuAreas;
+            }
+            set
+            {
+                if (selectedOccuAreas != value)
+                {
+                    selectedOccuAreas = value;
+                }
+            }
+        }
+
+        private string occupationalAreas;
+
+        public string OccupationalAreas
+        {
+            get => occupationalAreas;
+            set
+            {
+                occupationalAreas = value;
+                OnPropertyChanged("OccupationalAreas");
+            }
+        }
+
+
+
+        public ICommand UpdateOccuArea => new Command(OnPressedOccuArea);
+        public async void OnPressedOccuArea(object occuAreasList)
+        {
+            SelectedOccuAreas.Clear();
+            OccupationalAreas = string.Empty;
+            if (occuAreasList is IList<object>)
+            {
+                List<object> list = ((IList<object>)occuAreasList).ToList();
+                foreach (object a in list)
+                {
+                    SelectedOccuAreas.Add((OccupationalArea)a);
+
+                }
+                if (selectedOccuAreas.Count == 0) { OccupationalAreas = "לא נבחרו תחומי עיסוק"; }
+            }
+        }
+        #endregion
+
+        #region Add New Area
+        public ICommand AddOccuArea => new Command(OnAddOccuArea);
+        public async void OnAddOccuArea()
+        {
+
+            if (string.IsNullOrEmpty(NewOccuArea))
+            {
+                await App.Current.MainPage.DisplayAlert("שגיאה", "!לא ניתן להוסיף ערך זה", "בסדר");
+                return;
+            }
+
+            OccupationalArea NewOccuAr = new OccupationalArea
+            {
+                OccupationName = NewOccuArea
+            };
+
+            bool IsExist = false;
+            if (allOccupationalAreas.Contains(NewOccuAr)) { IsExist = true; }
+
+            if (!IsExist)
+            {
+                VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
+                bool ok = await proxy.AddOccupationalArea(NewOccuAr);
+
+                if (ok)
+                {
+                    allOccupationalAreas.Add(NewOccuAr);
+                    await App.Current.MainPage.DisplayAlert("", "בסדר", "!הוספת תחום עיסוק בהצלחה");
+                }
+                else if (!ok)
+                {
+                    await App.Current.MainPage.DisplayAlert("בסדר", "הוספת תחום עיסוק נכשלה", "שגיאה");
+                }
+            }
+            else
+            {
+                await App.Current.MainPage.DisplayAlert("בסדר", "תחום עיסוק זה כבר קיים במערכת", "שגיאה");
+            }
+
+        }
+        #endregion
+
+        #region Refresh
+        private bool isRefreshing;
+        public bool IsRefreshing
+        {
+            get => isRefreshing;
+            set
+            {
+                if (this.isRefreshing != value)
+                {
+                    this.isRefreshing = value;
+                    OnPropertyChanged(nameof(IsRefreshing));
+                }
+            }
+        }
+        public ICommand RefreshCommand => new Command(OnRefresh);
+        public void OnRefresh()
+        {
+            InitOccuAreas();
+        }
+        #endregion
+
         #region הצגת בעיות
         private bool showConditions;
 
@@ -148,6 +357,10 @@ namespace VolunteeringApp.ViewModels
 
             this.ImgSrc = DEFAULT_PHOTO_SRC;
             this.imageFileResult = null; //mark that no picture was chosen
+            this.selectedOccuAreas = new List<OccupationalArea>();
+            this.filteredOccuAreas = new ObservableCollection<OccupationalArea>();
+
+            InitOccuAreas();
 
             this.SubmitCommand = new Command(OnSubmit);
         }
@@ -174,8 +387,31 @@ namespace VolunteeringApp.ViewModels
                     Caption = this.Caption
                 };
 
+                foreach (OccupationalArea o in selectedOccuAreas)
+                {
+                    OccupationalAreasOfPost oc = new OccupationalAreasOfPost
+                    {
+                        OccupationalArea = o,
+                        Post = newP
+                    };
+                    newP.OccupationalAreasOfPosts.Add(oc);
+                }
+
+                App theApp = (App)App.Current;
+                Association a = (Association)theApp.CurrentUser;
+
+                foreach (OccupationalArea o in selectedOccuAreas)
+                {
+                    OccupationalAreasOfAssociation oc = new OccupationalAreasOfAssociation
+                    {
+                        OccupationalArea = o,
+                        Association = a
+                    };
+                    a.OccupationalAreasOfAssociations.Add(oc);
+                }
+
                 VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
-                Post p = await proxy.NewPost(newP);
+                Post p = await proxy.NewPost(newP, a);
 
                 if (p == null)
                 {
