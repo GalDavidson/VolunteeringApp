@@ -15,5 +15,6 @@ namespace VolunteeringApp.Models
         public string OccupationName { get; set; }
 
         public virtual List<OccupationalAreasOfAssociation> OccupationalAreasOfAssociations { get; set; }
+        public virtual List<OccupationalAreasOfPost> OccupationalAreasOfPosts { get; set; }
     }
 }

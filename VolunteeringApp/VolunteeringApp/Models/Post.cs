@@ -10,7 +10,7 @@ namespace VolunteeringApp.Models
         public Post()
         {
             OccupationalAreasOfPosts = new List<OccupationalAreasOfPost>();
-            PicturesOfPosts = new List<PicturesOfPost>();
+            //PicturesOfPosts = new List<PicturesOfPost>();
         }
 
         public int PostId { get; set; }
@@ -31,6 +31,6 @@ namespace VolunteeringApp.Models
         public virtual Association Association { get; set; }
         public virtual DailyEvent Event { get; set; }
         public virtual List<OccupationalAreasOfPost> OccupationalAreasOfPosts { get; set; }
-        public virtual List<PicturesOfPost> PicturesOfPosts { get; set; }
+        //public virtual List<PicturesOfPost> PicturesOfPosts { get; set; }
     }
 }

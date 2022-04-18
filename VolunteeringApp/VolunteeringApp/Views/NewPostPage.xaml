@@ -2,8 +2,19 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="VolunteeringApp.Views.NewPostPage">
+    <ContentPage.Resources>
+        <Style TargetType="StackLayout" x:Key="RegisterStack">
+            <Setter Property="Orientation" Value="Vertical"/>
+            <Setter Property="Padding" Value="30"/>
+            <Setter Property="Spacing" Value="40"/>
+            <Setter Property="FlowDirection" Value="RightToLeft"/>
+        </Style>
+    </ContentPage.Resources>
+    
     <ContentPage.Content>
-        <StackLayout>
+        
+        <ScrollView>
+            <StackLayout Padding="0,20,0,0" Style="{StaticResource RegisterStack}">
 
             <Label Text="יצירת פוסט חדש" TextDecorations="Underline"/>
 
@@ -29,12 +40,51 @@
             <Frame CornerRadius="5" BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="270" HeightRequest="80" Padding="10" >
                 <Entry Placeholder="תיאור הפוסט" Text="{Binding Caption}" FontSize="14" />
             </Frame>
+
+            <Label Text=":בחר.י תחומי עיסוק לאירוע זה" />
+
+            <SearchBar x:Name="searchBar" 
+                       Placeholder="חפש עיסוק" 
+                       Text="{Binding SearchTerm}"
+                    />
+
+            <RefreshView x:Name="refreshView"
+             Command="{Binding RefreshCommand}"
+             IsRefreshing="{Binding IsRefreshing}">
+
+                <CollectionView  x:Name="collectionName" ItemsSource="{Binding FilteredOccuAreas}" SelectionMode="Multiple" SelectedItems="{Binding SelectedOccuAreas}" BackgroundColor="White"
+                                SelectionChangedCommand="{Binding UpdateOccuArea}" SelectionChangedCommandParameter="{Binding Source={x:Reference collectionName}, Path=SelectedItems}">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Span="1" Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <SwipeView>
+                                <Grid Margin="7">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="50"/>
+                                    </Grid.RowDefinitions>
+                                    <Label Text="{Binding Path=OccupationName, StringFormat='{0}'}" HorizontalTextAlignment="End" FontSize="20" TextColor="Black" Grid.Row="0" Grid.Column="0"/>
+                                </Grid>
+
+                            </SwipeView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
+
+            <Entry Placeholder="רשום תחום עיסוק חדש שתרצה להוסיף" MaxLength="30" Text="{Binding NewOccuArea}" TextColor="Black"></Entry>
+            <Button Text="הוסף תחום עיסוק לרשימה" Command="{Binding AddOccuArea}"></Button>
             <Label Padding="0" Text="{Binding CaptionError}"  HorizontalOptions="Center" IsVisible="{Binding ShowCaptionError}" TextColor="Red"/>
 
             <Button Text="פרסמ.י" Command="{Binding SubmitCommand}" BackgroundColor="Beige" TextColor="Black" Margin="120,40" FontSize="15" CornerRadius="30"/>
 
             <Label Padding="0" Text="{Binding NextError}" HorizontalOptions="Center" IsVisible="{Binding ShowNextError}"/>
 
-        </StackLayout>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

@@ -411,7 +411,7 @@ namespace VolunteeringApp.ViewModels
                 }
 
                 VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
-                Post p = await proxy.NewPost(newP, a);
+                Post p = await proxy.NewPost(newP);
 
                 if (p == null)
                 {

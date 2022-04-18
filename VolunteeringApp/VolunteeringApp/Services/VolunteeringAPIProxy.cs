@@ -446,7 +446,7 @@ namespace VolunteeringApp.Services
             }
         }
 
-        public async Task<Post> NewPost(Post p, Association a)
+        public async Task<Post> NewPost(Post p)
         {
             try
             {
