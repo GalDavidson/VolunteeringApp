@@ -382,9 +382,14 @@ namespace VolunteeringApp.ViewModels
 
             if (ValidateForm())
             {
+
+                App theApp = (App)App.Current;
+                Association a = (Association)theApp.CurrentUser;
+
                 Post newP = new Post
                 {
-                    Caption = this.Caption
+                    Caption = this.Caption,
+                    AssociationId = a.AssociationId
                 };
 
                 foreach (OccupationalArea o in selectedOccuAreas)
@@ -397,17 +402,19 @@ namespace VolunteeringApp.ViewModels
                     newP.OccupationalAreasOfPosts.Add(oc);
                 }
 
-                App theApp = (App)App.Current;
-                Association a = (Association)theApp.CurrentUser;
-
                 foreach (OccupationalArea o in selectedOccuAreas)
                 {
-                    OccupationalAreasOfAssociation oc = new OccupationalAreasOfAssociation
+                    OccupationalAreasOfAssociation temp = a.OccupationalAreasOfAssociations.Where(s => s.OccupationalAreaId == o.OccupationalAreaId).FirstOrDefault();
+                    if (temp == null)
                     {
-                        OccupationalArea = o,
-                        Association = a
-                    };
-                    a.OccupationalAreasOfAssociations.Add(oc);
+                        OccupationalAreasOfAssociation oc = new OccupationalAreasOfAssociation
+                        {
+                            OccupationalArea = o,
+                            Association = a
+                        };
+                        a.OccupationalAreasOfAssociations.Add(oc);
+                    }
+
                 }
 
                 VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
