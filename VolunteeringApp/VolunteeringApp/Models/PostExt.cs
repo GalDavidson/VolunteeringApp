@@ -14,7 +14,7 @@ namespace VolunteeringApp.Models
                 VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
                 //Create a source with cache busting!
                 Random r = new Random();
-                string source = $"{proxy.GetBasePhotoUri()}/{this.AssociationId}.jpg?{r.Next()}";
+                string source = $"{proxy.GetBasePhotoUri()}/{this.PostId}.jpg?{r.Next()}";
                 return source;
             }
         }

@@ -466,7 +466,7 @@ namespace VolunteeringApp.Services
                     string str = await response.Content.ReadAsStringAsync();
 
                     Post post = JsonSerializer.Deserialize<Post>(str, options);
-                    return p;
+                    return post;
                 }
                 else
                 {

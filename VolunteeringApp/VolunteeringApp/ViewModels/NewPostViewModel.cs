@@ -389,32 +389,18 @@ namespace VolunteeringApp.ViewModels
                 Post newP = new Post
                 {
                     Caption = this.Caption,
-                    AssociationId = a.AssociationId
+                    AssociationId = a.AssociationId,
+
                 };
 
                 foreach (OccupationalArea o in selectedOccuAreas)
                 {
                     OccupationalAreasOfPost oc = new OccupationalAreasOfPost
                     {
-                        OccupationalArea = o,
-                        Post = newP
+                        OccupationalAreaId = o.OccupationalAreaId,
+                        PostId = newP.PostId
                     };
                     newP.OccupationalAreasOfPosts.Add(oc);
-                }
-
-                foreach (OccupationalArea o in selectedOccuAreas)
-                {
-                    OccupationalAreasOfAssociation temp = a.OccupationalAreasOfAssociations.Where(s => s.OccupationalAreaId == o.OccupationalAreaId).FirstOrDefault();
-                    if (temp == null)
-                    {
-                        OccupationalAreasOfAssociation oc = new OccupationalAreasOfAssociation
-                        {
-                            OccupationalArea = o,
-                            Association = a
-                        };
-                        a.OccupationalAreasOfAssociations.Add(oc);
-                    }
-
                 }
 
                 VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
