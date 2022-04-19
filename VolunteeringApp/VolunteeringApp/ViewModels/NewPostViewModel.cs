@@ -26,6 +26,102 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion
 
+        #region שם פרטי
+        private bool showEventNameError;
+
+        public bool ShowEventNameError
+        {
+            get => showEventNameError;
+            set
+            {
+                showEventNameError = value;
+                OnPropertyChanged("ShowEventNameError");
+            }
+        }
+
+        private string eventName;
+
+        public string EventName
+        {
+            get => eventName;
+            set
+            {
+                eventName = value;
+                ValidateEventName();
+                OnPropertyChanged("EventName");
+            }
+        }
+
+        private string eventNameError;
+
+        public string EventNameError
+        {
+            get => eventNameError;
+            set
+            {
+                eventNameError = value;
+                OnPropertyChanged("EventNameError");
+            }
+        }
+
+        private void ValidateEventName()
+        {
+            this.ShowConditions = false;
+
+            this.ShowEventNameError = string.IsNullOrEmpty(EventName);
+            if (ShowEventNameError)
+                EventNameError = ERROR_MESSAGES.REQUIRED_FIELD;
+        }
+        #endregion
+
+        #region מיקום האירוע
+        private bool showLocationError;
+
+        public bool ShowLocationError
+        {
+            get => showLocationError;
+            set
+            {
+                showLocationError = value;
+                OnPropertyChanged("ShowLocationError");
+            }
+        }
+
+        private string location;
+
+        public string Location
+        {
+            get => location;
+            set
+            {
+                location = value;
+                ValidateLocation();
+                OnPropertyChanged("Location");
+            }
+        }
+
+        private string locationError;
+
+        public string LocationError
+        {
+            get => locationError;
+            set
+            {
+                locationError = value;
+                OnPropertyChanged("LocationError");
+            }
+        }
+
+        private void ValidateLocation()
+        {
+            this.ShowConditions = false;
+
+            this.ShowLocationError = string.IsNullOrEmpty(Location);
+            if (ShowLocationError)
+                LocationError = ERROR_MESSAGES.REQUIRED_FIELD;
+        }
+        #endregion
+
         #region תיאור הפוסט
         private bool showCaptionError;
 
