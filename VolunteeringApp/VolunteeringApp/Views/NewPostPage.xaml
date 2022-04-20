@@ -53,17 +53,36 @@
 
                 <Label Text="מיקום" TextDecorations="Underline" />
                 <Frame CornerRadius="5" BorderColor="DarkGray" HorizontalOptions="Start" BackgroundColor="Transparent" WidthRequest="270" HeightRequest="40"  Padding="10" >
-                    <Entry  Text="{Binding Location}" FontSize="14" />
+                    <Entry Text="{Binding Location}" FontSize="14" />
                 </Frame>
                 <Label Padding="0" Text="{Binding LocationError}" HorizontalOptions="Start" IsVisible="{Binding ShowLocationError}"  Style="{StaticResource labelErrorStyle}"/>
 
+                
+                <Label Text="תאריך" TextDecorations="Underline" />
+                <Frame CornerRadius="5" BorderColor="DarkGray" HorizontalOptions="Start" BackgroundColor="Transparent" WidthRequest="270" HeightRequest="70"  Padding="10" >
+                    <DatePicker Date="{Binding EntryDate}" MinimumDate="{Binding EntryDate}" HorizontalOptions="Start"></DatePicker>
+                </Frame>
+                <Label Padding="0" Text="{Binding DateError}" HorizontalOptions="Start" IsVisible="{Binding ShowDateError}" Style="{StaticResource labelErrorStyle}"/>
 
+                
+                <Label Text="שעת התחלה" TextDecorations="Underline" />
+                <Frame CornerRadius="5" BorderColor="DarkGray" HorizontalOptions="Start" BackgroundColor="Transparent" WidthRequest="270" HeightRequest="70"  Padding="10" >
+                    <TimePicker Time="{Binding EntryStartTime}" HorizontalOptions="Start"></TimePicker>
+                </Frame>
+
+                
+                <Label Text="שעת סיום" TextDecorations="Underline" />
+                <Frame CornerRadius="5" BorderColor="DarkGray" HorizontalOptions="Start" BackgroundColor="Transparent" WidthRequest="270" HeightRequest="70"  Padding="10" >
+                    <TimePicker Time="{Binding EntryEndTime}" HorizontalOptions="Start"></TimePicker>
+                </Frame>
+
+                
                 <Label Text="תיאור הפוסט" TextDecorations="Underline" />
                 <Frame CornerRadius="5" BorderColor="DarkGray" HorizontalOptions="Start" BackgroundColor="Transparent" WidthRequest="270" HeightRequest="80" Padding="10" >
                     <Entry Text="{Binding Caption}" FontSize="14" />
                 </Frame>
-                <Label Padding="0" Text="{Binding CaptionError}" HorizontalOptions="Start" IsVisible="{Binding ShowCaptionError}"  Style="{StaticResource labelErrorStyle}"/>
-
+                <Label Padding="0" Text="{Binding CaptionError}" HorizontalOptions="Start" IsVisible="{Binding ShowCaptionError}" Style="{StaticResource labelErrorStyle}"/>
+                <Label/>
 
                 <Label Text="בחר.י תחום אחד או יותר שהאירוע עוסק בו:" TextDecorations="Underline" />
 
@@ -76,15 +95,15 @@
              Command="{Binding RefreshCommand}"
              IsRefreshing="{Binding IsRefreshing}">
 
-                    <CollectionView  x:Name="collectionName" ItemsSource="{Binding FilteredOccuAreas}" SelectionMode="Multiple" SelectedItems="{Binding SelectedOccuAreas}" BackgroundColor="Transparent"
+                    <CollectionView x:Name="collectionName" ItemsSource="{Binding FilteredOccuAreas}" SelectionMode="Multiple" SelectedItems="{Binding SelectedOccuAreas}" BackgroundColor="Transparent"
                                 SelectionChangedCommand="{Binding UpdateOccuArea}" SelectionChangedCommandParameter="{Binding Source={x:Reference collectionName}, Path=SelectedItems}">
-                        <CollectionView.ItemsLayout>
+                        <CollectionView.ItemsLayout >
                             <GridItemsLayout Span="1" Orientation="Vertical" />
                         </CollectionView.ItemsLayout>
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
                                 <SwipeView>
-                                    <Grid Margin="7">
+                                    <Grid Margin="7" HorizontalOptions="Start">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>

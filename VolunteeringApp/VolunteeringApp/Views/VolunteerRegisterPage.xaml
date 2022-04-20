@@ -114,7 +114,7 @@
                         <DatePicker TextColor="Black" Date="{Binding EntryBirthDate}" HorizontalOptions="Start"></DatePicker>
                     </StackLayout>
                 </Frame>
-
+                <Label Padding="0" Text="{Binding BirthDateError}" HorizontalOptions="Start" IsVisible="{Binding ShowBirthDateError}"  Style="{StaticResource labelErrorStyle}"/>
 
 
                 <Button Text="הרשמה" Command="{Binding SubmitCommand}" BackgroundColor="Beige" TextColor="Black"  Margin="15" FontAttributes="Bold" Padding="5" FontSize="17" CornerRadius="30"/>

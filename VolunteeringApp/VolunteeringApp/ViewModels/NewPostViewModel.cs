@@ -149,17 +149,17 @@ namespace VolunteeringApp.ViewModels
             }
         }
 
-        private DateTime date;
-        private DateTime Date
-        {
-            get => date;
-            set
-            {
-                date = value;
-                ValidateDate();
-                OnPropertyChanged("Date");
-            }
-        }
+        //private DateTime date;
+        //private DateTime Date
+        //{
+        //    get => date;
+        //    set
+        //    {
+        //        date = value;
+        //        ValidateDate();
+        //        OnPropertyChanged("Date");
+        //    }
+        //}
 
         private string dateError;
         private string DateError
@@ -174,10 +174,46 @@ namespace VolunteeringApp.ViewModels
 
         private void ValidateDate()
         {
-            TimeSpan ts = this.EntryDate - DateTime.Now;
-            this.ShowDateError = ts.Hours < 1;
-            if (ShowDateError)
-                DateError = "לא ניתן לפרסם אירוע שמתקיים בעוד פחות משעה";
+            if (DateTime.Now.Date == EntryDate.Date)
+            {
+                if ((EntryStartTime.TotalMilliseconds - (DateTime.Now.TimeOfDay).TotalMilliseconds) <  )
+                {
+                    ShowDateError = true;
+                    DateError = "לא ניתן לפרסם אירוע שמתקיים בעוד פחות משעה";
+                }
+            }
+        }
+        #endregion
+
+        #region שעת התחלה
+        private TimeSpan entryStartTime = new TimeSpan(0, 0, 0, 0);
+        public TimeSpan EntryStartTime
+        {
+            get => this.entryStartTime;
+            set
+            {
+                if (value != this.entryStartTime)
+                {
+                    this.entryStartTime = value;
+                    OnPropertyChanged("EntryStartTime");
+                }
+            }
+        }
+        #endregion
+
+        #region שעת סיום
+        private TimeSpan entryEndTime = new TimeSpan(0, 0, 0, 0);
+        public TimeSpan EntryEndTime
+        {
+            get => this.entryEndTime;
+            set
+            {
+                if (value != this.entryEndTime)
+                {
+                    this.entryEndTime = value;
+                    OnPropertyChanged("EntryEndTime");
+                }
+            }
         }
         #endregion
 

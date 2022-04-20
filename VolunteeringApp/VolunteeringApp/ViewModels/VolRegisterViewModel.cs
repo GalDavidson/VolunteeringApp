@@ -512,15 +512,15 @@ namespace VolunteeringApp.ViewModels
             }
         }
 
-        private DateTime birthdate;
-        private DateTime Birthdate
+        private DateTime birthDate;
+        private DateTime BirthDate
         {
-            get => birthdate;
+            get => birthDate;
             set
             {
-                birthdate = value;
+                birthDate = value;
                 ValidateBirthDate();
-                OnPropertyChanged("Birthdate");
+                OnPropertyChanged("BirthDate");
             }
         }
 
