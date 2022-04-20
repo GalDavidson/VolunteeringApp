@@ -26,7 +26,7 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion
 
-        #region שם פרטי
+        #region שם האירוע
         private bool showEventNameError;
 
         public bool ShowEventNameError
@@ -119,6 +119,65 @@ namespace VolunteeringApp.ViewModels
             this.ShowLocationError = string.IsNullOrEmpty(Location);
             if (ShowLocationError)
                 LocationError = ERROR_MESSAGES.REQUIRED_FIELD;
+        }
+        #endregion
+
+        #region תאריך האירוע
+
+        private DateTime entryDate = DateTime.Now;
+        public DateTime EntryDate
+        {
+            get => this.entryDate;
+            set
+            {
+                if (value != this.entryDate)
+                {
+                    this.entryDate = value;
+                    OnPropertyChanged("EntryDate");
+                }
+            }
+        }
+
+        private bool showDateError;
+        private bool ShowDateError
+        {
+            get => showDateError;
+            set
+            {
+                showDateError = value;
+                OnPropertyChanged("ShowDateError");
+            }
+        }
+
+        private DateTime date;
+        private DateTime Date
+        {
+            get => date;
+            set
+            {
+                date = value;
+                ValidateDate();
+                OnPropertyChanged("Date");
+            }
+        }
+
+        private string dateError;
+        private string DateError
+        {
+            get => dateError;
+            set
+            {
+                dateError = value;
+                OnPropertyChanged("DateError");
+            }
+        }
+
+        private void ValidateDate()
+        {
+            TimeSpan ts = this.EntryDate - DateTime.Now;
+            this.ShowDateError = ts.Hours < 1;
+            if (ShowDateError)
+                DateError = "לא ניתן לפרסם אירוע שמתקיים בעוד פחות משעה";
         }
         #endregion
 
@@ -449,6 +508,9 @@ namespace VolunteeringApp.ViewModels
 
         public NewPostViewModel()
         {
+            this.ShowEventNameError = false;
+            this.ShowLocationError = false;
+            this.ShowDateError = false;
             this.ShowCaptionError = false;
 
             this.ImgSrc = DEFAULT_PHOTO_SRC;
@@ -465,10 +527,13 @@ namespace VolunteeringApp.ViewModels
 
         private bool ValidateForm()
         {
+            ValidateEventName();
+            ValidateLocation();
+            ValidateDate();
             ValidateCaption();
 
             //check if any validation failed
-            if (ShowCaptionError)
+            if (ShowCaptionError || ShowEventNameError || ShowLocationError || ShowDateError)
                 return false;
             return true;
         }
@@ -478,15 +543,26 @@ namespace VolunteeringApp.ViewModels
 
             if (ValidateForm())
             {
-
                 App theApp = (App)App.Current;
                 Association a = (Association)theApp.CurrentUser;
+
+                DailyEvent ev = new DailyEvent
+                {
+                    EventName = this.EventName,
+                    EventLocation = this.Location,
+                    EventDate = EntryDate,
+                    ActionDate = DateTime.Today,
+                    AssociationId = a.AssociationId
+                };
+
+                VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
+                DailyEvent dailyEvent = await proxy.NewEvent(ev);
 
                 Post newP = new Post
                 {
                     Caption = this.Caption,
                     AssociationId = a.AssociationId,
-
+                    EventId = dailyEvent.EventId
                 };
 
                 foreach (OccupationalArea o in selectedOccuAreas)
@@ -499,7 +575,7 @@ namespace VolunteeringApp.ViewModels
                     newP.OccupationalAreasOfPosts.Add(oc);
                 }
 
-                VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
+               
                 Post p = await proxy.NewPost(newP);
 
                 if (p == null)

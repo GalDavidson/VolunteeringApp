@@ -480,6 +480,40 @@ namespace VolunteeringApp.Services
             }
         }
 
+        public async Task<DailyEvent> NewEvent(DailyEvent d)
+        {
+            try
+            {
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve,
+                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.Hebrew, UnicodeRanges.BasicLatin),
+                    PropertyNameCaseInsensitive = true
+                };
+                string jsonObject = JsonSerializer.Serialize<DailyEvent>(d, options);
+                StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/CreateNewEvent", content);
+                if (response.IsSuccessStatusCode)
+                {
+
+                    string str = await response.Content.ReadAsStringAsync();
+
+                    DailyEvent ev = JsonSerializer.Deserialize<DailyEvent>(str, options);
+                    return ev;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
         public async Task<Volunteer> RegVolAsync(Volunteer volunteer)
         {
             try

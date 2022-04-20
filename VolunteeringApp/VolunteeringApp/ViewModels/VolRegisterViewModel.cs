@@ -524,8 +524,8 @@ namespace VolunteeringApp.ViewModels
             }
         }
 
-        private bool birthDateError;
-        private bool BirthDateError
+        private string birthDateError;
+        private string BirthDateError
         {
             get => birthDateError;
             set
@@ -541,6 +541,8 @@ namespace VolunteeringApp.ViewModels
         {
             TimeSpan ts = DateTime.Now - this.EntryBirthDate;
             this.ShowBirthDateError = ts.TotalDays < (MIN_AGE * 365);
+            if (ShowBirthDateError)
+                BirthDateError = "לא ניתן לפרסם אירוע שמתקיים בעוד פחות משעה";
         }
         #endregion
 
@@ -582,9 +584,10 @@ namespace VolunteeringApp.ViewModels
             ValidateUsername();
             ValidatePassword();
             ValidateVerPassword();
+            ValidateBirthDate();
 
             //check if any validation failed
-            if (ShowNameError || ShowLastNameError || ShowUsernameError || ShowEmailError || ShowPasswordError || ShowVerPasswordError)
+            if (ShowNameError || ShowLastNameError || ShowUsernameError || ShowEmailError || ShowPasswordError || ShowVerPasswordError || ShowBirthDateError) 
                 return false;
             return true;
         }
@@ -597,6 +600,7 @@ namespace VolunteeringApp.ViewModels
             this.ShowUsernameError = false;
             this.ShowPasswordError = false;
             this.ShowVerPasswordError = false;
+            this.ShowBirthDateError = false;
             this.ShowConditions = false;
             this.SubmitCommand = new Command(OnSubmit);
 

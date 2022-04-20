@@ -10,13 +10,12 @@ namespace VolunteeringApp.Models
         {
             //OccupationalAreasOfPosts = new List<OccupationalAreasOfPost>();
             //PicturesOfEvents = new List<PicturesOfEvent>();
-            Posts = new List<Post>();
+            //Posts = new List<Post>();
             VolunteersInEvents = new List<VolunteersInEvent>();
         }
 
         public int EventId { get; set; }
         public string EventLocation { get; set; }
-        public string Caption { get; set; }
         public int? AssociationId { get; set; }
         public DateTime? ActionDate { get; set; }
         public string EventName { get; set; }
@@ -24,7 +23,7 @@ namespace VolunteeringApp.Models
 
         public virtual Association Association { get; set; }
         //public virtual List<PicturesOfEvent> PicturesOfEvents { get; set; }
-        public virtual List<Post> Posts { get; set; }
+        public virtual Post Post { get; set; }
         public virtual List<VolunteersInEvent> VolunteersInEvents { get; set; }
     }
 }
