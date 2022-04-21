@@ -7,6 +7,12 @@
             <Label Text="Welcome to Home Page!"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
+
+            <TimePicker Time="{Binding EntryStartTime}"></TimePicker>
+
+            <TimePicker Time="{Binding Entry}"></TimePicker>
+
+            <Label Text="{Binding Po}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

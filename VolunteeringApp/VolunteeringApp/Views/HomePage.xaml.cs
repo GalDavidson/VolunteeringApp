@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using VolunteeringApp.ViewModels;
 
 namespace VolunteeringApp.Views
 {
@@ -14,6 +15,7 @@ namespace VolunteeringApp.Views
     {
         public HomePage()
         {
+            BindingContext = new HomePageViewModel();
             InitializeComponent();
         }
     }

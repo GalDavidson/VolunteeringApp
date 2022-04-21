@@ -101,7 +101,6 @@ namespace VolunteeringApp.ViewModels
         }
 
         private string locationError;
-
         public string LocationError
         {
             get => locationError;
@@ -133,13 +132,14 @@ namespace VolunteeringApp.ViewModels
                 if (value != this.entryDate)
                 {
                     this.entryDate = value;
+                    ValidateDate();
                     OnPropertyChanged("EntryDate");
                 }
             }
         }
 
         private bool showDateError;
-        private bool ShowDateError
+        public bool ShowDateError
         {
             get => showDateError;
             set
@@ -149,20 +149,8 @@ namespace VolunteeringApp.ViewModels
             }
         }
 
-        //private DateTime date;
-        //private DateTime Date
-        //{
-        //    get => date;
-        //    set
-        //    {
-        //        date = value;
-        //        ValidateDate();
-        //        OnPropertyChanged("Date");
-        //    }
-        //}
-
         private string dateError;
-        private string DateError
+        public string DateError
         {
             get => dateError;
             set
@@ -174,13 +162,27 @@ namespace VolunteeringApp.ViewModels
 
         private void ValidateDate()
         {
+            DateError = "";
+
+            if (EntryStartTime.Hours == 0)
+                EntryStartTime.Add(new TimeSpan(24));
+            if (EntryEndTime.Hours == 0)
+                EntryEndTime.Add(new TimeSpan(24));
+
             if (DateTime.Now.Date == EntryDate.Date)
             {
-                if ((EntryStartTime.TotalMilliseconds - (DateTime.Now.TimeOfDay).TotalMilliseconds) <  )
+                if ((EntryEndTime-EntryStartTime).Minutes < 30)
                 {
                     ShowDateError = true;
-                    DateError = "לא ניתן לפרסם אירוע שמתקיים בעוד פחות משעה";
+                    DateError += "לא ניתן לקיים אירוע שנמשך פחות מחצי שעה";
                 }
+            }
+
+            TimeSpan t = DateTime.Now.TimeOfDay;
+            if ((EntryStartTime - t).Hours < 1)
+            {
+                ShowDateError = true;
+                DateError += "לא ניתן לפרסם אירוע שמתקיים בעוד פחות משעה";
             }
         }
         #endregion
@@ -195,6 +197,7 @@ namespace VolunteeringApp.ViewModels
                 if (value != this.entryStartTime)
                 {
                     this.entryStartTime = value;
+                    ValidateDate();
                     OnPropertyChanged("EntryStartTime");
                 }
             }
@@ -211,6 +214,7 @@ namespace VolunteeringApp.ViewModels
                 if (value != this.entryEndTime)
                 {
                     this.entryEndTime = value;
+                    ValidateDate();
                     OnPropertyChanged("EntryEndTime");
                 }
             }

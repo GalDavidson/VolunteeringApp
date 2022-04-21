@@ -296,7 +296,6 @@ namespace VolunteeringApp.ViewModels
                 {
                     this.password = value;
                     ValidatePassword();
-
                     OnPropertyChanged("Password");
                 }
             }
@@ -361,7 +360,6 @@ namespace VolunteeringApp.ViewModels
                 {
                     this.verPassword = value;
                     ValidateVerPassword();
-
                     OnPropertyChanged("VerPassword");
                 }
             }
