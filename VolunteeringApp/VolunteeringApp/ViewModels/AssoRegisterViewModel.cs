@@ -909,7 +909,7 @@ namespace VolunteeringApp.ViewModels
 
             this.selectedOccuAreas = new List<OccupationalArea>();
             this.filteredOccuAreas = new ObservableCollection<OccupationalArea>();
-
+            
             this.selectedBranches = new List<Branch>();
             this.filteredBranches = new ObservableCollection<Branch>();
 

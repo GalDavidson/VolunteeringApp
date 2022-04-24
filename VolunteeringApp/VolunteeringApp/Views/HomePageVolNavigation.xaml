@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VolunteeringApp.Views.HomePageVolNavigation"
+            xmlns:local="clr-namespace:VolunteeringApp.Views"
+            FlowDirection="RightToLeft">
+  <!--Pages can be added as references or inline-->
+    <TabbedPage.ToolbarItems>
+        <ToolbarItem Name="MenuItem1" Order="Secondary" Text="דף הבית" Priority="0" />
+        <ToolbarItem Name="MenuItem2" Order="Secondary" Text="הרשמה" Priority="1" />
+    </TabbedPage.ToolbarItems>
+
+    <!--Pages can be added as references or inline-->
+    <!--  <local:AllPosts Title="כל הפוסטים" /> -->
+    <local:VolunteerRegisterPage Title="האירועים שלך" />
+</TabbedPage>

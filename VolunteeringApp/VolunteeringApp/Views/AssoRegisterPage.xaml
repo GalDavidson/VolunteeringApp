@@ -139,7 +139,6 @@
                                             </Grid.RowDefinitions>
                                             <Label Text="{Binding Path=OccupationName, StringFormat='{0}'}" HorizontalTextAlignment="End" FontSize="20" TextColor="Black" Grid.Row="0" Grid.Column="0"/>
                                         </Grid>
-
                                     </SwipeView>
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>

@@ -162,28 +162,31 @@ namespace VolunteeringApp.ViewModels
 
         private void ValidateDate()
         {
-            DateError = "";
+            //DateError = "";
 
-            if (EntryStartTime.Hours == 0)
-                EntryStartTime.Add(new TimeSpan(24));
-            if (EntryEndTime.Hours == 0)
-                EntryEndTime.Add(new TimeSpan(24));
+            //int curStart = 0;
+            //int curEnd = 0;
 
-            if (DateTime.Now.Date == EntryDate.Date)
-            {
-                if ((EntryEndTime-EntryStartTime).Minutes < 30)
-                {
-                    ShowDateError = true;
-                    DateError += "לא ניתן לקיים אירוע שנמשך פחות מחצי שעה";
-                }
-            }
+            //if (EntryStartTime.Hours == 0)
+            //    curStart = 24;
+            //if (EntryEndTime.Hours == 0)
+            //    curEnd = 24;
 
-            TimeSpan t = DateTime.Now.TimeOfDay;
-            if ((EntryStartTime - t).Hours < 1)
-            {
-                ShowDateError = true;
-                DateError += "לא ניתן לפרסם אירוע שמתקיים בעוד פחות משעה";
-            }
+            //if (DateTime.Now.Date == EntryDate.Date)
+            //{
+            //    if ((EntryEndTime-EntryStartTime).Minutes < 30)
+            //    {
+            //        ShowDateError = true;
+            //        DateError += "לא ניתן לקיים אירוע שנמשך פחות מחצי שעה";
+            //    }
+            //}
+
+            //TimeSpan t = DateTime.Now.TimeOfDay;
+            //if ((EntryStartTime - t).Hours < 1)
+            //{
+            //    ShowDateError = true;
+            //    DateError += "לא ניתן לפרסם אירוע שמתקיים בעוד פחות משעה";
+            //}
         }
         #endregion
 
@@ -592,33 +595,26 @@ namespace VolunteeringApp.ViewModels
                     EventLocation = this.Location,
                     EventDate = EntryDate,
                     ActionDate = DateTime.Today,
-                    AssociationId = a.AssociationId
-                };
-
-                VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
-                DailyEvent dailyEvent = await proxy.NewEvent(ev);
-
-                Post newP = new Post
-                {
-                    Caption = this.Caption,
                     AssociationId = a.AssociationId,
-                    EventId = dailyEvent.EventId
+                    StartTime = EntryStartTime,
+                    EndTime = EntryEndTime
                 };
 
                 foreach (OccupationalArea o in selectedOccuAreas)
                 {
-                    OccupationalAreasOfPost oc = new OccupationalAreasOfPost
+                    OccupationalAreasOfEvent oc = new OccupationalAreasOfEvent
                     {
                         OccupationalAreaId = o.OccupationalAreaId,
-                        PostId = newP.PostId
+                        EventId = ev.EventId
                     };
-                    newP.OccupationalAreasOfPosts.Add(oc);
+                    ev.OccupationalAreasOfEvents.Add(oc);
                 }
 
-               
-                Post p = await proxy.NewPost(newP);
 
-                if (p == null)
+                VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
+                DailyEvent dailyEvent = await proxy.NewEvent(ev);
+
+                if (dailyEvent == null)
                 {
                     await App.Current.MainPage.DisplayAlert("שגיאה", "הרשמה נכשלה, בדוק את הפרטים המוקלדים", "בסדר");
                 }
@@ -631,11 +627,11 @@ namespace VolunteeringApp.ViewModels
                         bool success = await proxy.UploadImage(new FileInfo()
                         {
                             Name = this.imageFileResult.FullPath
-                        }, $"P{p.PostId}.jpg");
+                        }, $"V{ev.EventId}.jpg");
 
                         if (success)
                         {
-                            ImgSrc = p.ImgSource;
+                            ImgSrc = ev.ImgSource;
                         }
                     }
                     ServerStatus = "שומר נתונים...";

@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VolunteeringApp.Views.AllPostsPage"
+             xmlns:models="clr-namespace:VolunteeringApp.Models"
+             FlowDirection="RightToLeft">
+
+    <ContentPage.Resources>
+        <Style TargetType="StackLayout" x:Key="RegisterStack">
+            <Setter Property="Orientation" Value="Vertical"/>
+            <Setter Property="Padding" Value="30"/>
+            <Setter Property="Spacing" Value="40"/>
+            <Setter Property="FlowDirection" Value="RightToLeft"/>
+        </Style>
+        <Style TargetType="Label" x:Key="FormTitle">
+            <Setter Property="HorizontalOptions" Value="Center"/>
+            <Setter Property="FontSize" Value="Large"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+        </Style>
+        <Style TargetType="Entry" x:Key="RegisterEntry">
+            <Setter Property="PlaceholderColor" Value="White"/>
+            <Setter Property="HeightRequest" Value="40"/>
+            <Setter Property="TextColor" Value="White"/>
+        </Style>
+        <Style TargetType="Button" x:Key="RegisterButton">
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="FontSize" Value="Large"/>
+            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="BackgroundColor" Value="#088da5"/>
+        </Style>
+
+        <ResourceDictionary>
+            <Style x:Key="labelNameStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="Small" />
+            </Style>
+            <Style x:Key="labelErrorStyle" TargetType="Label">
+                <Setter Property="HorizontalOptions" Value="End" />
+                <Setter Property="TextColor" Value="Red" />
+                <Setter Property="FontSize" Value="Small" />
+            </Style>
+            <Style x:Key="conditionsStyle" TargetType="Label">
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="TextColor" Value="DarkBlue" />
+                <Setter Property="FontSize" Value="12" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <StackLayout Margin="60" Padding="25" BackgroundColor="Black" HorizontalOptions="Center" VerticalOptions="Center">
+
+            <!-- <SearchBar x:Name="searchBar" Placeholder="חפש סניף" Text="{Binding SearchPost}"/> -->
+
+            <RefreshView x:Name="refreshView" Command="{Binding RefreshPostsCommand}" IsRefreshing="{Binding IsRefresh}">
+
+                <CollectionView  x:Name="collection" ItemsSource="{Binding FilteredPosts}" SelectionMode="Multiple" BackgroundColor="White" >
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Span="1" Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <SwipeView>
+                                <Grid Margin="7">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="50"/>
+                                    </Grid.RowDefinitions>
+                                    <Label Text="{Binding Path=BranchLocation, StringFormat='{0}'}" HorizontalTextAlignment="End" FontSize="20" TextColor="Black" Grid.Row="0" Grid.Column="0"/>
+                                </Grid>
+                            </SwipeView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

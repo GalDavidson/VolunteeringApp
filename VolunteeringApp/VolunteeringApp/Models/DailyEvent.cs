@@ -22,10 +22,11 @@ namespace VolunteeringApp.Models
         public DateTime? EventDate { get; set; }
         public TimeSpan? StartTime { get; set; }
         public TimeSpan? EndTime { get; set; }
+        public string Caption { get; set; }
 
         public virtual Association Association { get; set; }
         //public virtual List<PicturesOfEvent> PicturesOfEvents { get; set; }
-        public virtual Post Post { get; set; }
+        public virtual List<OccupationalAreasOfEvent> OccupationalAreasOfEvents { get; set; }
         public virtual List<VolunteersInEvent> VolunteersInEvents { get; set; }
     }
 }

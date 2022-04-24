@@ -9,13 +9,13 @@ namespace VolunteeringApp.Models
         public OccupationalArea()
         {
             OccupationalAreasOfAssociations = new List<OccupationalAreasOfAssociation>();
-            OccupationalAreasOfPosts = new List<OccupationalAreasOfPost>();
+            OccupationalAreasOfEvents = new List<OccupationalAreasOfEvent>();
         }
 
         public int OccupationalAreaId { get; set; }
         public string OccupationName { get; set; }
 
         public virtual List<OccupationalAreasOfAssociation> OccupationalAreasOfAssociations { get; set; }
-        public virtual List<OccupationalAreasOfPost> OccupationalAreasOfPosts { get; set; }
+        public virtual List<OccupationalAreasOfEvent> OccupationalAreasOfEvents { get; set; }
     }
 }

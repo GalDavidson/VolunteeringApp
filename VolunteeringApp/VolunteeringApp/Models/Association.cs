@@ -12,7 +12,6 @@ namespace VolunteeringApp.Models
             BranchesOfAssociations = new List<BranchesOfAssociation>();
             DailyEvents = new List<DailyEvent>();
             OccupationalAreasOfAssociations = new List<OccupationalAreasOfAssociation>();
-            Posts = new List<Post>();
         }
 
         public int AssociationId { get; set; }
@@ -35,6 +34,5 @@ namespace VolunteeringApp.Models
         public virtual List<BranchesOfAssociation> BranchesOfAssociations { get; set; }
         public virtual List<DailyEvent> DailyEvents { get; set; }
         public virtual List<OccupationalAreasOfAssociation> OccupationalAreasOfAssociations { get; set; }
-        public virtual List<Post> Posts { get; set; }
     }
 }

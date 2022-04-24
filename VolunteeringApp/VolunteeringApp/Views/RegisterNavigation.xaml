@@ -2,11 +2,12 @@
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="VolunteeringApp.Views.RegisterNavigation"
-            xmlns:local="clr-namespace:VolunteeringApp.Views"  >
+            xmlns:local="clr-namespace:VolunteeringApp.Views"
+            FlowDirection="RightToLeft">
 
     <TabbedPage.ToolbarItems>
-        <ToolbarItem Name="MenuItem1" Order="Secondary" Text="דף הבית" Priority="0" />
-        <ToolbarItem Name="MenuItem2" Order="Secondary" Text="הרשמה" Priority="1" />
+        <ToolbarItem Name="MenuItem1" Order="Secondary" Text="דף הבית" Priority="0" Clicked="MenuItem1_Clicked" />
+        <ToolbarItem Name="MenuItem2" Order="Secondary" Text="התחברות" Priority="1" Clicked="MenuItem2_Clicked" />
     </TabbedPage.ToolbarItems>
     
     <!--Pages can be added as references or inline-->

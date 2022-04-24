@@ -5,7 +5,7 @@ using VolunteeringApp.Services;
 
 namespace VolunteeringApp.Models
 {
-    public partial class Post
+    public partial class DailyEvent
     {
         public string ImgSource
         {
@@ -14,7 +14,7 @@ namespace VolunteeringApp.Models
                 VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
                 //Create a source with cache busting!
                 Random r = new Random();
-                string source = $"{proxy.GetBasePhotoUri()}/{this.PostId}.jpg?{r.Next()}";
+                string source = $"{proxy.GetBasePhotoUri()}/{this.EventId}.jpg?{r.Next()}";
                 return source;
             }
         }
