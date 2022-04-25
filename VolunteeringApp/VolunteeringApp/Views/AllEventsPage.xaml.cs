@@ -8,6 +8,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using VolunteeringApp.ViewModels;
 using VolunteeringApp.Models;
+using VolunteeringApp.Views;
 
 namespace VolunteeringApp.Views
 {
@@ -16,8 +17,10 @@ namespace VolunteeringApp.Views
     {
         public AllEventsPage()
         {
-            BindingContext = new AllEventsViewModel();
+            AllEventsViewModel a = new AllEventsViewModel();
+            BindingContext = a;
             InitializeComponent();
+           
         }
     }
 }

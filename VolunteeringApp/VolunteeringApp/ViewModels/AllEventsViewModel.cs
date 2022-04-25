@@ -107,7 +107,7 @@ namespace VolunteeringApp.ViewModels
         //        }
         //    }
 
-        //    this.FilteredEvents = new ObservableCollection<Event>(this.FilteredEvents.OrderBy(b => b.ActionDate));
+        //    this.FilteredEvents = new ObservableCollection<DailyEvent>(this.FilteredEvents.OrderBy(b => b.ActionDate));
         //}
         //#endregion
 

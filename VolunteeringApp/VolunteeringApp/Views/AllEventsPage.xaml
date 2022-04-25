@@ -47,21 +47,23 @@
     </ContentPage.Resources>
 
     <ContentPage.Content>
-        <StackLayout Margin="60" Padding="25" BackgroundColor="Black" HorizontalOptions="Center" VerticalOptions="Center">
+        <StackLayout Margin="60" Padding="25" BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center">
 
             <!-- <SearchBar x:Name="searchBar" Placeholder="חפש סניף" Text="{Binding SearchPost}"/> -->
 
             <RefreshView x:Name="refreshView" Command="{Binding RefreshEventsCommand}" IsRefreshing="{Binding IsRefresh}">
 
-                <CollectionView  x:Name="collection" ItemsSource="{Binding FilteredEvents}" SelectionMode="Multiple" BackgroundColor="White" >
+                <CollectionView x:Name="collection" HorizontalOptions="Center" ItemsSource="{Binding FilteredEvents}" SelectionMode="Multiple" BackgroundColor="White" >
                     <CollectionView.ItemsLayout>
-                        <GridItemsLayout Span="1" Orientation="Vertical" />
+                        <GridItemsLayout Span="1" VerticalItemSpacing="120" Orientation="Vertical" />
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <SwipeView>
-                                <Grid Margin="7">
+                                <Grid HorizontalOptions="Center" Margin="7" RowSpacing="-20">
                                     <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
@@ -70,8 +72,21 @@
                                         <RowDefinition Height="50"/>
                                         <RowDefinition Height="50"/>
                                     </Grid.RowDefinitions>
-                                    <Label Text="{Binding Path=, StringFormat='{0}'}" FontSize="10" TextColor="Black" Grid.Row="0" Grid.Column="0"/>
-                               
+                                    <Label Text="ההתנדבות:" FontSize="12" TextColor="Black" Grid.Row="0" Grid.Column="0"/>
+                                    <Label Text="{Binding Path=EventName, StringFormat='{0}'}" FontSize="12" TextColor="Black" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"/>
+                                    <Label Text="איפה?" FontSize="12" TextColor="Black" Grid.Row="1" Grid.Column="0"/>
+                                    <Label Text="{Binding Path=EventLocation, StringFormat='{0}'}" FontSize="12" TextColor="Black" Grid.Row="1" Grid.Column="1"  Grid.ColumnSpan="2"/>
+                                    <Label Text="מתי?" FontSize="12" TextColor="Black" Grid.Row="2" Grid.Column="0"/>
+                                    <Label x:Name="hello" Text="{Binding Path=EventDate, StringFormat='{0:MMMM dd, yyyy}'}" FontSize="12" TextColor="Black" Grid.Row="2" Grid.Column="1"  Grid.ColumnSpan="2"/>
+                                    <Label Text="מתי?" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="0"/>
+                                    <Label Text="{Binding Path=StartTime, StringFormat='{0}'}" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="1"/>
+                                    <Label Text="{Binding Path=EndTime, StringFormat='{0}'}" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="2"/>
+                                    <Label Text="מה בתכנית:" FontSize="12" TextColor="Black" Grid.Row="4" Grid.Column="0"/>
+                                    <Label Text="{Binding Path=Caption, StringFormat='{0}'}" FontSize="12" TextColor="Black" Grid.Row="4" Grid.Column="1"  Grid.ColumnSpan="2"/>
+                                    <Button Text="הרשמה לאירוע" Command="{Binding SubmitCommand}"  FontAttributes="Bold" CornerRadius="15" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3"/>
+
+                                    
+                                    
                                 </Grid>
                             </SwipeView>
                         </DataTemplate>

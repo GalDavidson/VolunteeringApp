@@ -12,6 +12,7 @@ namespace VolunteeringApp.Models
             //OccupationalAreasOfPosts = new List<OccupationalAreasOfPost>();
             //PicturesOfEvents = new List<PicturesOfEvent>();
             //Posts = new List<Post>();
+            OccupationalAreasOfEvents = new List<OccupationalAreasOfEvent>();
             VolunteersInEvents = new List<VolunteersInEvent>();
         }
 
