@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="VolunteeringApp.Views.AllPostsPage"
-             xmlns:models="clr-namespace:VolunteeringApp.Models"
+             x:Class="VolunteeringApp.Views.AllEventsPage"
              FlowDirection="RightToLeft">
 
     <ContentPage.Resources>
@@ -52,9 +51,9 @@
 
             <!-- <SearchBar x:Name="searchBar" Placeholder="חפש סניף" Text="{Binding SearchPost}"/> -->
 
-            <RefreshView x:Name="refreshView" Command="{Binding RefreshPostsCommand}" IsRefreshing="{Binding IsRefresh}">
+            <RefreshView x:Name="refreshView" Command="{Binding RefreshEventsCommand}" IsRefreshing="{Binding IsRefresh}">
 
-                <CollectionView  x:Name="collection" ItemsSource="{Binding FilteredPosts}" SelectionMode="Multiple" BackgroundColor="White" >
+                <CollectionView  x:Name="collection" ItemsSource="{Binding FilteredEvents}" SelectionMode="Multiple" BackgroundColor="White" >
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout Span="1" Orientation="Vertical" />
                     </CollectionView.ItemsLayout>
@@ -67,8 +66,12 @@
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="50"/>
+                                        <RowDefinition Height="50"/>
+                                        <RowDefinition Height="50"/>
+                                        <RowDefinition Height="50"/>
                                     </Grid.RowDefinitions>
-                                    <Label Text="{Binding Path=BranchLocation, StringFormat='{0}'}" HorizontalTextAlignment="End" FontSize="20" TextColor="Black" Grid.Row="0" Grid.Column="0"/>
+                                    <Label Text="{Binding Path=, StringFormat='{0}'}" FontSize="10" TextColor="Black" Grid.Row="0" Grid.Column="0"/>
+                               
                                 </Grid>
                             </SwipeView>
                         </DataTemplate>

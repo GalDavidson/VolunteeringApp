@@ -17,13 +17,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\AllEventsPage.xaml.cs">
+      <DependentUpon>AllEventsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\NewEventPage.xaml.cs">
+      <DependentUpon>NewEventPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Views\AllPostsPage.xaml">
+    <EmbeddedResource Update="Views\AllEventsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\AppAdminPage.xaml">
@@ -41,7 +47,7 @@
     <EmbeddedResource Update="Views\LoginPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\NewPostPage.xaml">
+    <EmbeddedResource Update="Views\NewEventPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\RegisterNavigation.xaml">

@@ -12,11 +12,11 @@ using VolunteeringApp.Models;
 namespace VolunteeringApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class NewPostPage : ContentPage
+    public partial class NewEventPage : ContentPage
     {
-        public NewPostPage()
+        public NewEventPage()
         {
-            NewPostViewModel n = new NewPostViewModel();
+            NewEventViewModel n = new NewEventViewModel();
             n.SetImageSourceEvent += OnSetImageSource;
             this.BindingContext = n;
 

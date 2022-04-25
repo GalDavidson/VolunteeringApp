@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using VolunteeringApp.Services;
 
 namespace VolunteeringApp.Models
 {
@@ -23,6 +24,16 @@ namespace VolunteeringApp.Models
         public TimeSpan? StartTime { get; set; }
         public TimeSpan? EndTime { get; set; }
         public string Caption { get; set; }
+
+        public string Pic
+        {
+            get
+            {
+                VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
+                string url = $"{proxy.GetBasePhotoUri()}E{this.EventId}.jpg";
+                return url;
+            }
+        }
 
         public virtual Association Association { get; set; }
         //public virtual List<PicturesOfEvent> PicturesOfEvents { get; set; }

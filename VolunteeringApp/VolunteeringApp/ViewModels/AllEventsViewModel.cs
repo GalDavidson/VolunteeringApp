@@ -15,7 +15,7 @@ using Xamarin.Essentials;
 
 namespace VolunteeringApp.ViewModels
 {
-    class AllPostsViewModel : INotifyPropertyChanged
+    class AllEventsViewModel : INotifyPropertyChanged
     {
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -26,21 +26,21 @@ namespace VolunteeringApp.ViewModels
         #endregion
 
         #region סניפים
-        private List<Post> allPosts;
-        private ObservableCollection<Post> filteredPosts;
-        public ObservableCollection<Post> FilteredPosts
+        private List<DailyEvent> allEvents;
+        private ObservableCollection<DailyEvent> filteredEvents;
+        public ObservableCollection<DailyEvent> FilteredEvents
         {
             get
             {
-                return this.filteredPosts;
+                return this.filteredEvents;
             }
             set
             {
-                if (this.filteredPosts != value)
+                if (this.filteredEvents != value)
                 {
 
-                    this.filteredPosts = value;
-                    OnPropertyChanged("FilteredPosts");
+                    this.filteredEvents = value;
+                    OnPropertyChanged("FilteredEvents");
                 }
             }
         }
@@ -63,55 +63,55 @@ namespace VolunteeringApp.ViewModels
         //    }
         //}
 
-        private void InitPosts()
+        private void InitEvents()
         {
             IsRefresh = true;
             App theApp = (App)App.Current;
-            this.allPosts = theApp.LookupTables.Posts;
+            this.allEvents = theApp.LookupTables.Events;
 
 
             //Copy list to the filtered list
-            this.filteredPosts = new ObservableCollection<Post>(this.allPosts.OrderBy(b => b.ActionDate));
+            this.filteredEvents = new ObservableCollection<DailyEvent>(this.allEvents.OrderBy(b => b.ActionDate));
             //SearchBranch = String.Empty;
             IsRefresh = false;
         }
 
         #endregion סניפים
 
-        //#region Search Posts
+        //#region Search Events
         //public void OnTypeChanged(string searching)
         //{
         //    //Filter the list of contacts based on the search term
-        //    if (this.allPosts == null)
+        //    if (this.allEvents == null)
         //        return;
         //    if (String.IsNullOrWhiteSpace(searching) || String.IsNullOrEmpty(searching))
         //    {
-        //        foreach (Post p in this.allPosts)
+        //        foreach (DailyEvent p in this.allEvents)
         //        {
-        //            if (!this.FilteredPosts.Contains(p))
-        //                this.FilteredPosts.Add(p);
+        //            if (!this.FilteredEvents.Contains(p))
+        //                this.FilteredEvents.Add(p);
         //        }
         //    }
         //    else
         //    {
-        //        foreach (Post p in this.allPosts)
+        //        foreach (DailyEvent p in this.allEvents)
         //        {
         //            string branchesString = $"{b.BranchLocation}";
 
-        //            if (!this.FilteredPosts.Contains(p) &&
+        //            if (!this.FilteredEvents.Contains(p) &&
         //                branchesString.Contains(searching))
-        //                this.FilteredPosts.Add(p);
-        //            else if (this.FilteredPosts.Contains(p) &&
+        //                this.FilteredEvents.Add(p);
+        //            else if (this.FilteredEvents.Contains(p) &&
         //                !branchesString.Contains(searching))
-        //                this.FilteredPosts.Remove(p);
+        //                this.FilteredEvents.Remove(p);
         //        }
         //    }
 
-        //    this.FilteredPosts = new ObservableCollection<Post>(this.FilteredPosts.OrderBy(b => b.ActionDate));
+        //    this.FilteredEvents = new ObservableCollection<Event>(this.FilteredEvents.OrderBy(b => b.ActionDate));
         //}
         //#endregion
 
-        #region Refresh Posts
+        #region Refresh Events
         private bool isRefresh;
         public bool IsRefresh
         {
@@ -125,14 +125,14 @@ namespace VolunteeringApp.ViewModels
                 }
             }
         }
-        public ICommand RefreshPostsCommand => new Command(OnRefreshPosts);
-        public void OnRefreshPosts()
+        public ICommand RefreshEventsCommand => new Command(OnRefreshEvents);
+        public void OnRefreshEvents()
         {
-            InitPosts();
+            InitEvents();
         }
         #endregion
 
-        #region PostSelection
+        #region EventSelection
         //List<Branch> selectedBranches;
         //public List<Branch> SelectedBranches
         //{
@@ -180,10 +180,10 @@ namespace VolunteeringApp.ViewModels
         #endregion
 
 
-        public AllPostsViewModel()
+        public AllEventsViewModel()
         {
-            this.filteredPosts = new ObservableCollection<Post>();
-            InitPosts();
+            this.filteredEvents = new ObservableCollection<DailyEvent>();
+            InitEvents();
         }
 
 

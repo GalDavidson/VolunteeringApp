@@ -34,7 +34,6 @@ namespace VolunteeringApp
             ViewModels.ServerStatusViewModel vm = new ViewModels.ServerStatusViewModel();
             vm.ServerStatus = "טוען נתונים...";
             MainPage = new Views.ServerStatusPage(vm);
-
         }
 
         protected async override void OnStart()
@@ -48,7 +47,7 @@ namespace VolunteeringApp
                 MainPage = new Views.ServerStatusPage(vm);
             }
             else
-                MainPage = new NavigationPage(new AllPostsPage()) ;
+                MainPage = new NavigationPage(new AllEventsPage()) ;
         }
 
         protected override void OnSleep()

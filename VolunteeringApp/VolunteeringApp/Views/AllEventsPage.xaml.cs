@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using VolunteeringApp.ViewModels;
+using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using VolunteeringApp.ViewModels;
+using VolunteeringApp.Models;
 
 namespace VolunteeringApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AllPostsPage : ContentPage
+    public partial class AllEventsPage: ContentPage
     {
-        public AllPostsPage()
+        public AllEventsPage()
         {
-            BindingContext = new AllPostsViewModel();
+            BindingContext = new AllEventsViewModel();
             InitializeComponent();
         }
     }

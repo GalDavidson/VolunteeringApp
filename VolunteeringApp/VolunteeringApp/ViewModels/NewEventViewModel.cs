@@ -16,7 +16,7 @@ using Xamarin.Essentials;
 
 namespace VolunteeringApp.ViewModels
 {
-    public class NewPostViewModel: INotifyPropertyChanged
+    public class NewEventViewModel: INotifyPropertyChanged
     {
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -224,7 +224,7 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion
 
-        #region תיאור הפוסט
+        #region תיאור האירוע
         private bool showCaptionError;
 
         public bool ShowCaptionError
@@ -549,7 +549,7 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion serverStatus
 
-        public NewPostViewModel()
+        public NewEventViewModel()
         {
             this.ShowEventNameError = false;
             this.ShowLocationError = false;
@@ -594,6 +594,7 @@ namespace VolunteeringApp.ViewModels
                     EventName = this.EventName,
                     EventLocation = this.Location,
                     EventDate = EntryDate,
+                    Caption = this.Caption,
                     ActionDate = DateTime.Today,
                     AssociationId = a.AssociationId,
                     StartTime = EntryStartTime,
@@ -627,7 +628,7 @@ namespace VolunteeringApp.ViewModels
                         bool success = await proxy.UploadImage(new FileInfo()
                         {
                             Name = this.imageFileResult.FullPath
-                        }, $"V{ev.EventId}.jpg");
+                        }, $"E{ev.EventId}.jpg");
 
                         if (success)
                         {
