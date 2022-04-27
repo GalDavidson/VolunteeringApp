@@ -28,6 +28,21 @@
             <Setter Property="TextColor" Value="White"/>
             <Setter Property="BackgroundColor" Value="#088da5"/>
         </Style>
+        <Style TargetType="Grid">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="pink" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
 
         <ResourceDictionary>
             <Style x:Key="labelNameStyle" TargetType="Label">
@@ -61,6 +76,7 @@
                         <DataTemplate>
                             <SwipeView>
                                 <Grid HorizontalOptions="Center" Margin="7" RowSpacing="-20">
+                                    
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="*" />
@@ -85,8 +101,6 @@
                                     <Label Text="{Binding Path=Caption, StringFormat='{0}'}" FontSize="12" TextColor="Black" Grid.Row="4" Grid.Column="1"  Grid.ColumnSpan="2"/>
                                     <Button Text="הרשמה לאירוע" Command="{Binding SubmitCommand}"  FontAttributes="Bold" CornerRadius="15" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3"/>
 
-                                    
-                                    
                                 </Grid>
                             </SwipeView>
                         </DataTemplate>
