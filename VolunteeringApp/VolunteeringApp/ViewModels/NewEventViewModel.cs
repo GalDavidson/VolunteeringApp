@@ -336,6 +336,35 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion תחומי עיסוק
 
+        #region אזור בארץ
+        public ObservableCollection<Area> Areas { get; }
+
+        public void CreateAreaCollection()
+        {
+            if (((App)App.Current).LookupTables != null)
+            {
+                List<Area> areasList = ((App)App.Current).LookupTables.Areas;
+                foreach (Area a in areasList)
+                {
+                    this.Areas.Add(a);
+                }
+            }
+        }
+
+        private Area area;
+        public Area Area
+        {
+            get { return area; }
+            set
+            {
+                area = value;
+                OnPropertyChanged("Area");
+            }
+        }
+
+        #endregion
+
+
         #region Search
         public void OnTextChanged(string search)
         {
@@ -563,7 +592,11 @@ namespace VolunteeringApp.ViewModels
 
             InitOccuAreas();
 
+            Areas = new ObservableCollection<Area>();
+            CreateAreaCollection();
+
             this.SubmitCommand = new Command(OnSubmit);
+
         }
 
         public ICommand SubmitCommand { protected set; get; }
@@ -611,6 +644,11 @@ namespace VolunteeringApp.ViewModels
                     ev.OccupationalAreasOfEvents.Add(oc);
                 }
 
+                ev.Area = new Area
+                {
+                    AreaId = this.Area.AreaId,
+                    AreaName = this.Area.AreaName
+                };
 
                 VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
                 DailyEvent dailyEvent = await proxy.NewEvent(ev);

@@ -25,7 +25,7 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion
 
-        #region סניפים
+        #region כל האירועים
         private List<DailyEvent> allEvents;
         private ObservableCollection<DailyEvent> filteredEvents;
         public ObservableCollection<DailyEvent> FilteredEvents
@@ -38,30 +38,11 @@ namespace VolunteeringApp.ViewModels
             {
                 if (this.filteredEvents != value)
                 {
-
                     this.filteredEvents = value;
                     OnPropertyChanged("FilteredEvents");
                 }
             }
         }
-
-        //private string searchBranch;
-        //public string SearchBranch
-        //{
-        //    get
-        //    {
-        //        return this.searchBranch;
-        //    }
-        //    set
-        //    {
-        //        //if (this.searchBranch != value)
-        //        //{
-        //        this.searchBranch = value;
-        //        OnTypeChanged(value);
-        //        OnPropertyChanged("SearchBranch");
-        //        //}
-        //    }
-        //}
 
         private void InitEvents()
         {
@@ -72,44 +53,34 @@ namespace VolunteeringApp.ViewModels
 
             //Copy list to the filtered list
             this.filteredEvents = new ObservableCollection<DailyEvent>(this.allEvents.OrderBy(b => b.ActionDate));
-            //SearchBranch = String.Empty;
             IsRefresh = false;
         }
+        #endregion
 
-        #endregion סניפים
+        #region Search Events
+        public Command FilterCommand => new Command(OnTypeChanged);
+        public void OnTypeChanged()
+        {
+            //Filter the list of contacts based on the search term
+            if (this.allEvents == null)
+            {
 
-        //#region Search Events
-        //public void OnTypeChanged(string searching)
-        //{
-        //    //Filter the list of contacts based on the search term
-        //    if (this.allEvents == null)
-        //        return;
-        //    if (String.IsNullOrWhiteSpace(searching) || String.IsNullOrEmpty(searching))
-        //    {
-        //        foreach (DailyEvent p in this.allEvents)
-        //        {
-        //            if (!this.FilteredEvents.Contains(p))
-        //                this.FilteredEvents.Add(p);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        foreach (DailyEvent p in this.allEvents)
-        //        {
-        //            string branchesString = $"{b.BranchLocation}";
+                return;
+            }
 
-        //            if (!this.FilteredEvents.Contains(p) &&
-        //                branchesString.Contains(searching))
-        //                this.FilteredEvents.Add(p);
-        //            else if (this.FilteredEvents.Contains(p) &&
-        //                !branchesString.Contains(searching))
-        //                this.FilteredEvents.Remove(p);
-        //        }
-        //    }
+            if (this.Area != null)
+            {
+                foreach (DailyEvent e in this.allEvents)
+                {
+                    this.filteredEvents.Clear();
+                    if (e.AreaId == this.Area.AreaId)
+                        this.FilteredEvents.Add(e);
+                }
+            }
 
-        //    this.FilteredEvents = new ObservableCollection<DailyEvent>(this.FilteredEvents.OrderBy(b => b.ActionDate));
-        //}
-        //#endregion
+            this.filteredEvents = new ObservableCollection<DailyEvent>(this.FilteredEvents.OrderBy(b => b.ActionDate));
+        }
+        #endregion
 
         #region Refresh Events
         private bool isRefresh;
@@ -179,11 +150,58 @@ namespace VolunteeringApp.ViewModels
         //}
         #endregion
 
+        #region רשימת איזורים
+
+        private List<Area> areas;
+        public List<Area> Areas
+        {
+            get
+            {
+                return this.areas;
+            }
+            set
+            {
+                if (this.areas != value)
+                {
+                    this.areas = value;
+                    OnPropertyChanged("Areas");
+                }
+            }
+        }
+
+        private void CreateAreasCollection()
+        {
+            if (((App)App.Current).LookupTables != null)
+            {
+                List<Area> areasList = ((App)App.Current).LookupTables.Areas;
+                foreach (Area a in areasList)
+                {
+                    this.Areas.Add(a);
+                }
+            }
+        }
+
+
+        private Area area;
+        public Area Area
+        {
+            get => area;
+            set
+            {
+                if (this.area != value)
+                    area = value;
+                OnPropertyChanged("Area");
+            }
+        }
+
+       
+        #endregion
 
         public AllEventsViewModel()
         {
             this.filteredEvents = new ObservableCollection<DailyEvent>();
             InitEvents();
+            CreateAreasCollection();
         }
 
 

@@ -24,6 +24,7 @@ namespace VolunteeringApp.Models
         public DateTime? EventDate { get; set; }
         public TimeSpan? StartTime { get; set; }
         public TimeSpan? EndTime { get; set; }
+        public int? AreaId { get; set; }
         public string Caption { get; set; }
 
         public string Pic
@@ -36,6 +37,7 @@ namespace VolunteeringApp.Models
             }
         }
 
+        public virtual Area Area { get; set; }
         public virtual Association Association { get; set; }
         //public virtual List<PicturesOfEvent> PicturesOfEvents { get; set; }
         public virtual List<OccupationalAreasOfEvent> OccupationalAreasOfEvents { get; set; }
