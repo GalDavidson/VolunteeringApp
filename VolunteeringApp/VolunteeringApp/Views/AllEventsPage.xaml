@@ -62,10 +62,13 @@
     </ContentPage.Resources>
 
     <ContentPage.Content>
-        <StackLayout Margin="60" Padding="25" BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center">
+        <StackLayout BackgroundColor="Transparent" HorizontalOptions="Center" VerticalOptions="Center">
 
-            <!-- <SearchBar x:Name="searchBar" Placeholder="חפש סניף" Text="{Binding SearchPost}"/> -->
-
+            <Label Text="חיפוש לפי איזורים בארץ" TextDecorations="Underline"></Label>
+            <Frame CornerRadius="10" BorderColor="DarkGray" HorizontalOptions="Start" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
+                <Picker x:Name="AreaPicker" ItemsSource="{Binding Areas}" ItemDisplayBinding="{Binding AreaName}" SelectedItem="{Binding Area}" >
+                </Picker>
+            </Frame>
             <RefreshView x:Name="refreshView" Command="{Binding RefreshEventsCommand}" IsRefreshing="{Binding IsRefresh}">
 
                 <CollectionView x:Name="collection" HorizontalOptions="Center" ItemsSource="{Binding FilteredEvents}" SelectionMode="Multiple" BackgroundColor="White" >
@@ -99,7 +102,7 @@
                                     <Label Text="{Binding Path=EndTime, StringFormat='{0}'}" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="2"/>
                                     <Label Text="מה בתכנית:" FontSize="12" TextColor="Black" Grid.Row="4" Grid.Column="0"/>
                                     <Label Text="{Binding Path=Caption, StringFormat='{0}'}" FontSize="12" TextColor="Black" Grid.Row="4" Grid.Column="1"  Grid.ColumnSpan="2"/>
-                                    <Button Text="הרשמה לאירוע" Command="{Binding SubmitCommand}"  FontAttributes="Bold" CornerRadius="15" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3"/>
+                                    <Button Text="הרשמה לאירוע" Command="{Binding RegisterToEventCommand}"  FontAttributes="Bold" CornerRadius="15" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3"/>
 
                                 </Grid>
                             </SwipeView>

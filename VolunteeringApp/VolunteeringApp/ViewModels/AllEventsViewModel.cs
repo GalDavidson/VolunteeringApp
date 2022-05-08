@@ -57,30 +57,30 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion
 
-        #region Search Events
-        public Command FilterCommand => new Command(OnTypeChanged);
-        public void OnTypeChanged()
-        {
-            //Filter the list of contacts based on the search term
-            if (this.allEvents == null)
-            {
+        //#region Search Events
+        //public Command FilterCommand => new Command(OnTypeChanged);
+        //public void OnTypeChanged()
+        //{
+        //    //Filter the list of contacts based on the search term
+        //    if (this.allEvents == null)
+        //    {
 
-                return;
-            }
+        //        return;
+        //    }
 
-            if (this.Area != null)
-            {
-                foreach (DailyEvent e in this.allEvents)
-                {
-                    this.filteredEvents.Clear();
-                    if (e.AreaId == this.Area.AreaId)
-                        this.FilteredEvents.Add(e);
-                }
-            }
+        //    if (this.Area != null)
+        //    {
+        //        foreach (DailyEvent e in this.allEvents)
+        //        {
+        //            this.filteredEvents.Clear();
+        //            if (e.AreaId == this.Area.AreaId)
+        //                this.FilteredEvents.Add(e);
+        //        }
+        //    }
 
-            this.filteredEvents = new ObservableCollection<DailyEvent>(this.FilteredEvents.OrderBy(b => b.ActionDate));
-        }
-        #endregion
+        //    this.filteredEvents = new ObservableCollection<DailyEvent>(this.FilteredEvents.OrderBy(b => b.ActionDate));
+        //}
+        //#endregion
 
         #region Refresh Events
         private bool isRefresh;
@@ -152,22 +152,7 @@ namespace VolunteeringApp.ViewModels
 
         #region רשימת איזורים
 
-        private List<Area> areas;
-        public List<Area> Areas
-        {
-            get
-            {
-                return this.areas;
-            }
-            set
-            {
-                if (this.areas != value)
-                {
-                    this.areas = value;
-                    OnPropertyChanged("Areas");
-                }
-            }
-        }
+        public List<Area> Areas { get; }
 
         private void CreateAreasCollection()
         {
@@ -181,7 +166,6 @@ namespace VolunteeringApp.ViewModels
             }
         }
 
-
         private Area area;
         public Area Area
         {
@@ -193,18 +177,34 @@ namespace VolunteeringApp.ViewModels
                 OnPropertyChanged("Area");
             }
         }
-
-       
         #endregion
 
         public AllEventsViewModel()
         {
             this.filteredEvents = new ObservableCollection<DailyEvent>();
             InitEvents();
-            CreateAreasCollection();
+            //CreateAreasCollection();
+            this.RegisterToEventCommand = new Command(OnPress);
         }
 
+        public ICommand RegisterToEventCommand { protected set; get; }
 
+        public async void OnPress()
+        {
+            App app = (App)App.Current;
+            Object o = app.CurrentUser;
+
+            if (o == null)
+                await App.Current.MainPage.DisplayAlert("", "על מנת להירשם לאירוע התנדבות עליך להירשם/להתחבר לאפליקציה", "בסדר");
+
+            if (o is Volunteer)
+            {
+                VolunteersInEvent v = new VolunteersInEvent
+                {
+                    EventId = 
+                }
+            }
+        }
 
     }
 }

@@ -47,7 +47,7 @@ namespace VolunteeringApp
                 MainPage = new Views.ServerStatusPage(vm);
             }
             else
-                MainPage = new NavigationPage(new LoginPage());
+                MainPage = new NavigationPage(new AllEventsPage());
         }
 
         protected override void OnSleep()
