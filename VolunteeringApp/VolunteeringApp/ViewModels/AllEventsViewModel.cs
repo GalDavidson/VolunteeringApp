@@ -57,30 +57,30 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion
 
-        //#region Search Events
-        //public Command FilterCommand => new Command(OnTypeChanged);
-        //public void OnTypeChanged()
-        //{
-        //    //Filter the list of contacts based on the search term
-        //    if (this.allEvents == null)
-        //    {
+        #region Search Events
+        public Command FilterCommand => new Command(OnTypeChanged);
+        public void OnTypeChanged()
+        {
+            //Filter the list of contacts based on the search term
+            if (this.allEvents == null)
+            {
+                return;
+            }
 
-        //        return;
-        //    }
+            if (this.Area != null)
+            {
+                this.filteredEvents.Clear();
+                foreach (DailyEvent e in this.allEvents)
+                {
+                    if (e.AreaId == this.Area.AreaId)
+                        this.FilteredEvents.Add(e);
+                }
+                this.filteredEvents = new ObservableCollection<DailyEvent>(this.FilteredEvents.OrderBy(b => b.ActionDate));
+            }
 
-        //    if (this.Area != null)
-        //    {
-        //        foreach (DailyEvent e in this.allEvents)
-        //        {
-        //            this.filteredEvents.Clear();
-        //            if (e.AreaId == this.Area.AreaId)
-        //                this.FilteredEvents.Add(e);
-        //        }
-        //    }
-
-        //    this.filteredEvents = new ObservableCollection<DailyEvent>(this.FilteredEvents.OrderBy(b => b.ActionDate));
-        //}
-        //#endregion
+           
+        }
+        #endregion
 
         #region Refresh Events
         private bool isRefresh;
@@ -104,50 +104,22 @@ namespace VolunteeringApp.ViewModels
         #endregion
 
         #region EventSelection
-        //List<Branch> selectedBranches;
-        //public List<Branch> SelectedBranches
-        //{
-        //    get
-        //    {
-        //        return selectedBranches;
-        //    }
-        //    set
-        //    {
-        //        if (selectedBranches != value)
-        //        {
-        //            selectedBranches = value;
-        //        }
-        //    }
-        //}
-
-        //private string branches;
-
-        //public string Branches
-        //{
-        //    get => branches;
-        //    set
-        //    {
-        //        branches = value;
-        //        OnPropertyChanged("branches");
-        //    }
-        //}
-
-
-        //public ICommand UpdateBranches => new Command(OnPressedBranches);
-        //public async void OnPressedBranches(object branchesList)
-        //{
-        //    SelectedBranches.Clear();
-        //    Branches = string.Empty;
-        //    if (branchesList is IList<object>)
-        //    {
-        //        List<object> list = ((IList<object>)branchesList).ToList();
-        //        foreach (object b in list)
-        //        {
-        //            SelectedBranches.Add((Branch)b);
-        //        }
-        //        if (selectedBranches.Count == 0) { Branches = "לא נבחרו סניפים"; }
-        //    }
-        //}
+        private DailyEvent selectedEvent;
+        public DailyEvent SelectedEvent
+        {
+            get
+            {
+                return this.selectedEvent;
+            }
+            set
+            {
+                if (this.selectedEvent != value)
+                {
+                    this.selectedEvent = value;
+                    OnPropertyChanged("SelectedEvent");
+                }
+            }
+        }
         #endregion
 
         #region רשימת איזורים
@@ -173,17 +145,23 @@ namespace VolunteeringApp.ViewModels
             set
             {
                 if (this.area != value)
+                {
                     area = value;
-                OnPropertyChanged("Area");
+                    OnTypeChanged();
+                    OnPropertyChanged("Area");
+                }
+                    
+                
             }
         }
         #endregion
 
         public AllEventsViewModel()
         {
+            this.Areas = new List<Area>();
             this.filteredEvents = new ObservableCollection<DailyEvent>();
             InitEvents();
-            //CreateAreasCollection();
+            CreateAreasCollection();
             this.RegisterToEventCommand = new Command(OnPress);
         }
 
@@ -201,8 +179,11 @@ namespace VolunteeringApp.ViewModels
             {
                 VolunteersInEvent v = new VolunteersInEvent
                 {
-                    EventId = 
-                }
+                    EventId = SelectedEvent.EventId,
+                    VolunteerId = ((Volunteer)o).VolunteerId,
+
+
+                };
             }
         }
 

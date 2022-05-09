@@ -29,11 +29,16 @@ namespace VolunteeringApp.Views
            
         }
 
+        private void AreaPicker_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
+
         //private void AreaPicker_SelectedIndexChanged(object sender, EventArgs e)
         //{
 
         //    List<DailyEvent> lst = new List<DailyEvent>();
-        //    foreach (DailyEvent de in (List<DailyEvent>)AreaPicker.ItemsSource) 
+        //    foreach (DailyEvent de in (List<DailyEvent>)AreaPicker.ItemsSource)
         //    {
         //        lst.Add(de);
         //    }
