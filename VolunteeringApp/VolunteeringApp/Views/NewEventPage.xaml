@@ -53,7 +53,7 @@
                 <Label Padding="0" Text="{Binding EventNameError}" HorizontalOptions="Start" IsVisible="{Binding ShowEventNameError}"  Style="{StaticResource labelErrorStyle}"/>
 
 
-                <Label Text="מיקום" TextDecorations="Underline" />
+                <Label Text="כתובת" TextDecorations="Underline" />
                 <Frame CornerRadius="5" BorderColor="DarkGray" HorizontalOptions="Start" BackgroundColor="Transparent" WidthRequest="270" HeightRequest="40"  Padding="10" >
                     <Entry Text="{Binding Location}" FontSize="14" />
                 </Frame>

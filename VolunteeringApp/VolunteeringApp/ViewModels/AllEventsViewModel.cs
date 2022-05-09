@@ -57,8 +57,66 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion
 
-        #region Search Events
-        public Command FilterCommand => new Command(OnTypeChanged);
+        #region רשימת איזורים
+
+        public List<Area> Areas { get; set; }
+
+        private void CreateAreasCollection()
+        {
+            if (((App)App.Current).LookupTables != null)
+            {
+                Areas = ((App)App.Current).LookupTables.Areas;
+                Areas.Add()
+            }
+        }
+
+        private Area area;
+        public Area Area
+        {
+            get => area;
+            set
+            {
+                if (this.area != value)
+                {
+                    area = value;
+                    OnTypeChanged();
+                    OnPropertyChanged("Area");
+                }
+
+
+            }
+        }
+        #endregion
+
+        #region רשימת תחומי עיסוק
+
+        public List<OccupationalArea> OccupationalAreas { get; set; }
+
+        private void CreateOccupationalAreasCollection()
+        {
+            if (((App)App.Current).LookupTables != null)
+            {
+                OccupationalAreas = ((App)App.Current).LookupTables.OccupationalAreas;
+            }
+        }
+
+        private OccupationalArea occupationalArea;
+        public OccupationalArea OccupationalArea
+        {
+            get => occupationalArea;
+            set
+            {
+                if (this.occupationalArea != value)
+                {
+                    occupationalArea = value;
+                    OnTypeChanged();
+                    OnPropertyChanged("OccupationalArea");
+                }
+            }
+        }
+        #endregion
+
+        #region חיפוש אירועים לפי איזור ותחום עיסוק
         public void OnTypeChanged()
         {
             //Filter the list of contacts based on the search term
@@ -67,18 +125,58 @@ namespace VolunteeringApp.ViewModels
                 return;
             }
 
-            if (this.Area != null)
+            if (this.Area == null)
             {
-                this.filteredEvents.Clear();
-                foreach (DailyEvent e in this.allEvents)
+                if (this.OccupationalArea == null)
                 {
-                    if (e.AreaId == this.Area.AreaId)
-                        this.FilteredEvents.Add(e);
+                    return;
                 }
-                this.filteredEvents = new ObservableCollection<DailyEvent>(this.FilteredEvents.OrderBy(b => b.ActionDate));
+                else
+                {
+                    this.filteredEvents.Clear();
+                    foreach (DailyEvent e in this.allEvents)
+                    {
+                        foreach (OccupationalAreasOfEvent o in e.OccupationalAreasOfEvents)
+                        {
+                            if (this.OccupationalArea.OccupationalAreaId == o.OccupationalAreaId)
+                            {
+                                this.FilteredEvents.Add(e);
+                            }
+                        }
+                    }
+                    this.filteredEvents = new ObservableCollection<DailyEvent>(this.FilteredEvents.OrderBy(b => b.ActionDate));
+                }
             }
+            else
+            {
+                if (this.OccupationalArea == null)
+                {
+                    this.filteredEvents.Clear();
+                    foreach (DailyEvent e in this.allEvents)
+                    {
+                        if (e.AreaId == this.Area.AreaId)
+                            this.FilteredEvents.Add(e);
+                    }
+                    this.filteredEvents = new ObservableCollection<DailyEvent>(this.FilteredEvents.OrderBy(b => b.ActionDate));
+                }
+                else
+                {
+                    this.filteredEvents.Clear();
+                    foreach (DailyEvent e in this.allEvents)
+                    {
+                        bool found = false;
+                        foreach (OccupationalAreasOfEvent o in e.OccupationalAreasOfEvents)
+                        {
+                            if (this.OccupationalArea.OccupationalAreaId == o.OccupationalAreaId)
+                                found = true;
+                        }
 
-           
+                        if (found && e.AreaId == this.Area.AreaId)
+                            this.FilteredEvents.Add(e);
+                    }
+                    this.filteredEvents = new ObservableCollection<DailyEvent>(this.FilteredEvents.OrderBy(b => b.ActionDate));
+                }
+            }
         }
         #endregion
 
@@ -122,46 +220,15 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion
 
-        #region רשימת איזורים
-
-        public List<Area> Areas { get; }
-
-        private void CreateAreasCollection()
-        {
-            if (((App)App.Current).LookupTables != null)
-            {
-                List<Area> areasList = ((App)App.Current).LookupTables.Areas;
-                foreach (Area a in areasList)
-                {
-                    this.Areas.Add(a);
-                }
-            }
-        }
-
-        private Area area;
-        public Area Area
-        {
-            get => area;
-            set
-            {
-                if (this.area != value)
-                {
-                    area = value;
-                    OnTypeChanged();
-                    OnPropertyChanged("Area");
-                }
-                    
-                
-            }
-        }
-        #endregion
 
         public AllEventsViewModel()
         {
             this.Areas = new List<Area>();
+            this.OccupationalAreas = new List<OccupationalArea>();
             this.filteredEvents = new ObservableCollection<DailyEvent>();
             InitEvents();
             CreateAreasCollection();
+            CreateOccupationalAreasCollection();
             this.RegisterToEventCommand = new Command(OnPress);
         }
 

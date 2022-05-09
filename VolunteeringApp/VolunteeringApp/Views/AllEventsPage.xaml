@@ -62,13 +62,14 @@
     </ContentPage.Resources>
 
     <ContentPage.Content>
-        <StackLayout BackgroundColor="Transparent" HorizontalOptions="Center" VerticalOptions="Center">
+        <StackLayout BackgroundColor="Transparent" HorizontalOptions="Center" VerticalOptions="Center" Spacing="25">
 
-            <Label Text="חיפוש לפי איזורים בארץ" TextDecorations="Underline"></Label>
-            <Frame CornerRadius="10" BorderColor="DarkGray" HorizontalOptions="Start" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
-                <Picker x:Name="AreaPicker" ItemsSource="{Binding Areas}" ItemDisplayBinding="{Binding AreaName}" SelectedItem="{Binding Area}"  SelectedIndexChanged="AreaPicker_SelectedIndexChanged">
+            <!-- <Label Text="חיפוש לפי איזורים בארץ" TextDecorations="Underline" ></Label> -->
+            <Frame CornerRadius="10" BorderColor="DarkGray" HorizontalOptions="Start" BackgroundColor="Transparent" Padding="10">
+                <Picker x:Name="AreaPicker" Title="בחירת איזור בארץ"  ItemsSource="{Binding Areas}" ItemDisplayBinding="{Binding AreaName}" SelectedItem="{Binding Area}" HeightRequest="37" FontSize="15" >
                 </Picker>
             </Frame>
+            
             <RefreshView x:Name="refreshView" Command="{Binding RefreshEventsCommand}" IsRefreshing="{Binding IsRefresh}">
 
                 <CollectionView x:Name="collection" HorizontalOptions="Center" ItemsSource="{Binding FilteredEvents}" SelectionMode="Single"  BackgroundColor="Transparent" Style="{StaticResource NoBackround}" SelectedItem="{Binding SelectedEvent}" >
@@ -104,8 +105,11 @@
                                     <Label Text="{Binding Path=Caption, StringFormat='{0}'}" FontSize="12" TextColor="Black" Grid.Row="4" Grid.Column="1"  Grid.ColumnSpan="2"/>
                                     <Button Text="הרשמה לאירוע" Command="{Binding RegisterToEventCommand}"  FontAttributes="Bold" CornerRadius="15" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3"/>
 
+                                    
+                                    
                                 </Grid>
                             </SwipeView>
+                            
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
