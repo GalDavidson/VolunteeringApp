@@ -66,7 +66,11 @@ namespace VolunteeringApp.ViewModels
             if (((App)App.Current).LookupTables != null)
             {
                 Areas = ((App)App.Current).LookupTables.Areas;
-                Areas.Add()
+                Areas.Add(new Area
+                {
+                    AreaId = Areas.Count + 1,
+                    AreaName = "כל האיזורים"
+                });
             }
         }
 
@@ -97,6 +101,11 @@ namespace VolunteeringApp.ViewModels
             if (((App)App.Current).LookupTables != null)
             {
                 OccupationalAreas = ((App)App.Current).LookupTables.OccupationalAreas;
+                OccupationalAreas.Add(new OccupationalArea
+                {
+                    OccupationalAreaId = OccupationalAreas.Count + 1,
+                    OccupationName = "כל תחומי העיסוק"
+                });
             }
         }
 
@@ -230,6 +239,70 @@ namespace VolunteeringApp.ViewModels
             CreateAreasCollection();
             CreateOccupationalAreasCollection();
             this.RegisterToEventCommand = new Command(OnPress);
+            this.FilterEventsCommand = new Command(OnFilter);
+        }
+
+        public ICommand FilterEventsCommand { protected set; get; }
+
+        private void OnFilter()
+        {
+            //Filter the list of contacts based on the search term
+            if (this.allEvents == null)
+            {
+                return;
+            }
+
+            if (this.Area == null)
+            {
+                if (this.OccupationalArea == null)
+                {
+                    return;
+                }
+                else
+                {
+                    this.filteredEvents.Clear();
+                    foreach (DailyEvent e in this.allEvents)
+                    {
+                        foreach (OccupationalAreasOfEvent o in e.OccupationalAreasOfEvents)
+                        {
+                            if (this.OccupationalArea.OccupationalAreaId == o.OccupationalAreaId)
+                            {
+                                this.FilteredEvents.Add(e);
+                            }
+                        }
+                    }
+                    this.filteredEvents = new ObservableCollection<DailyEvent>(this.FilteredEvents.OrderBy(b => b.ActionDate));
+                }
+            }
+            else
+            {
+                if (this.OccupationalArea == null)
+                {
+                    this.filteredEvents.Clear();
+                    foreach (DailyEvent e in this.allEvents)
+                    {
+                        if (e.AreaId == this.Area.AreaId)
+                            this.FilteredEvents.Add(e);
+                    }
+                    this.filteredEvents = new ObservableCollection<DailyEvent>(this.FilteredEvents.OrderBy(b => b.ActionDate));
+                }
+                else
+                {
+                    this.filteredEvents.Clear();
+                    foreach (DailyEvent e in this.allEvents)
+                    {
+                        if (e.AreaId == this.Area.AreaId)
+                        {
+                            foreach (OccupationalAreasOfEvent o in e.OccupationalAreasOfEvents)
+                            {
+                                if (this.OccupationalArea.OccupationalAreaId == o.OccupationalAreaId)
+                                    this.FilteredEvents.Add(e);
+                            }
+                        }
+                    }
+                    this.filteredEvents = new ObservableCollection<DailyEvent>(this.FilteredEvents.OrderBy(b => b.ActionDate));
+                }
+            }
         }
 
         public ICommand RegisterToEventCommand { protected set; get; }
