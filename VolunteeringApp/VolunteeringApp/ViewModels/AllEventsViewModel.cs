@@ -58,7 +58,6 @@ namespace VolunteeringApp.ViewModels
         #endregion
 
         #region רשימת איזורים
-
         public List<Area> Areas { get; set; }
 
         private void CreateAreasCollection()
@@ -123,8 +122,6 @@ namespace VolunteeringApp.ViewModels
             }
         }
         #endregion
-
-       
 
         #region Refresh Events
         private bool isRefresh;
@@ -247,6 +244,16 @@ namespace VolunteeringApp.ViewModels
         private void OnCleanFilter()
         {
             this.FilteredEvents = new ObservableCollection<DailyEvent>(this.allEvents);
+            this.Area = new Area
+            {
+                AreaId = 0,
+                AreaName = "בחירת איזור בארץ"
+            };
+            this.OccupationalArea = new OccupationalArea
+            {
+                OccupationalAreaId = 0,
+                OccupationName = "בחירת סוג התנדבות"
+            };
         }
 
         public ICommand RegisterToEventCommand { protected set; get; }
@@ -267,7 +274,10 @@ namespace VolunteeringApp.ViewModels
                 VolunteersInEvent v = new VolunteersInEvent
                 {
                     EventId = SelectedEvent.EventId,
+                    Event = SelectedEvent,
                     VolunteerId = ((Volunteer)o).VolunteerId,
+                    Volunteer = (Volunteer)o,
+                    ActionDate = DateTime.Now,
                     RatingNum = 0,
                     WrittenRating = ""
                 };

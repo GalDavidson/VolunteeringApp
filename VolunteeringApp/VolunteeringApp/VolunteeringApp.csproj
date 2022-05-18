@@ -26,6 +26,9 @@
     <Compile Update="Views\NewEventPage.xaml.cs">
       <DependentUpon>NewEventPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\VolunteerEventsPage.xaml.cs">
+      <DependentUpon>VolunteerEventsPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -68,7 +71,7 @@
     <EmbeddedResource Update="Views\UpdateVolPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\VolunteerEvents.xaml">
+    <EmbeddedResource Update="Views\VolunteerEventsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\VolunteerRegisterPage.xaml">

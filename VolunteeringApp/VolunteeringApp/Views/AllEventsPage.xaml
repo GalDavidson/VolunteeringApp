@@ -6,8 +6,8 @@
              x:Name="ThePage">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="הרשמה" Priority="0" Order="Secondary" Clicked="ToolbarItem_Clicked"/>
-        <ToolbarItem Text="התחברות" Priority="0" Order="Secondary" Clicked="ToolbarItem_Clicked_1"/>
+        <ToolbarItem Text="התחברות" Priority="0" Order="Secondary" Clicked="ToolbarItem_Clicked"/>
+        <ToolbarItem Text="הרשמה" Priority="0" Order="Secondary" Clicked="ToolbarItem_Clicked_1"/>
         
     </ContentPage.ToolbarItems>
 
@@ -113,7 +113,7 @@
                                     <Label Text="איפה?" FontSize="12" TextColor="Black" Grid.Row="1" Grid.Column="0"/>
                                     <Label Text="{Binding Path=EventLocation, StringFormat='{0}'}" FontSize="12" TextColor="Black" Grid.Row="1" Grid.Column="1"  Grid.ColumnSpan="2"/>
                                     <Label Text="מתי?" FontSize="12" TextColor="Black" Grid.Row="2" Grid.Column="0"/>
-                                    <Label x:Name="hello" Text="{Binding Path=EventDate, StringFormat='{0:MMMM dd, yyyy}'}" FontSize="12" TextColor="Black" Grid.Row="2" Grid.Column="1"  Grid.ColumnSpan="2"/>
+                                    <Label Text="{Binding Path=EventDate, StringFormat='{0:MMMM dd, yyyy}'}" FontSize="12" TextColor="Black" Grid.Row="2" Grid.Column="1"  Grid.ColumnSpan="2"/>
                                     <Label Text="מתי?" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="0"/>
                                     <Label Text="{Binding Path=StartTime, StringFormat='{0:hh\\:mm}'}" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="1"/>
                                     <Label Text="{Binding Path=EndTime, StringFormat='{0:hh\\:mm}'}" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="2"/>
