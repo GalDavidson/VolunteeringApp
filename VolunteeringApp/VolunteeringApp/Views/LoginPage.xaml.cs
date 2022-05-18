@@ -32,7 +32,7 @@ namespace VolunteeringApp.Views
 
         private void ToolbarItem_Clicked_1(object sender, EventArgs e)
         {
-            Page p = new NavigationPage(new Views.RegisterNavigation());
+            Page p = new NavigationPage(new Views.HomePage());
             App.Current.MainPage = p;
         }
     }

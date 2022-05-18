@@ -26,7 +26,30 @@ namespace VolunteeringApp.Views
             AllEventsViewModel a = new AllEventsViewModel();
             BindingContext = a;
             InitializeComponent();
-           
+
+
+            ToolbarItem item = new ToolbarItem();
+            item.Text = "contact us";
+            item.Priority = 3;
+            item.Order = ToolbarItemOrder.Secondary;
+            item.Clicked += ContactUsCLicked;
+        }
+
+        private void ContactUsCLicked(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ToolbarItem_Clicked(object sender, EventArgs e)
+        {
+            Page p = new NavigationPage(new Views.LoginPage());
+            App.Current.MainPage = p;
+        }
+
+        private void ToolbarItem_Clicked_1(object sender, EventArgs e)
+        {
+            Page p = new NavigationPage(new Views.RegisterNavigation());
+            App.Current.MainPage = p;
         }
     }
 }

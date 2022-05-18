@@ -202,7 +202,7 @@ namespace VolunteeringApp.ViewModels
                 }
                 if (user is Volunteer)
                 {
-                    Page p = new NavigationPage(new Views.UpdateVolPage());
+                    Page p = new NavigationPage(new Views.AllEventsPage());
                     App.Current.MainPage = p;
                 }
                 else if (user is AppAdmin) 

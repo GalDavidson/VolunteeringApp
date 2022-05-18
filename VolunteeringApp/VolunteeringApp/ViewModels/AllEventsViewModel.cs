@@ -48,11 +48,11 @@ namespace VolunteeringApp.ViewModels
         {
             IsRefresh = true;
             App theApp = (App)App.Current;
-            this.allEvents = theApp.LookupTables.Events;
+            this.allEvents = new List<DailyEvent>(theApp.LookupTables.Events);
 
 
             //Copy list to the filtered list
-            this.filteredEvents = new ObservableCollection<DailyEvent>(this.allEvents.OrderBy(b => b.ActionDate));
+            this.filteredEvents = new ObservableCollection<DailyEvent>(this.allEvents);
             IsRefresh = false;
         }
         #endregion
@@ -83,7 +83,6 @@ namespace VolunteeringApp.ViewModels
                 if (this.area != value)
                 {
                     area = value;
-                    OnTypeChanged();
                     OnPropertyChanged("Area");
                 }
 
@@ -100,11 +99,12 @@ namespace VolunteeringApp.ViewModels
         {
             if (((App)App.Current).LookupTables != null)
             {
-                OccupationalAreas = ((App)App.Current).LookupTables.OccupationalAreas;
+                OccupationalAreas = new List<OccupationalArea>((((App)App.Current).LookupTables.OccupationalAreas).OrderBy(b => b.OccupationName));
+
                 OccupationalAreas.Add(new OccupationalArea
                 {
                     OccupationalAreaId = OccupationalAreas.Count + 1,
-                    OccupationName = "כל תחומי העיסוק"
+                    OccupationName = "כל סוגי ההתנדבות"
                 });
             }
         }
@@ -118,76 +118,13 @@ namespace VolunteeringApp.ViewModels
                 if (this.occupationalArea != value)
                 {
                     occupationalArea = value;
-                    OnTypeChanged();
                     OnPropertyChanged("OccupationalArea");
                 }
             }
         }
         #endregion
 
-        #region חיפוש אירועים לפי איזור ותחום עיסוק
-        public void OnTypeChanged()
-        {
-            //Filter the list of contacts based on the search term
-            if (this.allEvents == null)
-            {
-                return;
-            }
-
-            if (this.Area == null)
-            {
-                if (this.OccupationalArea == null)
-                {
-                    return;
-                }
-                else
-                {
-                    this.filteredEvents.Clear();
-                    foreach (DailyEvent e in this.allEvents)
-                    {
-                        foreach (OccupationalAreasOfEvent o in e.OccupationalAreasOfEvents)
-                        {
-                            if (this.OccupationalArea.OccupationalAreaId == o.OccupationalAreaId)
-                            {
-                                this.FilteredEvents.Add(e);
-                            }
-                        }
-                    }
-                    this.filteredEvents = new ObservableCollection<DailyEvent>(this.FilteredEvents.OrderBy(b => b.ActionDate));
-                }
-            }
-            else
-            {
-                if (this.OccupationalArea == null)
-                {
-                    this.filteredEvents.Clear();
-                    foreach (DailyEvent e in this.allEvents)
-                    {
-                        if (e.AreaId == this.Area.AreaId)
-                            this.FilteredEvents.Add(e);
-                    }
-                    this.filteredEvents = new ObservableCollection<DailyEvent>(this.FilteredEvents.OrderBy(b => b.ActionDate));
-                }
-                else
-                {
-                    this.filteredEvents.Clear();
-                    foreach (DailyEvent e in this.allEvents)
-                    {
-                        bool found = false;
-                        foreach (OccupationalAreasOfEvent o in e.OccupationalAreasOfEvents)
-                        {
-                            if (this.OccupationalArea.OccupationalAreaId == o.OccupationalAreaId)
-                                found = true;
-                        }
-
-                        if (found && e.AreaId == this.Area.AreaId)
-                            this.FilteredEvents.Add(e);
-                    }
-                    this.filteredEvents = new ObservableCollection<DailyEvent>(this.FilteredEvents.OrderBy(b => b.ActionDate));
-                }
-            }
-        }
-        #endregion
+       
 
         #region Refresh Events
         private bool isRefresh;
@@ -234,12 +171,13 @@ namespace VolunteeringApp.ViewModels
         {
             this.Areas = new List<Area>();
             this.OccupationalAreas = new List<OccupationalArea>();
-            this.filteredEvents = new ObservableCollection<DailyEvent>();
+            this.FilteredEvents = new ObservableCollection<DailyEvent>();
             InitEvents();
             CreateAreasCollection();
             CreateOccupationalAreasCollection();
             this.RegisterToEventCommand = new Command(OnPress);
             this.FilterEventsCommand = new Command(OnFilter);
+            this.CleanFilterEventsCommand = new Command(OnCleanFilter);
         }
 
         public ICommand FilterEventsCommand { protected set; get; }
@@ -252,15 +190,15 @@ namespace VolunteeringApp.ViewModels
                 return;
             }
 
-            if (this.Area == null)
+            if (this.Area == null || this.Area.AreaName == "כל האיזורים") 
             {
-                if (this.OccupationalArea == null)
+                if (this.OccupationalArea == null || this.OccupationalArea.OccupationName == "כל סוגי ההתנדבות")
                 {
                     return;
                 }
                 else
                 {
-                    this.filteredEvents.Clear();
+                    this.FilteredEvents.Clear();
                     foreach (DailyEvent e in this.allEvents)
                     {
                         foreach (OccupationalAreasOfEvent o in e.OccupationalAreasOfEvents)
@@ -271,24 +209,24 @@ namespace VolunteeringApp.ViewModels
                             }
                         }
                     }
-                    this.filteredEvents = new ObservableCollection<DailyEvent>(this.FilteredEvents.OrderBy(b => b.ActionDate));
+                    this.FilteredEvents = new ObservableCollection<DailyEvent>((this.FilteredEvents).OrderBy(b => b.ActionDate));
                 }
             }
             else
             {
                 if (this.OccupationalArea == null)
                 {
-                    this.filteredEvents.Clear();
+                    this.FilteredEvents.Clear();
                     foreach (DailyEvent e in this.allEvents)
                     {
                         if (e.AreaId == this.Area.AreaId)
                             this.FilteredEvents.Add(e);
                     }
-                    this.filteredEvents = new ObservableCollection<DailyEvent>(this.FilteredEvents.OrderBy(b => b.ActionDate));
+                    this.FilteredEvents = new ObservableCollection<DailyEvent>(this.FilteredEvents.OrderBy(b => b.ActionDate));
                 }
                 else
                 {
-                    this.filteredEvents.Clear();
+                    this.FilteredEvents.Clear();
                     foreach (DailyEvent e in this.allEvents)
                     {
                         if (e.AreaId == this.Area.AreaId)
@@ -300,9 +238,15 @@ namespace VolunteeringApp.ViewModels
                             }
                         }
                     }
-                    this.filteredEvents = new ObservableCollection<DailyEvent>(this.FilteredEvents.OrderBy(b => b.ActionDate));
+                    this.FilteredEvents = new ObservableCollection<DailyEvent>(this.FilteredEvents.OrderBy(b => b.ActionDate));
                 }
             }
+        }
+
+        public ICommand CleanFilterEventsCommand { protected set; get; }
+        private void OnCleanFilter()
+        {
+            this.FilteredEvents = new ObservableCollection<DailyEvent>(this.allEvents);
         }
 
         public ICommand RegisterToEventCommand { protected set; get; }
@@ -313,7 +257,10 @@ namespace VolunteeringApp.ViewModels
             Object o = app.CurrentUser;
 
             if (o == null)
-                await App.Current.MainPage.DisplayAlert("", "על מנת להירשם לאירוע התנדבות עליך להירשם/להתחבר לאפליקציה", "בסדר");
+            {
+                await App.Current.MainPage.DisplayAlert("", "על מנת להירשם לאירוע התנדבות עליך להירשם או להתחבר לאפליקציה כמתנדב", "בסדר");
+                return;
+            }
 
             if (o is Volunteer)
             {
@@ -321,9 +268,21 @@ namespace VolunteeringApp.ViewModels
                 {
                     EventId = SelectedEvent.EventId,
                     VolunteerId = ((Volunteer)o).VolunteerId,
-
-
+                    RatingNum = 0,
+                    WrittenRating = ""
                 };
+
+                VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
+                VolunteersInEvent vol = await proxy.NewVolInEvent(v);
+
+                if (vol == null)
+                {
+                    await App.Current.MainPage.DisplayAlert("שגיאה", "הרשמה לאירוע התנדבות נכשלה", "בסדר");
+                }
+                else
+                {
+
+                }
             }
         }
 

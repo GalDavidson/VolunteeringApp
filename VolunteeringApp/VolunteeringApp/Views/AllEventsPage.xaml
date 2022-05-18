@@ -2,7 +2,14 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="VolunteeringApp.Views.AllEventsPage"
-             FlowDirection="RightToLeft">
+             FlowDirection="RightToLeft"
+             x:Name="ThePage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="הרשמה" Priority="0" Order="Secondary" Clicked="ToolbarItem_Clicked"/>
+        <ToolbarItem Text="התחברות" Priority="0" Order="Secondary" Clicked="ToolbarItem_Clicked_1"/>
+        
+    </ContentPage.ToolbarItems>
 
     <ContentPage.Resources>
         <Style TargetType="StackLayout" x:Key="RegisterStack">
@@ -76,6 +83,8 @@
             </Frame>
 
             <Button Text="סינון" Command="{Binding FilterEventsCommand}" FontAttributes="Bold" CornerRadius="15"  HorizontalOptions="Start" HeightRequest="37"/>
+            <Button Text="ניקוי בחירה" Command="{Binding CleanFilterEventsCommand}" FontAttributes="Bold" CornerRadius="15"  HorizontalOptions="Start" HeightRequest="37"/>
+
 
             <RefreshView x:Name="refreshView" Command="{Binding RefreshEventsCommand}" IsRefreshing="{Binding IsRefresh}">
 
@@ -86,7 +95,7 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <SwipeView>
-                                <Grid HorizontalOptions="Center" Margin="7" RowSpacing="-20">
+                                <Grid HorizontalOptions="Center" Margin="7" RowSpacing="-20" Style="{StaticResource NoBackround}">
                                     
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
@@ -106,11 +115,11 @@
                                     <Label Text="מתי?" FontSize="12" TextColor="Black" Grid.Row="2" Grid.Column="0"/>
                                     <Label x:Name="hello" Text="{Binding Path=EventDate, StringFormat='{0:MMMM dd, yyyy}'}" FontSize="12" TextColor="Black" Grid.Row="2" Grid.Column="1"  Grid.ColumnSpan="2"/>
                                     <Label Text="מתי?" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="0"/>
-                                    <Label Text="{Binding Path=StartTime, StringFormat='{0}'}" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="1"/>
-                                    <Label Text="{Binding Path=EndTime, StringFormat='{0}'}" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="2"/>
+                                    <Label Text="{Binding Path=StartTime, StringFormat='{0:hh\\:mm}'}" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="1"/>
+                                    <Label Text="{Binding Path=EndTime, StringFormat='{0:hh\\:mm}'}" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="2"/>
                                     <Label Text="מה בתכנית:" FontSize="12" TextColor="Black" Grid.Row="4" Grid.Column="0"/>
                                     <Label Text="{Binding Path=Caption, StringFormat='{0}'}" FontSize="12" TextColor="Black" Grid.Row="4" Grid.Column="1"  Grid.ColumnSpan="2"/>
-                                    <Button Text="הרשמה לאירוע" Command="{Binding RegisterToEventCommand}"  FontAttributes="Bold" CornerRadius="15" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3"/>
+                                    <Button Text="הרשמה לאירוע" Command="{Binding Source={x:Reference ThePage}, Path= BindingContext.RegisterToEventCommand}"  FontAttributes="Bold" CornerRadius="15" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3"/>
 
                                 </Grid>
                             </SwipeView>
