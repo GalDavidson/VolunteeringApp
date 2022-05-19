@@ -35,9 +35,9 @@ namespace VolunteeringApp.ViewModels
             }
             set
             {
-                if (this.EventsList != value)
+                if (this.eventsList != value)
                 {
-                    this.EventsList = value;
+                    this.eventsList = value;
                     OnPropertyChanged("EventsList");
                 }
             }
@@ -45,29 +45,37 @@ namespace VolunteeringApp.ViewModels
         private void CreateEventsCollection()
         {
             App theApp = (App)App.Current;
-            this.EventsList = new ObservableCollection<DailyEvent>(theApp.LookupTables.Events);
+            List<DailyEvent> events = theApp.LookupTables.Events;
+            Volunteer vol = (Volunteer)theApp.CurrentUser;
+
+            foreach (DailyEvent e in events) 
+            {
+                VolunteersInEvent found = e.VolunteersInEvents.Where(v => v.VolunteerId == vol.VolunteerId).FirstOrDefault();
+                if (found != null)
+                    EventsList.Add(e);
+            }
+            this.EventsList = new ObservableCollection<DailyEvent>(this.EventsList);
         }
 
-        public ICommand SelectionAssociationChanged => new Command<Object>(OnSelectionAssociationChanged);
-        public void OnSelectionAssociationChanged(Object obj)
+        public ICommand SelectionAssociationChanged => new Command<DailyEvent>(OnSelectionEventChanged);
+        public void OnSelectionEventChanged(DailyEvent e)
         {
-            if (obj is Association)
+            Page eventPage = new ShowEventPage();
+            ShowEventViewModel eventContext = new ShowEventViewModel
             {
-                Association chosenAsso = (Association)obj;
-                Page associationPage = new ShowAssociationPage();
-                ShowAssociationViewModel assoContext = new ShowAssociationViewModel
-                {
-                    Email = chosenAsso.Email,
-                    UserName = chosenAsso.UserName,
-                    InformationAbout = chosenAsso.InformationAbout,
-                    PhoneNum = chosenAsso.PhoneNum
-                };
-                associationPage.BindingContext = assoContext;
-                associationPage.Title = assoContext.UserName;
-                if (NavigateToPageEvent != null)
-                    NavigateToPageEvent(associationPage);
-            }
+                EventName = e.EventName,
+                EventLocation = e.EventLocation,
+                EventDate = (DateTime)e.EventDate,
+                StartTime = (TimeSpan)e.StartTime,
+                EndTime = (TimeSpan)e.EndTime,
+                Caption = e.Caption,
+                VolunteersList = new ObservableCollection<VolunteersInEvent>(e.VolunteersInEvents)
+            };
+            eventPage.BindingContext = eventContext;
+            if (NavigateToPageEvent != null)
+                NavigateToPageEvent(eventPage);
         }
+
         //Delete association
         //public ICommand DeleteAssoCommand => new Command<Association>(RemoveAsso);
         //public async void RemoveAsso(Association a)
@@ -99,6 +107,7 @@ namespace VolunteeringApp.ViewModels
 
         public VolunteerEventsViewModel()
         {
+            EventsList = new ObservableCollection<DailyEvent>();
             CreateEventsCollection();
         }
     }

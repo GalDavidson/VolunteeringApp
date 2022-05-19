@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VolunteeringApp.Views.ShowEventPage"
+             FlowDirection="RightToLeft">
+    <ContentPage.Content>
+        <StackLayout>
+            <SwipeView>
+                <Grid HorizontalOptions="Center" Margin="7" RowSpacing="-20">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                    </Grid.RowDefinitions>
+                    
+                    <Label Text="ההתנדבות:" FontSize="12" TextColor="Black" Grid.Row="0" Grid.Column="0"/>
+                    <Label Text="{Binding EventName, StringFormat='{0}'}" FontSize="12" TextColor="Black" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"/>
+                    <Label Text="איפה?" FontSize="12" TextColor="Black" Grid.Row="1" Grid.Column="0"/>
+                    <Label Text="{Binding EventLocation, StringFormat='{0}'}" FontSize="12" TextColor="Black" Grid.Row="1" Grid.Column="1"  Grid.ColumnSpan="2"/>
+                    <Label Text="מתי?" FontSize="12" TextColor="Black" Grid.Row="2" Grid.Column="0"/>
+                    <Label Text="{Binding EventDate, StringFormat='{0:MMMM dd, yyyy}'}" FontSize="12" TextColor="Black" Grid.Row="2" Grid.Column="1"  Grid.ColumnSpan="2"/>
+                    <Label Text="מתי?" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="0"/>
+                    <Label Text="{Binding StartTime, StringFormat='{0:hh\\:mm}'}" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="1"/>
+                    <Label Text="{Binding EndTime, StringFormat='{0:hh\\:mm}'}" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="2"/>
+                    <Label Text="מה בתכנית:" FontSize="12" TextColor="Black" Grid.Row="4" Grid.Column="0"/>
+                    <Label Text="{Binding Caption, StringFormat='{0}'}" FontSize="12" TextColor="Black" Grid.Row="4" Grid.Column="1"  Grid.ColumnSpan="2"/>
+
+                </Grid>
+            </SwipeView>
+
+            <Label Text="מי מגיע:" TextColor="Black" Padding="0" HeightRequest="15" TextDecorations="Underline"/>
+
+            <CollectionView x:Name="collectionName" ItemsSource="{Binding VolunteersList}" SelectionMode="None">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Span="1" VerticalItemSpacing="100" Orientation="Vertical"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <SwipeView>
+                            <Grid HorizontalOptions="Center" Margin="7" RowSpacing="-20" >
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50"/>
+                                </Grid.RowDefinitions>
+                                <Image x:Name="theImage" Source="{Binding Path=ProfilePic}" Grid.Row="0" Grid.Column="0"/>
+                                <Label Text="{Binding Path=FName}" FontSize="12" TextColor="Black" Grid.Row="0" Grid.Column="1"/>
+                                
+                            </Grid>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
