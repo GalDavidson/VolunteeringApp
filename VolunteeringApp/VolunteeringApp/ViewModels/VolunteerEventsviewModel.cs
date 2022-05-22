@@ -57,9 +57,20 @@ namespace VolunteeringApp.ViewModels
             this.EventsList = new ObservableCollection<DailyEvent>(this.EventsList);
         }
 
+        //NavigateToEventPage
         public ICommand SelectionAssociationChanged => new Command<DailyEvent>(OnSelectionEventChanged);
         public void OnSelectionEventChanged(DailyEvent e)
         {
+            App theApp = (App)App.Current;
+            Volunteer vol = (Volunteer)theApp.CurrentUser;
+
+            ObservableCollection<VolunteersInEvent> lst = new ObservableCollection<VolunteersInEvent>();
+            foreach (VolunteersInEvent v in e.VolunteersInEvents)
+            {
+                if (v.VolunteerId != vol.VolunteerId)
+                    lst.Add(v);
+            }
+
             Page eventPage = new ShowEventPage();
             ShowEventViewModel eventContext = new ShowEventViewModel
             {
@@ -69,37 +80,49 @@ namespace VolunteeringApp.ViewModels
                 StartTime = (TimeSpan)e.StartTime,
                 EndTime = (TimeSpan)e.EndTime,
                 Caption = e.Caption,
-                VolunteersList = new ObservableCollection<VolunteersInEvent>(e.VolunteersInEvents)
+                VolunteersList = lst
             };
             eventPage.BindingContext = eventContext;
             if (NavigateToPageEvent != null)
                 NavigateToPageEvent(eventPage);
+
         }
 
-        //Delete association
-        //public ICommand DeleteAssoCommand => new Command<Association>(RemoveAsso);
-        //public async void RemoveAsso(Association a)
-        //{
-        //    bool result = await App.Current.MainPage.DisplayAlert("את.ה בטוח.ה?", "", "כן", "לא", FlowDirection.RightToLeft);
-        //    if (result)
-        //    {
-        //        VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
-        //        bool ok = await proxy.RemoveAsso(a);
+        //sign out of event
+        public ICommand RemoveEventCommand => new Command<DailyEvent>(RemoveFromEvent);
+        public async void RemoveFromEvent(DailyEvent e)
+        {
+            bool result = await App.Current.MainPage.DisplayAlert("את.ה בטוח.ה?", "", "כן", "לא", FlowDirection.RightToLeft);
+            if (result)
+            {
+                App theApp = (App)App.Current;
+                Volunteer vol = (Volunteer)theApp.CurrentUser;
 
-        //        if (ok)
-        //        {
-        //            AssociationsList.Remove(a);
-        //        }
-        //        else
-        //        {
-        //            await App.Current.MainPage.DisplayAlert("שגיאה", "לא בוצע", "אישור");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        await App.Current.MainPage.DisplayAlert("שגיאה", "לא בוצע", "אישור");
-        //    }
-        //}
+                List<VolunteersInEvent> lst = new List<VolunteersInEvent>(e.VolunteersInEvents);
+                e.VolunteersInEvents = new List<VolunteersInEvent>();
+                foreach(VolunteersInEvent v in lst)
+                {
+                    if (v.VolunteerId == vol.VolunteerId)
+                        e.VolunteersInEvents.Add(v);
+                }
+
+                VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
+                bool ok = await proxy.RemoveVolFromEvent(e);
+
+                if (ok)
+                {
+                    Console.WriteLine("yay");
+                }
+                else
+                {
+                    await App.Current.MainPage.DisplayAlert("שגיאה", "לא בוצע", "אישור");
+                }
+            }
+            else
+            {
+                await App.Current.MainPage.DisplayAlert("שגיאה", "לא בוצע", "אישור");
+            }
+        }
         #endregion
 
         public Action<Page> NavigateToPageEvent;

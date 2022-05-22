@@ -689,7 +689,7 @@ namespace VolunteeringApp.ViewModels
 
                         if (success)
                         {
-                            UserImgSrc = newVol.ImgSource;
+                            UserImgSrc = newVol.ProfilePic;
                         }
                     }
                     ServerStatus = "שומר נתונים...";

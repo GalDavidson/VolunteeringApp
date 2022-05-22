@@ -291,7 +291,7 @@ namespace VolunteeringApp.ViewModels
                 }
                 else
                 {
-
+                    await App.Current.MainPage.DisplayAlert("", "נרשמת בהצלחה לאירוע", "בסדר");
                 }
             }
         }
