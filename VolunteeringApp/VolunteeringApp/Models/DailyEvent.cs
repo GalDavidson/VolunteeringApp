@@ -21,9 +21,8 @@ namespace VolunteeringApp.Models
         public int? AssociationId { get; set; }
         public DateTime? ActionDate { get; set; }
         public string EventName { get; set; }
-        public DateTime? EventDate { get; set; }
-        public TimeSpan? StartTime { get; set; }
-        public TimeSpan? EndTime { get; set; }
+        public DateTime? StartTime { get; set; }
+        public DateTime? EndTime { get; set; }
         public int? AreaId { get; set; }
         public string Caption { get; set; }
 

@@ -25,6 +25,90 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion
 
+        #region toolbar
+        private string firstItem;
+        public string FirstItem
+        {
+            get
+            {
+                return this.firstItem;
+            }
+            set
+            {
+                if (this.firstItem != value)
+                {
+                    this.firstItem = value;
+                    OnPropertyChanged("FirstItem");
+                }
+            }
+        }
+
+        private string secondItem;
+        public string SecondItem
+        {
+            get
+            {
+                return this.secondItem;
+            }
+            set
+            {
+                if (this.secondItem != value)
+                {
+                    this.secondItem = value;
+                    OnPropertyChanged("SecondItem");
+                }
+            }
+        }
+
+        private string thirdItem;
+        public string ThirdItem
+        {
+            get
+            {
+                return this.thirdItem;
+            }
+            set
+            {
+                if (this.thirdItem != value)
+                {
+                    this.thirdItem = value;
+                    OnPropertyChanged("ThirdItem");
+                }
+            }
+        }
+
+        private string fourthItem;
+        public string FourthItem
+        {
+            get
+            {
+                return this.fourthItem;
+            }
+            set
+            {
+                if (this.fourthItem != value)
+                {
+                    this.fourthItem = value;
+                    OnPropertyChanged("FourthItem");
+                }
+            }
+        }
+
+
+        private void ToolBarItems()
+        {
+            App theApp = (App)App.Current;
+            Object o = theApp.CurrentUser;
+
+            if (o == null)
+            {
+
+            }
+
+        }
+
+        #endregion
+
         #region כל האירועים
         private List<DailyEvent> allEvents;
         private ObservableCollection<DailyEvent> filteredEvents;

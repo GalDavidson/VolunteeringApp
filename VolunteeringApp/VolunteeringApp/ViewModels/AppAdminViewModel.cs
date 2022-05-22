@@ -133,7 +133,7 @@ namespace VolunteeringApp.ViewModels
                 List<DailyEvent> eventsList = ((App)App.Current).LookupTables.Events;
                 foreach (DailyEvent e in eventsList)
                 {
-                    if (((DateTime)e.EventDate).Day == DateTime.Now.Day)
+                    if (((DateTime)e.StartTime).Day == DateTime.Now.Day)
                         TodayEventsList++;
                 }
             }
@@ -165,7 +165,7 @@ namespace VolunteeringApp.ViewModels
                 List<DailyEvent> eventsList = ((App)App.Current).LookupTables.Events;
                 foreach (DailyEvent e in eventsList)
                 {
-                    if (((DateTime)e.EventDate).Month == DateTime.Now.Month)
+                    if (((DateTime)e.StartTime).Month == DateTime.Now.Month)
                         MonthEventsList++;
                 }
             }

@@ -364,7 +364,6 @@ namespace VolunteeringApp.ViewModels
 
         #endregion
 
-
         #region Search
         public void OnTextChanged(string search)
         {
@@ -622,16 +621,18 @@ namespace VolunteeringApp.ViewModels
                 App theApp = (App)App.Current;
                 Association a = (Association)theApp.CurrentUser;
 
+                DateTime start = new DateTime(EntryDate.Year, EntryDate.Month, EntryDate.Day, EntryStartTime.Hours, EntryStartTime.Minutes, EntryStartTime.Seconds);
+                DateTime end = new DateTime(EntryDate.Year, EntryDate.Month, EntryDate.Day, EntryEndTime.Hours, EntryEndTime.Minutes, EntryEndTime.Seconds);
+
                 DailyEvent ev = new DailyEvent
                 {
                     EventName = this.EventName,
                     EventLocation = this.Location,
-                    EventDate = EntryDate,
                     Caption = this.Caption,
                     ActionDate = DateTime.Today,
                     AssociationId = a.AssociationId,
-                    StartTime = EntryStartTime,
-                    EndTime = EntryEndTime
+                    StartTime = start,
+                    EndTime = end
                 };
 
                 foreach (OccupationalArea o in selectedOccuAreas)
