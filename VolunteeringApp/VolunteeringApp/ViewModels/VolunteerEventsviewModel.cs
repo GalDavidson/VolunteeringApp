@@ -58,9 +58,35 @@ namespace VolunteeringApp.ViewModels
         }
 
         //NavigateToEventPage
+
+        private DailyEvent selectedDailyEvent;
+        public DailyEvent SelectedDailyEvent
+        {
+            get
+            {
+                return this.selectedDailyEvent;
+            }
+            set
+            {
+                
+                if (value != null && value != this.selectedDailyEvent)
+                {
+                    this.selectedDailyEvent = value;
+                    OnSelectionEventChanged(value);
+                }
+                if (value == null)
+                {
+                    this.selectedDailyEvent = null;
+                    OnPropertyChanged("SelectedDailyEvent");
+                    
+                }
+                    
+            }
+        }
         public ICommand SelectionEventChanged => new Command<DailyEvent>(OnSelectionEventChanged);
         public void OnSelectionEventChanged(DailyEvent e)
         {
+           
             App theApp = (App)App.Current;
             Volunteer vol = (Volunteer)theApp.CurrentUser;
 
@@ -86,6 +112,7 @@ namespace VolunteeringApp.ViewModels
             if (NavigateToPageEvent != null)
                 NavigateToPageEvent(eventPage);
 
+            SelectedDailyEvent = null;
         }
 
         //sign out of event
@@ -129,6 +156,7 @@ namespace VolunteeringApp.ViewModels
         {
             EventsList = new ObservableCollection<DailyEvent>();
             CreateEventsCollection();
+            SelectedDailyEvent = null;
         }
     }
 }

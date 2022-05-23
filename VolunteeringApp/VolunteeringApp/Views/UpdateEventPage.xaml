@@ -2,11 +2,139 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="VolunteeringApp.Views.UpdateEventPage">
+    <ContentPage.Resources>
+        <Style TargetType="StackLayout" x:Key="EventStack">
+            <Setter Property="Orientation" Value="Vertical"/>
+            <Setter Property="Padding" Value="30"/>
+            <Setter Property="Spacing" Value="20"/>
+            <Setter Property="FlowDirection" Value="RightToLeft"/>
+        </Style>
+
+        <ResourceDictionary>
+            <Style x:Key="labelErrorStyle" TargetType="Label">
+                <Setter Property="HorizontalOptions" Value="End" />
+                <Setter Property="TextColor" Value="Red" />
+                <Setter Property="FontSize" Value="Small" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+
+        <ScrollView>
+            <StackLayout Padding="0,20,0,0" Style="{StaticResource EventStack}">
+
+                <Label Text="יצירת אירוע חדש" TextDecorations="Underline"/>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="150" />
+                    </Grid.RowDefinitions>
+                    <Frame Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="1" BackgroundColor="Transparent" BorderColor="Black">
+                        <Image x:Name="theImage" Source="{Binding ImgSrc}" />
+                    </Frame>
+                    <ImageButton Padding="0" Margin="0" Source="photogallery.png" HorizontalOptions="End" BackgroundColor="Transparent" Grid.Column="1" Grid.Row="0" Command="{Binding PickImageCommand}"/>
+                    <ImageButton Padding="0" Margin="0" Source="camera.png" HorizontalOptions="Start" Grid.Column="2" Grid.Row="0" BackgroundColor="Transparent" Command="{Binding CameraImageCommand}"/>
+                </Grid>
+
+                <Label Text="שם אירוע ההתנדבות" TextDecorations="Underline" />
+                <Frame CornerRadius="5" BorderColor="DarkGray" HorizontalOptions="Start" BackgroundColor="Transparent" WidthRequest="270" HeightRequest="40" Padding="10" >
+                    <Entry  Text="{Binding EventName}" FontSize="14" />
+                </Frame>
+                <Label Padding="0" Text="{Binding EventNameError}" HorizontalOptions="Start" IsVisible="{Binding ShowEventNameError}"  Style="{StaticResource labelErrorStyle}"/>
+
+
+                <Label Text="כתובת" TextDecorations="Underline" />
+                <Frame CornerRadius="5" BorderColor="DarkGray" HorizontalOptions="Start" BackgroundColor="Transparent" WidthRequest="270" HeightRequest="40"  Padding="10" >
+                    <Entry Text="{Binding Location}" FontSize="14" />
+                </Frame>
+                <Label Padding="0" Text="{Binding LocationError}" HorizontalOptions="Start" IsVisible="{Binding ShowLocationError}"  Style="{StaticResource labelErrorStyle}"/>
+
+                <Label Text="איזור בארץ" TextDecorations="Underline" />
+                <Frame CornerRadius="5" BorderColor="DarkGray" HorizontalOptions="Start" BackgroundColor="Transparent" WidthRequest="270" HeightRequest="40" Padding="10">
+                    <Picker ItemsSource="{Binding Areas}" ItemDisplayBinding="{Binding AreaName}" SelectedItem="{Binding Area}">
+                    </Picker>
+                </Frame>
+
+                <Label Text="תאריך" TextDecorations="Underline" />
+                <Frame CornerRadius="5" BorderColor="DarkGray" HorizontalOptions="Start" BackgroundColor="Transparent" WidthRequest="270" HeightRequest="70"  Padding="10" >
+                    <DatePicker Date="{Binding EntryDate}" MinimumDate="{Binding EntryDate}" HorizontalOptions="Start"></DatePicker>
+                </Frame>
+
+
+                <Label Text="שעת התחלה" TextDecorations="Underline" />
+                <Frame CornerRadius="5" BorderColor="DarkGray" HorizontalOptions="Start" BackgroundColor="Transparent" WidthRequest="270" HeightRequest="70"  Padding="10" >
+                    <TimePicker Time="{Binding EntryStartTime}" HorizontalOptions="Start"></TimePicker>
+                </Frame>
+
+
+                <Label Text="שעת סיום" TextDecorations="Underline" />
+                <Frame CornerRadius="5" BorderColor="DarkGray" HorizontalOptions="Start" BackgroundColor="Transparent" WidthRequest="270" HeightRequest="70"  Padding="10" >
+                    <TimePicker Time="{Binding EntryEndTime}" HorizontalOptions="Start"></TimePicker>
+                </Frame>
+
+                <Label Padding="0" Text="{Binding DateError}" HorizontalOptions="Start" IsVisible="{Binding ShowDateError}" Style="{StaticResource labelErrorStyle}"/>
+
+
+                <Label Text="תיאור האירוע" TextDecorations="Underline" />
+                <Frame CornerRadius="5" BorderColor="DarkGray" HorizontalOptions="Start" BackgroundColor="Transparent" WidthRequest="270" HeightRequest="80" Padding="10" >
+                    <Entry Text="{Binding Caption}" FontSize="14" />
+                </Frame>
+                <Label Padding="0" Text="{Binding CaptionError}" HorizontalOptions="Start" IsVisible="{Binding ShowCaptionError}" Style="{StaticResource labelErrorStyle}"/>
+                <Label/>
+
+
+
+                <Label Text="בחר.י תחום אחד או יותר שהאירוע עוסק בו:" TextDecorations="Underline" />
+
+                <SearchBar x:Name="searchBar" 
+                       Placeholder="חפש עיסוק" 
+                       Text="{Binding SearchTerm}"
+                    />
+
+                <RefreshView x:Name="refreshView"
+             Command="{Binding RefreshCommand}"
+             IsRefreshing="{Binding IsRefreshing}">
+
+                    <CollectionView x:Name="collectionName" ItemsSource="{Binding FilteredOccuAreas}" SelectionMode="Multiple" SelectedItems="{Binding SelectedOccuAreas}" BackgroundColor="Transparent"
+                                SelectionChangedCommand="{Binding UpdateOccuArea}" SelectionChangedCommandParameter="{Binding Source={x:Reference collectionName}, Path=SelectedItems}">
+                        <CollectionView.ItemsLayout >
+                            <GridItemsLayout Span="1" Orientation="Vertical" />
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <SwipeView>
+                                    <Grid Margin="7" HorizontalOptions="Start">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="50"/>
+                                        </Grid.RowDefinitions>
+                                        <Label Text="{Binding Path=OccupationName, StringFormat='{0}'}" HorizontalTextAlignment="End" FontSize="20" TextColor="Black" Grid.Row="0" Grid.Column="0"/>
+                                    </Grid>
+
+                                </SwipeView>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </RefreshView>
+
+                <Entry Placeholder="רשום תחום עיסוק חדש שתרצה להוסיף" MaxLength="30" Text="{Binding NewOccuArea}" TextColor="Black"></Entry>
+                <Button Text="הוסף תחום עיסוק לרשימה" Command="{Binding AddOccuArea}"></Button>
+
+                <Button Text="פרסמ.י" Command="{Binding SubmitCommand}" BackgroundColor="Beige" TextColor="Black" Margin="120,40" FontSize="15" CornerRadius="30"/>
+
+                <Label Padding="0" Text="{Binding NextError}" HorizontalOptions="Center" IsVisible="{Binding ShowNextError}"/>
+
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

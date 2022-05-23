@@ -27,12 +27,14 @@ namespace VolunteeringApp.Views
             BindingContext = a;
             InitializeComponent();
 
+            
 
             ToolbarItem item = new ToolbarItem();
             item.Text = "contact us";
             item.Priority = 3;
             item.Order = ToolbarItemOrder.Secondary;
             item.Clicked += ContactUsCLicked;
+            this.ToolbarItems.Add(item);
         }
 
         private void ContactUsCLicked(object sender, EventArgs e)

@@ -102,37 +102,12 @@ namespace VolunteeringApp.ViewModels
 
         #endregion
 
-        #region edit or delete event
+        #region Edit or delete event
         public ICommand EditEventCommand => new Command<DailyEvent>(EditFromEvent);
         public async void EditFromEvent(DailyEvent e)
         {
-            bool result = await App.Current.MainPage.DisplayAlert("את.ה בטוח.ה?", "", "כן", "לא", FlowDirection.RightToLeft);
-            if (result)
-            {
-                App theApp = (App)App.Current;
-                Volunteer vol = (Volunteer)theApp.CurrentUser;
-
-                List<VolunteersInEvent> lst = new List<VolunteersInEvent>(e.VolunteersInEvents);
-                e.VolunteersInEvents = new List<VolunteersInEvent>();
-                foreach (VolunteersInEvent v in lst)
-                {
-                    if (v.VolunteerId == vol.VolunteerId)
-                        e.VolunteersInEvents.Add(v);
-                }
-
-                VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
-                bool ok = await proxy.RemoveVolFromEvent(e);
-
-                if (ok)
-                {
-                    //    await App.Current.MainPage.DisplayAlert("", "ביטלת את רישומך", "אישור");
-                    //    EventsList.Remove(e);
-                }
-                else
-                {
-                    await App.Current.MainPage.DisplayAlert("שגיאה", "לא בוצע", "אישור");
-                }
-            }
+            Page p = new NavigationPage(new Views.UpdateEventPage(e));
+            App.Current.MainPage = p;
         }
         #endregion
 

@@ -15,7 +15,7 @@ using Xamarin.Essentials;
 
 namespace VolunteeringApp.ViewModels
 {
-    public class EditEventViewModel : INotifyPropertyChanged
+    public class UpdateEventViewModel : INotifyPropertyChanged
     {
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -603,7 +603,7 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion serverStatus
 
-        public EditEventViewModel(DailyEvent e)
+        public UpdateEventViewModel(DailyEvent e)
         {
             App app = (App)App.Current;
             Association currentUser = (Association)app.CurrentUser;

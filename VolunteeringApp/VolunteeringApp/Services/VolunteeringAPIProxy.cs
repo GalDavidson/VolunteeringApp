@@ -306,6 +306,7 @@ namespace VolunteeringApp.Services
             {
                 JsonSerializerOptions options = new JsonSerializerOptions
                 {
+                    ReferenceHandler = ReferenceHandler.Preserve,
                     PropertyNameCaseInsensitive = true
                 };
                 string json = JsonSerializer.Serialize<OccupationalArea>(a, options);
@@ -335,6 +336,7 @@ namespace VolunteeringApp.Services
             {
                 JsonSerializerOptions options = new JsonSerializerOptions
                 {
+                    ReferenceHandler = ReferenceHandler.Preserve,
                     PropertyNameCaseInsensitive = true
                 };
                 string json = JsonSerializer.Serialize<Branch>(b, options);
@@ -364,6 +366,7 @@ namespace VolunteeringApp.Services
             {
                 JsonSerializerOptions options = new JsonSerializerOptions
                 {
+                    ReferenceHandler = ReferenceHandler.Preserve,
                     PropertyNameCaseInsensitive = true
                 };
                 string json = JsonSerializer.Serialize<Gender>(g, options);
@@ -393,6 +396,7 @@ namespace VolunteeringApp.Services
             {
                 JsonSerializerOptions options = new JsonSerializerOptions
                 {
+                    ReferenceHandler = ReferenceHandler.Preserve,
                     PropertyNameCaseInsensitive = true
                 };
                 string json = JsonSerializer.Serialize<Association>(a, options);
@@ -422,6 +426,7 @@ namespace VolunteeringApp.Services
             {
                 JsonSerializerOptions options = new JsonSerializerOptions
                 {
+                    ReferenceHandler = ReferenceHandler.Preserve,
                     PropertyNameCaseInsensitive = true
                 };
                 string json = JsonSerializer.Serialize<Volunteer>(v, options);
@@ -451,6 +456,7 @@ namespace VolunteeringApp.Services
             {
                 JsonSerializerOptions options = new JsonSerializerOptions
                 {
+                    ReferenceHandler = ReferenceHandler.Preserve,
                     PropertyNameCaseInsensitive = true
                 };
                 string json = JsonSerializer.Serialize<DailyEvent>(de, options);
@@ -480,6 +486,7 @@ namespace VolunteeringApp.Services
             {
                 JsonSerializerOptions options = new JsonSerializerOptions
                 {
+                    ReferenceHandler = ReferenceHandler.Preserve,
                     PropertyNameCaseInsensitive = true
                 };
                 string json = JsonSerializer.Serialize<DailyEvent>(de, options);

@@ -12,9 +12,8 @@
             <Label Text="על מנת לראות פרטים על אירוע התנדבות לחצ.י עליו" TextColor="Black" Padding="0" HeightRequest="15"/>
 
             <CollectionView x:Name="collectionName" 
-                            ItemsSource="{Binding EventsList}" SelectionMode="Single"
-                        SelectionChangedCommand="{Binding SelectionEventChanged}"
-                        SelectionChangedCommandParameter="{Binding Source={x:Reference collectionName}, Path=SelectedItem}">
+                            ItemsSource="{Binding EventsList}" SelectionMode="Single" SelectedItem="{Binding SelectedDailyEvent}"
+                        >
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Span="1" VerticalItemSpacing="100" Orientation="Vertical" />
                 </CollectionView.ItemsLayout>
