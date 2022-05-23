@@ -825,9 +825,6 @@ namespace VolunteeringApp.ViewModels
             this.selectedOccuAreas = new ObservableCollection<Object>();
             this.filteredOccuAreas = new ObservableCollection<OccupationalArea>();
 
-            this.selectedBranches = new List<Object>();
-            this.filteredBranches = new ObservableCollection<Branch>();
-
             InitOccuAreas();
             InitBranches();
 
@@ -976,5 +973,4 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion
     }
-
 }
