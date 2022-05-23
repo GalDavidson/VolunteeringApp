@@ -14,7 +14,7 @@ namespace VolunteeringApp.Views
     {
         public AssoUpComingEventsPage()
         {
-            AssoUpComingEventsViewModel context = new AssoUpComingEventsViewModel();
+            AssoEventsViewModel context = new AssoEventsViewModel();
             //Register to the event so the view model will be able to navigate to the monkeypage
             context.NavigateToPageEvent += NavigateToAsync;
             this.BindingContext = context;

@@ -11,9 +11,7 @@
             <Label Text="על מנת לבטל את רישומך לאירוע התנדבות החלק.י שמאלה על האירוע" TextColor="Black" Padding="0" HeightRequest="17"/>
             <Label Text="על מנת לראות פרטים על אירוע התנדבות לחצ.י עליו" TextColor="Black" Padding="0" HeightRequest="15"/>
 
-            <CollectionView x:Name="collectionName" 
-                            ItemsSource="{Binding EventsList}" SelectionMode="Single" SelectedItem="{Binding SelectedDailyEvent}"
-                        >
+            <CollectionView x:Name="collectionName" ItemsSource="{Binding EventsList}" SelectionMode="Single" SelectedItem="{Binding SelectedDailyEvent}">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Span="1" VerticalItemSpacing="100" Orientation="Vertical" />
                 </CollectionView.ItemsLayout>
@@ -48,10 +46,10 @@
                                     <Label Text="איפה?" FontSize="12" TextColor="Black" Grid.Row="1" Grid.Column="0"/>
                                     <Label Text="{Binding Path=EventLocation, StringFormat='{0}'}" FontSize="12" TextColor="Black" Grid.Row="1" Grid.Column="1"  Grid.ColumnSpan="2"/>
                                     <Label Text="מתי?" FontSize="12" TextColor="Black" Grid.Row="2" Grid.Column="0"/>
-                                    <Label Text="{Binding Path=EventDate, StringFormat='{0:MMMM dd, yyyy}'}" FontSize="12" TextColor="Black" Grid.Row="2" Grid.Column="1"  Grid.ColumnSpan="2"/>
+                                    <Label Text="{Binding Path=StartTime, StringFormat='{0:MMMM dd, yyyy}'}" FontSize="12" TextColor="Black" Grid.Row="2" Grid.Column="1"  Grid.ColumnSpan="2"/>
                                     <Label Text="מתי?" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="0"/>
-                                    <Label Text="{Binding Path=StartTime, StringFormat='{0:hh\\:mm}'}" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="1"/>
-                                    <Label Text="{Binding Path=EndTime, StringFormat='{0:hh\\:mm}'}" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="2"/>
+                                    <Label Text="{Binding Path=EndTime, StringFormat='{0:HH\\:mm}'}" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="1"/>
+                                    <Label Text="{Binding Path=StartTime, StringFormat='{0:HH\\:mm}'}" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="2"/>
                                     
                                 </Grid>
                             </SwipeView>

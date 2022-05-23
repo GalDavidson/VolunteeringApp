@@ -15,7 +15,7 @@ using Xamarin.Essentials;
 
 namespace VolunteeringApp.ViewModels
 {
-    class AssoUpComingEventsViewModel: INotifyPropertyChanged
+    class AssoEventsViewModel: INotifyPropertyChanged
     {
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -63,22 +63,48 @@ namespace VolunteeringApp.ViewModels
         private void InitEvents()
         {
             App theApp = (App)App.Current;
+            Association current = (Association)theApp.CurrentUser;
             this.allEvents = new List<DailyEvent>(theApp.LookupTables.Events);
 
             foreach (DailyEvent e in allEvents)
             {
-                TimeSpan ts = (TimeSpan)(e.StartTime- DateTime.Now);
-                if (ts.TotalMinutes < 0 || ts.TotalMinutes == 0)
-                    PastEvents.Add(e);
-                else
-                    UpComingEvents.Add(e);
-                
+                if (e.AssociationId == current.AssociationId)
+                {
+                    TimeSpan ts = (TimeSpan)(e.StartTime - DateTime.Now);
+                    if (ts.TotalMinutes < 0 || ts.TotalMinutes == 0)
+                        PastEvents.Add(e);
+                    else
+                        UpComingEvents.Add(e);
+                }
             }
         }
         #endregion
 
         #region Navigate To Up Coming Event Page
-        public ICommand SelectionEventChanged => new Command<DailyEvent>(OnSelectionEventChanged);
+
+        private DailyEvent selectedDailyEvent;
+        public DailyEvent SelectedDailyEvent
+        {
+            get
+            {
+                return this.selectedDailyEvent;
+            }
+            set
+            {
+
+                if (value != null && value != this.selectedDailyEvent)
+                {
+                    this.selectedDailyEvent = value;
+                    OnSelectionEventChanged(value);
+                }
+                if (value == null)
+                {
+                    this.selectedDailyEvent = null;
+                    OnPropertyChanged("SelectedDailyEvent");
+
+                }
+            }
+        }
         public void OnSelectionEventChanged(DailyEvent e)
         {
             Page eventPage = new ShowEventPage();
@@ -95,7 +121,8 @@ namespace VolunteeringApp.ViewModels
             eventPage.BindingContext = eventContext;
             if (NavigateToPageEvent != null)
                 NavigateToPageEvent(eventPage);
-
+            
+            SelectedDailyEvent = null;
         }
 
         public Action<Page> NavigateToPageEvent;
@@ -103,15 +130,15 @@ namespace VolunteeringApp.ViewModels
         #endregion
 
         #region Edit or delete event
-        public ICommand EditEventCommand => new Command<DailyEvent>(EditFromEvent);
-        public async void EditFromEvent(DailyEvent e)
+        public ICommand EditEventCommand => new Command<DailyEvent>(EditEvent);
+        public void EditEvent(DailyEvent e)
         {
             Page p = new NavigationPage(new Views.UpdateEventPage(e));
             App.Current.MainPage = p;
         }
         #endregion
 
-        public AssoUpComingEventsViewModel()
+        public AssoEventsViewModel()
         {
             UpComingEvents = new ObservableCollection<DailyEvent>();
             PastEvents = new ObservableCollection<DailyEvent>();

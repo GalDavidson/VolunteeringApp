@@ -73,7 +73,7 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion
 
-        #region מיקום האירוע
+        #region כתובת האירוע
         private bool showLocationError;
 
         public bool ShowLocationError
@@ -341,10 +341,10 @@ namespace VolunteeringApp.ViewModels
             IsRefreshing = false;
 
             //Select the relevant Occup Area for the specific user
-            Association association = (Association)theApp.CurrentUser;
-            foreach (OccupationalAreasOfAssociation oaa in association.OccupationalAreasOfAssociations)
+            
+            foreach (OccupationalAreasOfEvent oae in ExistEvent.OccupationalAreasOfEvents)
             {
-                OccupationalArea area = this.FilteredOccuAreas.Where(occ => occ.OccupationalAreaId == oaa.OccupationalAreaId).FirstOrDefault();
+                OccupationalArea area = this.FilteredOccuAreas.Where(occ => occ.OccupationalAreaId == oae.OccupationalAreaId).FirstOrDefault();
                 if (area != null)
                     SelectedOccuAreas.Add(area);
             }
@@ -385,6 +385,17 @@ namespace VolunteeringApp.ViewModels
             {
                 area = value;
                 OnPropertyChanged("Area");
+            }
+        }
+
+        private int areaIndex;
+        public int AreaIndex
+        {
+            get { return areaIndex; }
+            set
+            {
+                areaIndex = value;
+                OnPropertyChanged("AreaIndex");
             }
         }
 
@@ -609,7 +620,7 @@ namespace VolunteeringApp.ViewModels
             Association currentUser = (Association)app.CurrentUser;
             VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
 
-
+            this.ExistEvent = e;
             this.EventName = e.EventName;
             this.Location = e.EventLocation;
             this.EntryDate = (DateTime)e.StartTime;
@@ -620,11 +631,7 @@ namespace VolunteeringApp.ViewModels
             this.EntryStartTime = new TimeSpan(start.Hour, start.Minute, start.Second);
             this.EntryEndTime = new TimeSpan(end.Hour, end.Minute, end.Second);
             this.Caption = e.Caption;
-            this.Area = new Area
-            {
-                AreaId = (int)e.AreaId,
-                AreaName = e.Area.AreaName
-            };
+            this.AreaIndex = (int)(e.AreaId - 1);
 
             this.ShowEventNameError = false;
             this.ShowLocationError = false;
@@ -679,7 +686,8 @@ namespace VolunteeringApp.ViewModels
                     ActionDate = this.ExistEvent.ActionDate,
                     AssociationId = this.ExistEvent.AssociationId,
                     StartTime = start,
-                    EndTime = end
+                    EndTime = end,
+                    AreaId = this.Area.AreaId
                 };
 
                 foreach (OccupationalArea o in selectedOccuAreas)

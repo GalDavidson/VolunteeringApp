@@ -12,10 +12,7 @@
             <Label Text="על מנת לערוך או לבטל את האירוע החלק.י עליו שמאלה" TextColor="Black" Padding="0" HeightRequest="17"/>
             <Label Text="על מנת לראות מי נרשמ.ה אליו, לחצ.י עליו" TextColor="Black" Padding="0" HeightRequest="15"/>
 
-            <CollectionView x:Name="collectionName" 
-                            ItemsSource="{Binding UpComingEvents}" SelectionMode="Single"
-                        SelectionChangedCommand="{Binding SelectionEventChanged}"
-                        SelectionChangedCommandParameter="{Binding Source={x:Reference collectionName}, Path=SelectedItem}">
+            <CollectionView x:Name="collectionName" ItemsSource="{Binding UpComingEvents}" SelectionMode="Single" SelectedItem="{Binding SelectedDailyEvent}">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Span="1" VerticalItemSpacing="100" Orientation="Vertical" />
                 </CollectionView.ItemsLayout>
@@ -24,7 +21,7 @@
                         <SwipeView>
                             <SwipeView.LeftItems>
                                 <SwipeItems>
-                                    <SwipeItem Text="ביטול אירוע"
+                                    <SwipeItem Text="עריכת אירוע"
                                            IconImageSource="leaveEvent.png"
                                            BackgroundColor="LightPink"
                                            Command="{Binding Source={x:Reference ThePage}, Path=BindingContext.EditEventCommand}"

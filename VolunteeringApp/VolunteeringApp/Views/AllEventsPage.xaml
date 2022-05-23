@@ -6,10 +6,6 @@
              x:Name="ThePage">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem  Text="התחברות" Priority="0" Order="Secondary" Clicked="ToolbarItem_Clicked"/>
-        <ToolbarItem Text="הרשמה" Priority="0" Order="Secondary" Clicked="ToolbarItem_Clicked_1"/>
-        <ToolbarItem Text="" Priority="0" Order="Secondary" ></ToolbarItem>
-        
     </ContentPage.ToolbarItems>
 
 
