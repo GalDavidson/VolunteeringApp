@@ -197,17 +197,20 @@ namespace VolunteeringApp.ViewModels
                 app.CurrentUser = user;
                 if (user is Association)
                 {
+                    await App.Current.MainPage.DisplayAlert("", "התחברת", "בסדר");
                     Page p = new NavigationPage(new Views.AllEventsPage());
                     App.Current.MainPage = p;
                 }
                 if (user is Volunteer)
                 {
-                    Page p = new NavigationPage(new Views.VolunteerEventsPage());
+                    await App.Current.MainPage.DisplayAlert("", "התחברת", "בסדר");
+                    Page p = new NavigationPage(new Views.AllEventsPage());
                     App.Current.MainPage = p;
                 }
                 else if (user is AppAdmin) 
                 {
-                    Page p = new NavigationPage(new Views.AppAdminPage());
+                    await App.Current.MainPage.DisplayAlert("", "התחברת", "בסדר");
+                    Page p = new NavigationPage(new Views.AllEventsPage());
                     App.Current.MainPage = p;
                 }
             }
