@@ -113,11 +113,11 @@
                                     <Label Text="מתי?" FontSize="12" TextColor="Black" Grid.Row="2" Grid.Column="0"/>
                                     <Label Text="{Binding Path=EventDate, StringFormat='{0:MMMM dd, yyyy}'}" FontSize="12" TextColor="Black" Grid.Row="2" Grid.Column="1"  Grid.ColumnSpan="2"/>
                                     <Label Text="מתי?" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="0"/>
-                                    <Label Text="{Binding Path=StartTime, StringFormat='{0:hh\\:mm}'}" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="1"/>
-                                    <Label Text="{Binding Path=EndTime, StringFormat='{0:hh\\:mm}'}" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="2"/>
+                                    <Label Text="{Binding Path=EndTime, StringFormat='{0:HH\\:mm}'}" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="1"/>
+                                    <Label Text="{Binding Path=StartTime, StringFormat='{0:HH\\:mm}'}" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="2"/>
                                     <Label Text="מה בתכנית:" FontSize="12" TextColor="Black" Grid.Row="4" Grid.Column="0"/>
                                     <Label Text="{Binding Path=Caption, StringFormat='{0}'}" FontSize="12" TextColor="Black" Grid.Row="4" Grid.Column="1"  Grid.ColumnSpan="2"/>
-                                    <Button Text="הרשמה לאירוע" Command="{Binding Source={x:Reference ThePage}, Path= BindingContext.RegisterToEventCommand}"  FontAttributes="Bold" CornerRadius="15" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3"/>
+                                    <Button x:Name="theButton" Text="הרשמה לאירוע" Command="{Binding Source={x:Reference ThePage}, Path= BindingContext.RegisterToEventCommand}"  FontAttributes="Bold" CornerRadius="15" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" IsVisible="{Binding IsVisible}" IsEnabled="{Binding IsEnabled}"/>
 
                                 </Grid>
                             </SwipeView>

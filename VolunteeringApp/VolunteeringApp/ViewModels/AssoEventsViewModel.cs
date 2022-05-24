@@ -126,7 +126,6 @@ namespace VolunteeringApp.ViewModels
         }
 
         public Action<Page> NavigateToPageEvent;
-
         #endregion
 
         #region Edit or delete event

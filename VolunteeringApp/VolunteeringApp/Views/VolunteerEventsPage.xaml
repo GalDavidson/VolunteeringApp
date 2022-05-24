@@ -4,6 +4,10 @@
              x:Class="VolunteeringApp.Views.VolunteerEventsPage"
              x:Name="ThePage"
              FlowDirection="RightToLeft">
+
+    <ContentPage.ToolbarItems>
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Content>
         <StackLayout BackgroundColor="Transparent" HorizontalOptions="Center" VerticalOptions="Center" Spacing="25">
 

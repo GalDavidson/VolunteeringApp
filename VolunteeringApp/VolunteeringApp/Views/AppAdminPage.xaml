@@ -4,6 +4,9 @@
              x:Class="VolunteeringApp.Views.AppAdminPage"
              FlowDirection="RightToLeft">
 
+    <ContentPage.ToolbarItems>
+    </ContentPage.ToolbarItems>
+    
     <ContentPage.Content>
         <StackLayout>
 

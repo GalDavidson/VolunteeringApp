@@ -3,7 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="VolunteeringApp.Views.VolunteerRegisterPage"
              FlowDirection="RightToLeft">
-    
+
+    <ContentPage.ToolbarItems>
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Resources>
         <Style TargetType="StackLayout" x:Key="RegisterStack">
             <Setter Property="Orientation" Value="Vertical"/>

@@ -4,6 +4,9 @@
              x:Class="VolunteeringApp.Views.UpdateAssoPage"
              FlowDirection="RightToLeft">
 
+    <ContentPage.ToolbarItems>
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style x:Key="labelNameStyle" TargetType="Label">

@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VolunteeringApp.Views.AssoPastEventsPage"
+             x:Name="ThePage"
+             FlowDirection="RightToLeft">
+
+    <ContentPage.ToolbarItems>
+    </ContentPage.ToolbarItems>
+    
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="Transparent" HorizontalOptions="Center" VerticalOptions="Center" Spacing="25">
+
+            <Label Text="אירועי ההתנדבות הקודמים של העמותה " TextColor="Black" Padding="0" HeightRequest="18" TextDecorations="Underline"/>
+            <Label Text="על מנת לראות את משתתפיו, לחצ.י עליו" TextColor="Black" Padding="0" HeightRequest="15"/>
+
+            <CollectionView x:Name="collectionName" ItemsSource="{Binding PastEvents}" SelectionMode="Single" SelectedItem="{Binding SelectedDailyEvent}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Span="1" VerticalItemSpacing="100" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        
+                        <Grid HorizontalOptions="Center" Margin="7" RowSpacing="-20" WidthRequest="350">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                            </Grid.RowDefinitions>
+                            <Label Text="ההתנדבות:" FontSize="12" TextColor="Black" Grid.Row="0" Grid.Column="0"/>
+                            <Label Text="{Binding Path=EventName, StringFormat='{0}'}" FontSize="12" TextColor="Black" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"/>
+                            <Label Text="איפה?" FontSize="12" TextColor="Black" Grid.Row="1" Grid.Column="0"/>
+                            <Label Text="{Binding Path=EventLocation, StringFormat='{0}'}" FontSize="12" TextColor="Black" Grid.Row="1" Grid.Column="1"  Grid.ColumnSpan="2"/>
+                            <Label Text="מתי?" FontSize="12" TextColor="Black" Grid.Row="2" Grid.Column="0"/>
+                            <Label Text="{Binding Path=StartTime, StringFormat='{0:MMMM dd, yyyy}'}" FontSize="12" TextColor="Black" Grid.Row="2" Grid.Column="1"  Grid.ColumnSpan="2"/>
+                            <Label Text="מתי?" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="0"/>
+                            <Label Text="{Binding Path=EndTime, StringFormat='{0:HH\\:mm}'}" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="1"/>
+                            <Label Text="{Binding Path=StartTime, StringFormat='{0:HH\\:mm}'}" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="2"/>
+
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

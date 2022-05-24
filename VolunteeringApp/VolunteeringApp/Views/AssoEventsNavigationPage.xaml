@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VolunteeringApp.Views.AssoEventsNavigationPage"
+            xmlns:local="clr-namespace:VolunteeringApp.Views"
+            FlowDirection="RightToLeft">
+
+    <TabbedPage.ToolbarItems>
+    </TabbedPage.ToolbarItems>
+
+    <!--Pages can be added as references or inline-->
+    
+    <local:AssoUpComingEventsPage Title="אירועים קרובים" />
+    <local:AssoPastEventsPage Title="אירועים קודמים" />
+</TabbedPage>

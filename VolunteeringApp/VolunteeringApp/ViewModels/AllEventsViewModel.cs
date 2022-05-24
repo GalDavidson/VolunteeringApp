@@ -123,6 +123,40 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion
 
+        #region כפתור הרשמה לאירוע
+        private bool isEnabled;
+        public bool IsEnabled
+        {
+            get => isEnabled;
+            set
+            {
+                if (this.isEnabled != value)
+                {
+                    isEnabled = value;
+                    OnPropertyChanged("IsEnabled");
+                }
+
+
+            }
+        }
+
+        private bool isVisible;
+        public bool IsVisible
+        {
+            get => isVisible;
+            set
+            {
+                if (this.isVisible != value)
+                {
+                    isVisible = value;
+                    OnPropertyChanged("IsVisible");
+                }
+
+
+            }
+        }
+        #endregion
+
         #region Refresh Events
         private bool isRefresh;
         public bool IsRefresh
@@ -175,6 +209,20 @@ namespace VolunteeringApp.ViewModels
             this.RegisterToEventCommand = new Command(OnPress);
             this.FilterEventsCommand = new Command(OnFilter);
             this.CleanFilterEventsCommand = new Command(OnCleanFilter);
+
+            App theApp = (App)App.Current;
+            Object o = theApp.CurrentUser;
+
+            if (o is Association || o is AppAdmin)
+            {
+                IsEnabled = false;
+                IsVisible = false;
+            }
+            else
+            {
+                IsEnabled = true;
+                IsVisible = true;
+            }
         }
 
         public ICommand FilterEventsCommand { protected set; get; }

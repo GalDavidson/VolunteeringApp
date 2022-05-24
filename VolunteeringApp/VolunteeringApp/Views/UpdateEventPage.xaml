@@ -2,6 +2,10 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="VolunteeringApp.Views.UpdateEventPage">
+
+    <ContentPage.ToolbarItems>
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Resources>
         <Style TargetType="StackLayout" x:Key="EventStack">
             <Setter Property="Orientation" Value="Vertical"/>

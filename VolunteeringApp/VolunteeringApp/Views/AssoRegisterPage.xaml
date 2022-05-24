@@ -4,6 +4,9 @@
              x:Class="VolunteeringApp.Views.AssoRegisterPage"
              FlowDirection="RightToLeft">
     
+    <ContentPage.ToolbarItems>
+    </ContentPage.ToolbarItems>
+    
     <ContentPage.Resources>
         <Style TargetType="StackLayout" x:Key="RegisterStack">
             <Setter Property="Orientation" Value="Vertical"/>

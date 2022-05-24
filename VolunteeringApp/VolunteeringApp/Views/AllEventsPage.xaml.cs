@@ -25,9 +25,8 @@ namespace VolunteeringApp.Views
         {
             AllEventsViewModel a = new AllEventsViewModel();
             BindingContext = a;
-            InitializeComponent();
-
             AddItems();
+            InitializeComponent();
         }
 
         private void AddItems()
@@ -64,7 +63,7 @@ namespace VolunteeringApp.Views
                     Priority = 0,
                     Order = ToolbarItemOrder.Secondary
                 };
-                profileItem.Clicked += ToolbarItem_Clicked_Profile;
+                profileItem.Clicked += ToolbarItem_Clicked_AssoProfile;
 
                 ToolbarItem assoEventsItem = new ToolbarItem
                 {
@@ -88,13 +87,65 @@ namespace VolunteeringApp.Views
                     Priority = 0,
                     Order = ToolbarItemOrder.Secondary
                 };
-                //logoutItem.Clicked += ToolbarItem_Clicked_Register;
+                logoutItem.Clicked += ToolbarItem_Clicked_Logout;
 
                 this.ToolbarItems.Add(profileItem);
                 this.ToolbarItems.Add(assoEventsItem);
                 this.ToolbarItems.Add(newEventItem);
                 this.ToolbarItems.Add(logoutItem);
+            }
 
+            if (o is Volunteer)
+            {
+                ToolbarItem profileItem = new ToolbarItem
+                {
+                    Text = "הפרטים שלי",
+                    Priority = 0,
+                    Order = ToolbarItemOrder.Secondary
+                };
+                profileItem.Clicked += ToolbarItem_Clicked_VolProfile;
+
+                ToolbarItem volEventsItem = new ToolbarItem
+                {
+                    Text = "האירועים שלי",
+                    Priority = 0,
+                    Order = ToolbarItemOrder.Secondary
+                };
+                volEventsItem.Clicked += ToolbarItem_Clicked_VolEvents;
+
+                ToolbarItem logoutItem = new ToolbarItem
+                {
+                    Text = "התנתקות",
+                    Priority = 0,
+                    Order = ToolbarItemOrder.Secondary
+                };
+                logoutItem.Clicked += ToolbarItem_Clicked_Logout;
+
+                this.ToolbarItems.Add(profileItem);
+                this.ToolbarItems.Add(volEventsItem);
+                this.ToolbarItems.Add(logoutItem);
+            }
+
+            if (o is AppAdmin)
+            {
+                ToolbarItem appAdminItem = new ToolbarItem
+                {
+                    Text = "התחברות",
+                    Priority = 0,
+                    Order = ToolbarItemOrder.Secondary
+                };
+                appAdminItem.Clicked += ToolbarItem_Clicked_AdminPage;
+
+                ToolbarItem logoutItem = new ToolbarItem
+                {
+                    Text = "התנתקות",
+                    Priority = 0,
+                    Order = ToolbarItemOrder.Secondary
+                };
+                logoutItem.Clicked += ToolbarItem_Clicked_Logout;
+
+                this.ToolbarItems.Add(appAdminItem);
+                this.ToolbarItems.Add(logoutItem);
             }
         }
 
@@ -110,9 +161,15 @@ namespace VolunteeringApp.Views
             App.Current.MainPage = p;
         }
 
-        private void ToolbarItem_Clicked_Profile(object sender, EventArgs e)
+        private void ToolbarItem_Clicked_AssoProfile(object sender, EventArgs e)
         {
             Page p = new NavigationPage(new Views.UpdateAssoPage());
+            App.Current.MainPage = p;
+        }
+
+        private void ToolbarItem_Clicked_VolProfile(object sender, EventArgs e)
+        {
+            Page p = new NavigationPage(new Views.UpdateVolPage());
             App.Current.MainPage = p;
         }
 
@@ -122,11 +179,35 @@ namespace VolunteeringApp.Views
             App.Current.MainPage = p;
         }
 
+        private void ToolbarItem_Clicked_VolEvents(object sender, EventArgs e)
+        {
+            Page p = new NavigationPage(new Views.VolunteerEventsPage());
+            App.Current.MainPage = p;
+        }
+
         private void ToolbarItem_Clicked_NewEvent(object sender, EventArgs e)
         {
             Page p = new NavigationPage(new Views.NewEventPage());
             App.Current.MainPage = p;
         }
 
+        private async void ToolbarItem_Clicked_Logout(object sender, EventArgs e)
+        {
+            bool result = await App.Current.MainPage.DisplayAlert("להתנתק?", "", "כן", "לא", FlowDirection.RightToLeft);
+            if (result)
+            {
+                App theApp = (App)App.Current;
+                theApp.CurrentUser = null;
+                await App.Current.MainPage.DisplayAlert("התנתקת בהצלחה", "", "", "בסדר", FlowDirection.RightToLeft);
+                Page p = new NavigationPage(new Views.AllEventsPage());
+                App.Current.MainPage = p;
+            }
+        }
+
+        private void ToolbarItem_Clicked_AdminPage(object sender, EventArgs e)
+        {
+            Page p = new NavigationPage(new Views.NewEventPage());
+            App.Current.MainPage = p;
+        }
     }
 }

@@ -197,7 +197,7 @@ namespace VolunteeringApp.ViewModels
                 app.CurrentUser = user;
                 if (user is Association)
                 {
-                    Page p = new NavigationPage(new Views.AssoUpComingEventsPage());
+                    Page p = new NavigationPage(new Views.AllEventsPage());
                     App.Current.MainPage = p;
                 }
                 if (user is Volunteer)
