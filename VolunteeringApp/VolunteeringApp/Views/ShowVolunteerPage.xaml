@@ -4,9 +4,6 @@
              x:Class="VolunteeringApp.Views.ShowVolunteerPage"
              FlowDirection="RightToLeft">
 
-    <ContentPage.ToolbarItems>
-    </ContentPage.ToolbarItems>
-
     <ContentPage.Content>
         <StackLayout>
             <Label Text="{Binding FName}" HorizontalTextAlignment="Center" FontSize="Large"/>

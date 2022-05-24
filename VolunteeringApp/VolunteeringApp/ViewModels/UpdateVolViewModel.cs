@@ -697,7 +697,7 @@ namespace VolunteeringApp.ViewModels
                     theApp.CurrentUser = user;
                     await App.Current.MainPage.Navigation.PopModalAsync();
 
-                    Page p = new Views.HomePage();
+                    Page p = new Views.AllEventsPage();
                     App.Current.MainPage = p;
                     //await App.Current.MainPage.DisplayAlert("עדכון", "העדכון בוצע בהצלחה", "אישור", FlowDirection.RightToLeft);
                 }

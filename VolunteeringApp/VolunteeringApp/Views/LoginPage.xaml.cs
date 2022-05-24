@@ -16,23 +16,28 @@ namespace VolunteeringApp.Views
         public LoginPage()
         {
             this.BindingContext = new LoginViewModel();
+            AddItems();
+
             InitializeComponent();
-
-            ToolbarItem item = new ToolbarItem();
-            item.Text = "contact us";
-            item.Priority = 3;
-            item.Order = ToolbarItemOrder.Secondary;
-            item.Clicked += ContactUsCLicked;
         }
 
-        private void ContactUsCLicked(object sender, EventArgs e)
+        private void AddItems()
         {
-            
+            ToolbarItem registerItem = new ToolbarItem
+            {
+                Text = "הרשמה",
+                Priority = 0,
+                Order = ToolbarItemOrder.Secondary
+            };
+            registerItem.Clicked += ToolbarItem_Clicked_Register;
+
+            this.ToolbarItems.Add(registerItem);
         }
 
-        private void ToolbarItem_Clicked_1(object sender, EventArgs e)
+
+        private void ToolbarItem_Clicked_Register(object sender, EventArgs e)
         {
-            Page p = new NavigationPage(new Views.HomePage());
+            Page p = new NavigationPage(new Views.RegisterNavigation());
             App.Current.MainPage = p;
         }
     }

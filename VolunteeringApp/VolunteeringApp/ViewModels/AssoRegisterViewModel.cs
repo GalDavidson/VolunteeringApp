@@ -990,7 +990,7 @@ namespace VolunteeringApp.ViewModels
                     //}
      
                     app.CurrentUser = asso;
-                    Page p = new NavigationPage(new Views.HomePage());
+                    Page p = new NavigationPage(new Views.AllEventsPage());
                     App.Current.MainPage = p;
                 }
             }

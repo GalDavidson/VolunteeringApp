@@ -4,9 +4,6 @@
              x:Class="VolunteeringApp.Views.ShowAssociationPage"
              FlowDirection="RightToLeft">
 
-    <ContentPage.ToolbarItems>
-    </ContentPage.ToolbarItems>
-
     <ContentPage.Content>
         <StackLayout>
             <Label Text="{Binding Email}" HorizontalTextAlignment="Center" FontSize="Large"/>

@@ -660,7 +660,7 @@ namespace VolunteeringApp.ViewModels
                     ServerStatus = "שומר נתונים...";
 
                     app.CurrentUser = v;
-                    Page p = new NavigationPage(new Views.HomePage());
+                    Page p = new NavigationPage(new Views.AllEventsPage());
                     App.Current.MainPage = p;
                 
                 }

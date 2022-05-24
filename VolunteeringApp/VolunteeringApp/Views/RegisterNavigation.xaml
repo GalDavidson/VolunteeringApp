@@ -6,8 +6,6 @@
             FlowDirection="RightToLeft">
 
     <TabbedPage.ToolbarItems>
-        <ToolbarItem Name="MenuItem1" Order="Secondary" Text="דף הבית" Priority="0" Clicked="MenuItem1_Clicked" />
-        <ToolbarItem Name="MenuItem2" Order="Secondary" Text="התחברות" Priority="1" Clicked="MenuItem2_Clicked" />
     </TabbedPage.ToolbarItems>
     
     <!--Pages can be added as references or inline-->

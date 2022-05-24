@@ -24,6 +24,14 @@ namespace VolunteeringApp.Views
             Object o = theApp.CurrentUser;
             if (o is Association)
             {
+                ToolbarItem allEventsItem = new ToolbarItem
+                {
+                    Text = "כל האירועים",
+                    Priority = 0,
+                    Order = ToolbarItemOrder.Secondary
+                };
+                allEventsItem.Clicked += ToolbarItem_Clicked_AllEvents;
+
                 ToolbarItem profileItem = new ToolbarItem
                 {
                     Text = "הפרטים שלי",
@@ -48,10 +56,17 @@ namespace VolunteeringApp.Views
                 };
                 logoutItem.Clicked += ToolbarItem_Clicked_Logout;
 
-                this.ToolbarItems.Add(profileItem);
+                this.ToolbarItems.Add(allEventsItem);
                 this.ToolbarItems.Add(newEventItem);
+                this.ToolbarItems.Add(profileItem);
                 this.ToolbarItems.Add(logoutItem);
             }
+        }
+
+        private void ToolbarItem_Clicked_AllEvents(object sender, EventArgs e)
+        {
+            Page p = new NavigationPage(new Views.AllEventsPage());
+            App.Current.MainPage = p;
         }
 
         private void ToolbarItem_Clicked_AssoProfile(object sender, EventArgs e)

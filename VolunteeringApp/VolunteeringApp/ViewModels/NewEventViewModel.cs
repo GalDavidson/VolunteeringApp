@@ -676,7 +676,7 @@ namespace VolunteeringApp.ViewModels
                     }
                     ServerStatus = "שומר נתונים...";
 
-                    Page page = new NavigationPage(new Views.HomePage());
+                    Page page = new NavigationPage(new Views.AllEventsPage());
                     App.Current.MainPage = page;
 
                 }

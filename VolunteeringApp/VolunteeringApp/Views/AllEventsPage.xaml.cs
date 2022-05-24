@@ -130,7 +130,7 @@ namespace VolunteeringApp.Views
             {
                 ToolbarItem appAdminItem = new ToolbarItem
                 {
-                    Text = "התחברות",
+                    Text = "דף מנהל.ת",
                     Priority = 0,
                     Order = ToolbarItemOrder.Secondary
                 };
@@ -175,7 +175,7 @@ namespace VolunteeringApp.Views
 
         private void ToolbarItem_Clicked_AssoEvents(object sender, EventArgs e)
         {
-            Page p = new NavigationPage(new Views.AssoUpComingEventsPage());
+            Page p = new NavigationPage(new Views.AssoEventsNavigationPage());
             App.Current.MainPage = p;
         }
 
