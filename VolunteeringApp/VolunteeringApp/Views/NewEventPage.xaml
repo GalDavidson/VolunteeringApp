@@ -5,6 +5,10 @@
              FlowDirection="RightToLeft">
 
     <ContentPage.ToolbarItems>
+        <ToolbarItem Text="כל האירועים" Priority='0' Order='Secondary' Clicked='ToolbarItem_Clicked_AllEvents'/>
+        <ToolbarItem Text="האירועים שלי" Priority='0' Order='Secondary' Clicked='ToolbarItem_Clicked_AssoEvents'/>
+        <ToolbarItem Text="הפרטים שלי" Priority='0' Order='Secondary' Clicked='ToolbarItem_Clicked_AssoProfile'/>
+        <ToolbarItem Text="התנתקות" Priority='0' Order='Secondary' Clicked='ToolbarItem_Clicked_Logout'/>
     </ContentPage.ToolbarItems>
 
     <ContentPage.Resources>

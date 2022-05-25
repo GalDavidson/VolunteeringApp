@@ -16,24 +16,9 @@ namespace VolunteeringApp.Views
         public LoginPage()
         {
             this.BindingContext = new LoginViewModel();
-            AddItems();
 
             InitializeComponent();
         }
-
-        private void AddItems()
-        {
-            ToolbarItem registerItem = new ToolbarItem
-            {
-                Text = "הרשמה",
-                Priority = 0,
-                Order = ToolbarItemOrder.Secondary
-            };
-            registerItem.Clicked += ToolbarItem_Clicked_Register;
-
-            this.ToolbarItems.Add(registerItem);
-        }
-
 
         private void ToolbarItem_Clicked_Register(object sender, EventArgs e)
         {

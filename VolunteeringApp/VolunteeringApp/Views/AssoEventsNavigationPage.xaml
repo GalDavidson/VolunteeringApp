@@ -6,6 +6,10 @@
             FlowDirection="RightToLeft">
 
     <TabbedPage.ToolbarItems>
+        <ToolbarItem Text="כל האירועים" Priority='0' Order='Secondary' Clicked='ToolbarItem_Clicked_AllEvents'/>
+        <ToolbarItem Text="הפרטים שלי" Priority='0' Order='Secondary' Clicked='ToolbarItem_Clicked_AssoProfile'/>
+        <ToolbarItem Text="פרסום אירוע חדש" Priority='0' Order='Secondary' Clicked='ToolbarItem_Clicked_NewEvent' />
+        <ToolbarItem Text="התנתקות" Priority='0' Order='Secondary' Clicked='ToolbarItem_Clicked_Logout'/>
     </TabbedPage.ToolbarItems>
 
     <!--Pages can be added as references or inline-->

@@ -206,7 +206,7 @@ namespace VolunteeringApp.Views
 
         private void ToolbarItem_Clicked_AdminPage(object sender, EventArgs e)
         {
-            Page p = new NavigationPage(new Views.NewEventPage());
+            Page p = new NavigationPage(new Views.AppAdminPage());
             App.Current.MainPage = p;
         }
     }

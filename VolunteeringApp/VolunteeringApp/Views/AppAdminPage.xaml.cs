@@ -20,35 +20,8 @@ namespace VolunteeringApp.Views
             //Register to the event so the view model will be able to navigate to the monkeypage
             context.NavigateToPageEvent += NavigateToAsync;
             this.BindingContext = context;
-            AddItems();
 
             InitializeComponent();
-        }
-        private void AddItems()
-        {
-            App theApp = (App)App.Current;
-            Object o = theApp.CurrentUser;
-            if (o is AppAdmin)
-            {
-                ToolbarItem allEventsItem = new ToolbarItem
-                {
-                    Text = "כל האירועים",
-                    Priority = 0,
-                    Order = ToolbarItemOrder.Secondary
-                };
-                allEventsItem.Clicked += ToolbarItem_Clicked_AllEvents;
-
-                ToolbarItem logoutItem = new ToolbarItem
-                {
-                    Text = "התנתקות",
-                    Priority = 0,
-                    Order = ToolbarItemOrder.Secondary
-                };
-                logoutItem.Clicked += ToolbarItem_Clicked_Logout;
-
-                this.ToolbarItems.Add(allEventsItem);
-                this.ToolbarItems.Add(logoutItem);
-            }
         }
 
         private void ToolbarItem_Clicked_AllEvents(object sender, EventArgs e)

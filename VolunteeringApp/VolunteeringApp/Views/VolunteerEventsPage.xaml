@@ -6,6 +6,9 @@
              FlowDirection="RightToLeft">
 
     <ContentPage.ToolbarItems>
+        <ToolbarItem Text="כל האירועים" Priority='0' Order='Secondary' Clicked='ToolbarItem_Clicked_AllEvents'/>
+        <ToolbarItem Text="הפרטים שלי" Priority='0' Order='Secondary' Clicked='ToolbarItem_Clicked_VolProfile'/>
+        <ToolbarItem Text="התנתקות" Priority='0' Order='Secondary' Clicked='ToolbarItem_Clicked_Logout'/>
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
