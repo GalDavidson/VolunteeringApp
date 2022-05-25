@@ -649,9 +649,11 @@ namespace VolunteeringApp.ViewModels
             CreateAreaCollection();
 
             this.SubmitCommand = new Command(OnSubmit);
+            this.DeleteCommand = new Command(OnDelete);
         }
 
         public ICommand SubmitCommand { protected set; get; }
+        public ICommand DeleteCommand { protected set; get; }
 
         private bool ValidateForm()
         {
@@ -740,6 +742,21 @@ namespace VolunteeringApp.ViewModels
             {
                 ShowNextError = true;
                 NextError = "אירעה שגיאה! לא ניתן להמשיך בהרשמה";
+            }
+        }
+
+        public async void OnDelete()
+        {
+            bool result = await App.Current.MainPage.DisplayAlert("את.ה בטוח.ה?", "", "כן", "לא", FlowDirection.RightToLeft);
+            if (result)
+            {
+                VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
+                bool ok = await proxy.DelEvent(NewOccuAr);
+                App theApp = (App)App.Current;
+                theApp.CurrentUser = null;
+                await App.Current.MainPage.DisplayAlert("האירוע נמחק בהצלחה", "", "", "בסדר", FlowDirection.RightToLeft);
+                Page p = new NavigationPage(new Views.VolunteerEventsPage());
+                App.Current.MainPage = p;
             }
         }
 

@@ -150,8 +150,6 @@ namespace VolunteeringApp.ViewModels
         #endregion
 
         public Action<Page> NavigateToPageEvent;
-
-
         public VolunteerEventsViewModel()
         {
             EventsList = new ObservableCollection<DailyEvent>();

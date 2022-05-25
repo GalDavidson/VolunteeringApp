@@ -25,15 +25,9 @@ namespace VolunteeringApp.Views
             App.Current.MainPage = p;
         }
 
-        private void ToolbarItem_Clicked_volEvents(object sender, EventArgs e)
+        private void ToolbarItem_Clicked_VolEvents(object sender, EventArgs e)
         {
             Page p = new NavigationPage(new Views.VolunteerEventsPage());
-            App.Current.MainPage = p;
-        }
-
-        private void ToolbarItem_Clicked_VolProfile(object sender, EventArgs e)
-        {
-            Page p = new NavigationPage(new Views.UpdateVolPage());
             App.Current.MainPage = p;
         }
 

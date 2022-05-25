@@ -6,8 +6,7 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="כל האירועים" Priority='0' Order='Secondary' Clicked='ToolbarItem_Clicked_AllEvents'/>
-        <ToolbarItem Text="האירועים שלי" Priority='0' Order='Secondary' Clicked='ToolbarItem_Clicked_volEvents'/>
-        <ToolbarItem Text="הפרטים שלי" Priority='0' Order='Secondary' Clicked='ToolbarItem_Clicked_VolProfile'/>
+        <ToolbarItem Text="האירועים שלי" Priority='0' Order='Secondary' Clicked='ToolbarItem_Clicked_VolEvents'/>
         <ToolbarItem Text="התנתקות" Priority='0' Order='Secondary' Clicked='ToolbarItem_Clicked_Logout'/>
     </ContentPage.ToolbarItems>
 
