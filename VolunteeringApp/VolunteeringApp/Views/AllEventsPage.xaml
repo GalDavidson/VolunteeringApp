@@ -86,7 +86,7 @@
 
             <RefreshView x:Name="refreshView" Command="{Binding RefreshEventsCommand}" IsRefreshing="{Binding IsRefresh}">
 
-                <CollectionView x:Name="collection" HorizontalOptions="Center" ItemsSource="{Binding FilteredEvents}" SelectionMode="Single"  BackgroundColor="Transparent" Style="{StaticResource NoBackround}" SelectedItem="{Binding SelectedEvent}" >
+                <CollectionView x:Name="collection" HorizontalOptions="Center" ItemsSource="{Binding FilteredEvents}" SelectionMode="None"  BackgroundColor="Transparent" Style="{StaticResource NoBackround}" >
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout Span="1" VerticalItemSpacing="120" Orientation="Vertical" />
                     </CollectionView.ItemsLayout>
@@ -117,7 +117,7 @@
                                     <Label Text="{Binding Path=StartTime, StringFormat='{0:HH\\:mm}'}" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="2"/>
                                     <Label Text="מה בתכנית:" FontSize="12" TextColor="Black" Grid.Row="4" Grid.Column="0"/>
                                     <Label Text="{Binding Path=Caption, StringFormat='{0}'}" FontSize="12" TextColor="Black" Grid.Row="4" Grid.Column="1"  Grid.ColumnSpan="2"/>
-                                    <Button x:Name="theButton" Text="הרשמה לאירוע" Command="{Binding Source={x:Reference ThePage}, Path= BindingContext.RegisterToEventCommand}"  FontAttributes="Bold" CornerRadius="15" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" IsVisible="{Binding IsVisible}" IsEnabled="{Binding IsEnabled}"/>
+                                    <Button x:Name="theButton" Text="הרשמה לאירוע" Command="{Binding Source={x:Reference ThePage}, Path= BindingContext.RegisterToEventCommand}" CommandParameter="{Binding}"  FontAttributes="Bold" CornerRadius="15" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" IsVisible="{Binding Source={x:Reference ThePage}, Path= BindingContext.IsVisible}"/>
 
                                 </Grid>
                             </SwipeView>

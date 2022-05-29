@@ -27,5 +27,13 @@ namespace VolunteeringApp.Views
         {
             await Navigation.PushAsync(p);
         }
+
+        protected override void OnDisappearing()
+        {
+            AssoEventsViewModel context = (AssoEventsViewModel)this.BindingContext;
+            context.SelectedDailyEvent = null;
+
+            base.OnDisappearing();
+        }
     }
 }

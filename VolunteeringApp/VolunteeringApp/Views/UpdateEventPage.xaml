@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="VolunteeringApp.Views.UpdateEventPage">
+             x:Class="VolunteeringApp.Views.UpdateEventPage"
+             FlowDirection="RightToLeft">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="כל האירועים" Priority='0' Order='Secondary' Clicked='ToolbarItem_Clicked_AllEvents'/>
@@ -111,14 +112,14 @@
              Command="{Binding RefreshCommand}"
              IsRefreshing="{Binding IsRefreshing}">
 
-                    <CollectionView x:Name="collectionName" ItemsSource="{Binding FilteredOccuAreas}" SelectionMode="Multiple" SelectedItems="{Binding SelectedOccuAreas}" BackgroundColor="Transparent"
+                    <CollectionView x:Name="collectionName" ItemsSource="{Binding FilteredOccuAreas}" SelectionMode="Multiple" SelectedItems="{Binding SelectedOccuAreas, Mode=TwoWay}" BackgroundColor="Transparent"
                                 SelectionChangedCommand="{Binding UpdateOccuArea}" SelectionChangedCommandParameter="{Binding Source={x:Reference collectionName}, Path=SelectedItems}">
                         <CollectionView.ItemsLayout >
                             <GridItemsLayout Span="1" Orientation="Vertical" />
                         </CollectionView.ItemsLayout>
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
-                                <SwipeView>
+                                
                                     <Grid Margin="7" HorizontalOptions="Start">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*" />
@@ -129,7 +130,7 @@
                                         <Label Text="{Binding Path=OccupationName, StringFormat='{0}'}" HorizontalTextAlignment="End" FontSize="20" TextColor="Black" Grid.Row="0" Grid.Column="0"/>
                                     </Grid>
 
-                                </SwipeView>
+                                
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>

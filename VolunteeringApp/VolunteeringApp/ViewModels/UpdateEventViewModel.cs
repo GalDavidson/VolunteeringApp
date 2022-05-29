@@ -339,7 +339,6 @@ namespace VolunteeringApp.ViewModels
             this.FilteredOccuAreas = new ObservableCollection<OccupationalArea>(this.allOccupationalAreas.OrderBy(a => a.OccupationName));
             SearchTerm = String.Empty;
             IsRefreshing = false;
-
             //Select the relevant Occup Area for the specific user
             
             foreach (OccupationalAreasOfEvent oae in ExistEvent.OccupationalAreasOfEvents)
@@ -435,8 +434,8 @@ namespace VolunteeringApp.ViewModels
         #endregion
 
         #region AreaSelection
-        List<OccupationalArea> selectedOccuAreas;
-        public List<OccupationalArea> SelectedOccuAreas
+        ObservableCollection<Object> selectedOccuAreas;
+        public ObservableCollection<Object> SelectedOccuAreas
         {
             get
             {
@@ -447,6 +446,7 @@ namespace VolunteeringApp.ViewModels
                 if (selectedOccuAreas != value)
                 {
                     selectedOccuAreas = value;
+                    OnPropertyChanged("SelectedOccuAreas");
                 }
             }
         }
@@ -465,21 +465,13 @@ namespace VolunteeringApp.ViewModels
 
 
 
-        public ICommand UpdateOccuArea => new Command(OnPressedOccuArea);
+        public ICommand UpdateOccuArea => new Command<Object>(OnPressedOccuArea);
         public async void OnPressedOccuArea(object occuAreasList)
         {
-            SelectedOccuAreas.Clear();
-            OccupationalAreas = string.Empty;
-            if (occuAreasList is IList<object>)
-            {
-                List<object> list = ((IList<object>)occuAreasList).ToList();
-                foreach (object a in list)
-                {
-                    SelectedOccuAreas.Add((OccupationalArea)a);
 
-                }
-                if (selectedOccuAreas.Count == 0) { OccupationalAreas = "לא נבחרו תחומי עיסוק"; }
-            }
+            OccupationalAreas = string.Empty;
+            
+            if (selectedOccuAreas.Count == 0) { OccupationalAreas = "לא נבחרו תחומי עיסוק"; }
         }
         #endregion
 
@@ -640,8 +632,8 @@ namespace VolunteeringApp.ViewModels
 
             this.ImgSrc = proxy.GetBasePhotoUri() + $"A{currentUser.AssociationId}.jpg";
             this.imageFileResult = null; //mark that no picture was chosen
-            this.selectedOccuAreas = new List<OccupationalArea>();
-            this.filteredOccuAreas = new ObservableCollection<OccupationalArea>();
+            this.SelectedOccuAreas = new ObservableCollection<Object>();
+            this.FilteredOccuAreas = new ObservableCollection<OccupationalArea>();
 
             InitOccuAreas();
 
@@ -649,7 +641,7 @@ namespace VolunteeringApp.ViewModels
             CreateAreaCollection();
 
             this.SubmitCommand = new Command(OnSubmit);
-            this.DeleteCommand = new Command(OnDelete);
+            //this.DeleteCommand = new Command(OnDelete);
         }
 
         public ICommand SubmitCommand { protected set; get; }
@@ -709,9 +701,9 @@ namespace VolunteeringApp.ViewModels
                 };
 
                 VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
-                DailyEvent dailyEvent = await proxy.UpdateEvent(ev);
+                bool dailyEvent = await proxy.UpdateEvent(ev);
 
-                if (dailyEvent == null)
+                if (!dailyEvent)
                 {
                     await App.Current.MainPage.DisplayAlert("שגיאה", "עדכון פרטים נכשל, בדוק את הפרטים המוקלדים", "בסדר");
                 }
@@ -745,20 +737,20 @@ namespace VolunteeringApp.ViewModels
             }
         }
 
-        public async void OnDelete()
-        {
-            bool result = await App.Current.MainPage.DisplayAlert("את.ה בטוח.ה?", "", "כן", "לא", FlowDirection.RightToLeft);
-            if (result)
-            {
-                VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
-                bool ok = await proxy.DelEvent(NewOccuAr);
-                App theApp = (App)App.Current;
-                theApp.CurrentUser = null;
-                await App.Current.MainPage.DisplayAlert("האירוע נמחק בהצלחה", "", "", "בסדר", FlowDirection.RightToLeft);
-                Page p = new NavigationPage(new Views.VolunteerEventsPage());
-                App.Current.MainPage = p;
-            }
-        }
+        //public async void OnDelete()
+        //{
+        //    bool result = await App.Current.MainPage.DisplayAlert("את.ה בטוח.ה?", "", "כן", "לא", FlowDirection.RightToLeft);
+        //    if (result)
+        //    {
+        //        VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
+        //        bool ok = await proxy.DelEvent(NewOccuAr);
+        //        App theApp = (App)App.Current;
+        //        theApp.CurrentUser = null;
+        //        await App.Current.MainPage.DisplayAlert("האירוע נמחק בהצלחה", "", "", "בסדר", FlowDirection.RightToLeft);
+        //        Page p = new NavigationPage(new Views.VolunteerEventsPage());
+        //        App.Current.MainPage = p;
+        //    }
+        //}
 
         #region new pic
         FileResult imageFileResult;

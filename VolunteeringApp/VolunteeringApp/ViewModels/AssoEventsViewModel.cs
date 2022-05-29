@@ -92,21 +92,19 @@ namespace VolunteeringApp.ViewModels
             set
             {
 
-                if (value != null && value != this.selectedDailyEvent)
+                if (value != this.selectedDailyEvent)
                 {
                     this.selectedDailyEvent = value;
                     OnSelectionEventChanged(value);
-                }
-                if (value == null)
-                {
-                    this.selectedDailyEvent = null;
                     OnPropertyChanged("SelectedDailyEvent");
-
                 }
+                
             }
         }
         public void OnSelectionEventChanged(DailyEvent e)
         {
+            if (e == null)
+                return;
             Page eventPage = new ShowEventPage();
             ShowEventViewModel eventContext = new ShowEventViewModel
             {
@@ -122,7 +120,8 @@ namespace VolunteeringApp.ViewModels
             if (NavigateToPageEvent != null)
                 NavigateToPageEvent(eventPage);
             
-            SelectedDailyEvent = null;
+            //selectedDailyEvent = null;
+            //OnPropertyChanged("SelectedDailyEvent");
         }
 
         public Action<Page> NavigateToPageEvent;

@@ -95,7 +95,7 @@
              Command="{Binding RefreshCommand}"
              IsRefreshing="{Binding IsRefreshing}">
 
-                        <CollectionView  x:Name="collectionName" ItemsSource="{Binding FilteredOccuAreas}" SelectionMode="Multiple" SelectedItems="{Binding SelectedOccuAreas, Mode=TwoWay}" BackgroundColor="White"
+                        <CollectionView  x:Name="collectionName" ItemsSource="{Binding FilteredOccuAreas}" SelectionMode="Multiple" SelectedItems="{Binding SelectedOccuAreas, Mode=TwoWay}" BackgroundColor="Transparent"
                                 SelectionChangedCommand="{Binding UpdateOccuArea}" SelectionChangedCommandParameter="{Binding Source={x:Reference collectionName}, Path=SelectedItems}">
                             <CollectionView.ItemsLayout>
                                 <GridItemsLayout Span="1" Orientation="Vertical" />

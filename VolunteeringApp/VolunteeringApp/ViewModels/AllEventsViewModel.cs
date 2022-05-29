@@ -206,7 +206,7 @@ namespace VolunteeringApp.ViewModels
             InitEvents();
             CreateAreasCollection();
             CreateOccupationalAreasCollection();
-            this.RegisterToEventCommand = new Command(OnPress);
+            this.RegisterToEventCommand = new Command<DailyEvent>(OnPress);
             this.FilterEventsCommand = new Command(OnFilter);
             this.CleanFilterEventsCommand = new Command(OnCleanFilter);
 
@@ -306,8 +306,9 @@ namespace VolunteeringApp.ViewModels
 
         public ICommand RegisterToEventCommand { protected set; get; }
 
-        public async void OnPress()
+        public async void OnPress(DailyEvent dailyEvent)
         {
+            SelectedEvent = dailyEvent;
             App app = (App)App.Current;
             Object o = app.CurrentUser;
 

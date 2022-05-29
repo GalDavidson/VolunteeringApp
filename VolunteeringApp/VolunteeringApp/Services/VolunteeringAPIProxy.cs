@@ -184,7 +184,7 @@ namespace VolunteeringApp.Services
             }
         }
 
-        public async Task<DailyEvent> UpdateEvent(DailyEvent de)
+        public async Task<bool> UpdateEvent(DailyEvent de)
         {
             try
             {
@@ -201,18 +201,18 @@ namespace VolunteeringApp.Services
                 if (response.IsSuccessStatusCode)
                 {
                     jsonObject = await response.Content.ReadAsStringAsync();
-                    DailyEvent ret = JsonSerializer.Deserialize<DailyEvent>(jsonObject, options);
+                    bool ret = JsonSerializer.Deserialize<bool>(jsonObject, options);
                     return ret;
                 }
                 else
                 {
-                    return null;
+                    return false;
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                return null;
+                return false;
             }
         }
 
