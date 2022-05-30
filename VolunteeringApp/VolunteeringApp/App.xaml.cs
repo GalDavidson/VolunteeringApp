@@ -19,6 +19,9 @@ namespace VolunteeringApp
 
         public Lookups LookupTables { get; set; }
 
+        //public event Action DeleteEvent;
+        //public void TriggerDeleteEvent() => DeleteEvent?.Invoke();
+
         public static bool IsDevEnv
         {
             get 

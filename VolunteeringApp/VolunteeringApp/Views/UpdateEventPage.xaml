@@ -139,7 +139,6 @@
                 <Entry Placeholder="רשום תחום עיסוק חדש שתרצה להוסיף" MaxLength="30" Text="{Binding NewOccuArea}" TextColor="Black"></Entry>
                 <Button Text="הוסף תחום עיסוק לרשימה" Command="{Binding AddOccuArea}"></Button>
 
-                <Button Text="מחק.י את האירוע" Command="{Binding DeleteCommand}" BackgroundColor="Beige" TextColor="Black" Margin="120,40" FontSize="15" CornerRadius="30"/>
                 <Button Text="פרסמ.י" Command="{Binding SubmitCommand}" BackgroundColor="Beige" TextColor="Black" Margin="120,40" FontSize="15" CornerRadius="30"/>
 
                 <Label Padding="0" Text="{Binding NextError}" HorizontalOptions="Center" IsVisible="{Binding ShowNextError}"/>

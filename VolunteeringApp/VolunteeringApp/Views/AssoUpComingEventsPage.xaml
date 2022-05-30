@@ -21,12 +21,19 @@
                         <SwipeView>
                             <SwipeView.LeftItems>
                                 <SwipeItems>
-                                    <SwipeItem Text="עריכת אירוע"
-                                           IconImageSource="leaveEvent.png"
-                                           BackgroundColor="LightPink"
+                                    <SwipeItem Text="עריכה"
+                                           IconImageSource="editEvent.png"
+                                           BackgroundColor="LightBlue"
                                            Command="{Binding Source={x:Reference ThePage}, Path=BindingContext.EditEventCommand}"
                                            CommandParameter="{Binding}" />
+                                    
+                                    <SwipeItem Text="מחיקה"
+                                           IconImageSource="leaveEvent.png"
+                                           BackgroundColor="LightPink"
+                                           Command="{Binding Source={x:Reference ThePage}, Path=BindingContext.DeleteEventCommand}"
+                                           CommandParameter="{Binding}" />
                                 </SwipeItems>
+                                
                             </SwipeView.LeftItems>
                             
                                 <Grid HorizontalOptions="Center" Margin="7" RowSpacing="-20" WidthRequest="350">

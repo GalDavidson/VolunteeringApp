@@ -12,8 +12,10 @@ namespace VolunteeringApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AssoEventsNavigationPage : TabbedPage
     {
-        public AssoEventsNavigationPage()
+        public AssoEventsNavigationPage(/*DailyEvent dailyEvent*/)
         {
+            //if (dailyEvent != null)
+
             InitializeComponent();
         }
 

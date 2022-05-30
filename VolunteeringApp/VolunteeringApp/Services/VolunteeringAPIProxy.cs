@@ -300,6 +300,34 @@ namespace VolunteeringApp.Services
             }
         }
 
+        public async Task<List<DailyEvent>> GetEvents()
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetAllEvents");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        ReferenceHandler = ReferenceHandler.Preserve, //avoid reference loops!
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    List<DailyEvent> lst = JsonSerializer.Deserialize<List<DailyEvent>>(content, options);
+                    return lst;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
         public async Task<bool> AddOccupationalArea(OccupationalArea a)
         {
             try

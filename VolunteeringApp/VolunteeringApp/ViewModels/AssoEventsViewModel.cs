@@ -60,11 +60,15 @@ namespace VolunteeringApp.ViewModels
             }
         }
 
-        private void InitEvents()
+        private async void InitEvents()
         {
+            UpComingEvents.Clear();
+            PastEvents.Clear();
+            VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
+            this.allEvents = await proxy.GetEvents();
+            
             App theApp = (App)App.Current;
             Association current = (Association)theApp.CurrentUser;
-            this.allEvents = new List<DailyEvent>(theApp.LookupTables.Events);
 
             foreach (DailyEvent e in allEvents)
             {
@@ -80,7 +84,7 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion
 
-        #region Navigate To Up Coming Event Page
+        #region Navigate To Event Page
 
         private DailyEvent selectedDailyEvent;
         public DailyEvent SelectedDailyEvent
@@ -127,13 +131,42 @@ namespace VolunteeringApp.ViewModels
         public Action<Page> NavigateToPageEvent;
         #endregion
 
-        #region Edit or delete event
+        #region Edit and delete event
         public ICommand EditEventCommand => new Command<DailyEvent>(EditEvent);
         public void EditEvent(DailyEvent e)
         {
             Page p = new NavigationPage(new Views.UpdateEventPage(e));
             App.Current.MainPage = p;
         }
+
+        public ICommand DeleteEventCommand => new Command<DailyEvent>(DelEvent);
+
+        public async void DelEvent(DailyEvent e)
+        {
+            bool result = await App.Current.MainPage.DisplayAlert("את.ה בטוח.ה?", "", "כן", "לא", FlowDirection.RightToLeft);
+            if (result)
+            {
+                VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
+                bool ok = await proxy.DelEvent(e);
+                //((App)App.Current).TriggerDeleteEvent();
+
+                if (ok)
+                {
+                    UpComingEvents.Remove(e);
+                    Page p = new NavigationPage(new Views.AssoEventsNavigationPage());
+                    App.Current.MainPage = p;
+                }
+                else
+                {
+                    await App.Current.MainPage.DisplayAlert("שגיאה", "לא בוצע", "אישור");
+                }
+            }
+            else
+            {
+                await App.Current.MainPage.DisplayAlert("שגיאה", "לא בוצע", "אישור");
+            }
+        }
+
         #endregion
 
         public AssoEventsViewModel()
@@ -141,6 +174,7 @@ namespace VolunteeringApp.ViewModels
             UpComingEvents = new ObservableCollection<DailyEvent>();
             PastEvents = new ObservableCollection<DailyEvent>();
             InitEvents();
+            //((App)App.Current).DeleteEvent += InitEvents;
         }
     }
 }

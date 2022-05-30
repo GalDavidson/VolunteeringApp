@@ -16,4 +16,6 @@
     
     <local:AssoUpComingEventsPage Title="אירועים קרובים" />
     <local:AssoPastEventsPage Title="אירועים קודמים" />
+
+
 </TabbedPage>

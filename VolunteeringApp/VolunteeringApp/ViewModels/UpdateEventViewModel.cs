@@ -645,8 +645,7 @@ namespace VolunteeringApp.ViewModels
         }
 
         public ICommand SubmitCommand { protected set; get; }
-        public ICommand DeleteCommand { protected set; get; }
-
+       
         private bool ValidateForm()
         {
             ValidateEventName();
