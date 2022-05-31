@@ -11,6 +11,8 @@
             <Label Text="אירועי ההתנדבות הקודמים של העמותה " TextColor="Black" Padding="0" HeightRequest="18" TextDecorations="Underline"/>
             <Label Text="על מנת לראות את משתתפיו, לחצ.י עליו" TextColor="Black" Padding="0" HeightRequest="15"/>
 
+            <Label Text="{Binding PastEvMessage}" TextColor="CadetBlue" Padding="0" HeightRequest="15" HorizontalOptions="Center"/>
+
             <CollectionView x:Name="collectionName" ItemsSource="{Binding PastEvents}" SelectionMode="Single" SelectedItem="{Binding SelectedDailyEvent}">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Span="1" VerticalItemSpacing="100" Orientation="Vertical" />

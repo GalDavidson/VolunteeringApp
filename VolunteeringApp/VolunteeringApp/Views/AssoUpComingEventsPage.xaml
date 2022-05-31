@@ -12,6 +12,8 @@
             <Label Text="על מנת לערוך או לבטל את האירוע החלק.י עליו שמאלה" TextColor="Black" Padding="0" HeightRequest="17"/>
             <Label Text="על מנת לראות מי נרשמ.ה אליו, לחצ.י עליו" TextColor="Black" Padding="0" HeightRequest="15"/>
 
+            <Label Text="{Binding UpComingEvMessage}" TextColor="CadetBlue" Padding="0" HeightRequest="15" HorizontalOptions="Center"/>
+
             <CollectionView x:Name="collectionName" ItemsSource="{Binding UpComingEvents}" SelectionMode="Single" SelectedItem="{Binding SelectedDailyEvent}">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Span="1" VerticalItemSpacing="100" Orientation="Vertical" />

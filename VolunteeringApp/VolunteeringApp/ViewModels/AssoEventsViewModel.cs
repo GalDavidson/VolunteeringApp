@@ -26,6 +26,41 @@ namespace VolunteeringApp.ViewModels
         #endregion
 
         #region events
+        private string upComingEvMessage;
+        public string UpComingEvMessage
+        {
+            get
+            {
+                return this.upComingEvMessage;
+            }
+            set
+            {
+                if (this.upComingEvMessage != value)
+                {
+                    this.upComingEvMessage = value;
+                    OnPropertyChanged("UpComingEvMessage");
+                }
+            }
+        }
+
+        private string pastEvMessage;
+        public string PastEvMessage
+        {
+            get
+            {
+                return this.pastEvMessage;
+            }
+            set
+            {
+                if (this.pastEvMessage != value)
+                {
+                    this.pastEvMessage = value;
+                    OnPropertyChanged("PastEvMessage");
+                }
+            }
+        }
+
+
         private List<DailyEvent> allEvents;
         private ObservableCollection<DailyEvent> upComingEvents;
         public ObservableCollection<DailyEvent> UpComingEvents
@@ -62,25 +97,37 @@ namespace VolunteeringApp.ViewModels
 
         private async void InitEvents()
         {
-            UpComingEvents.Clear();
-            PastEvents.Clear();
+            this.UpComingEvents.Clear();
+            this.PastEvents.Clear();
             VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
             this.allEvents = await proxy.GetEvents();
             
             App theApp = (App)App.Current;
             Association current = (Association)theApp.CurrentUser;
 
-            foreach (DailyEvent e in allEvents)
+            if (this.allEvents.Count == 0)
+            {
+                this.PastEvMessage = "לא נמצאו אירועים קודמים :(";
+                this.UpComingEvMessage = "לא נמצאו אירועים קרובים :(";
+                return;
+            }
+
+            foreach (DailyEvent e in this.allEvents)
             {
                 if (e.AssociationId == current.AssociationId)
                 {
                     TimeSpan ts = (TimeSpan)(e.StartTime - DateTime.Now);
                     if (ts.TotalMinutes < 0 || ts.TotalMinutes == 0)
-                        PastEvents.Add(e);
+                        this.PastEvents.Add(e);
                     else
-                        UpComingEvents.Add(e);
+                        this.UpComingEvents.Add(e);
                 }
             }
+
+            if (this.UpComingEvents.Count == 0)
+                this.UpComingEvMessage = "אין אירועים קרובים :(";
+            if (this.PastEvents.Count == 0)
+                this.PastEvMessage = "אין אירועים קודמים :(";
         }
         #endregion
 
