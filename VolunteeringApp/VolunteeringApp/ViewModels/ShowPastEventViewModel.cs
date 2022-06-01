@@ -32,5 +32,36 @@ namespace VolunteeringApp.ViewModels
         public TimeSpan EndTime { get; set; }
         public string Caption { get; set; }
         public ObservableCollection<VolunteersInEvent> VolunteersList { get; set; }
+
+        #region rating
+        private int ratingValue;
+        public int RatingValue
+        {
+            get
+            {
+                return this.ratingValue;
+            }
+            set
+            {
+                this.ratingValue = value;
+                OnPropertyChanged("RatingValue");
+            }
+        }
+
+        private List<int> ratingValueLst;
+        public List<int> RatingValueLst
+        {
+            get
+            {
+                return this.ratingValueLst;
+            }
+            set
+            {
+                this.ratingValueLst = value;
+                OnPropertyChanged("RatingValueLst");
+            }
+        }
+
+        #endregion
     }
 }

@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:rating="clr-namespace:Rating;assembly=Rating"
              x:Class="VolunteeringApp.Views.ShowPastEventPage"
-             FlowDirection="RightToLeft">
+             FlowDirection="RightToLeft"
+             x:Name="ThePage">
 
     <ContentPage.Content>
         <StackLayout BackgroundColor="Transparent" HorizontalOptions="Center" VerticalOptions="Center" Spacing="25">
@@ -34,22 +35,13 @@
                 <Label Text="{Binding StartTime, StringFormat='{0:hh\\:mm}'}" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="3"/>
                 <Label Text="מה בתכנית:" FontSize="12" TextColor="Black" Grid.Row="4" Grid.Column="0"/>
                 <Label Text="{Binding Caption, StringFormat='{0}'}" FontSize="12" TextColor="Black" Grid.Row="4" Grid.Column="1"  Grid.ColumnSpan="2"/>
-                <rating:RatingBar
-                    x:Name="rating" 
-                          HorizontalOptions="Center" 
-                          ImageWidth="30" ImageHeight="30" 
-                          FlowDirection="LeftToRight" 
-                          EmptyStarImage="ic_star.png" 
-                          FillStarImage="ic_star_orange.png" 
-                          SelectedStarValue="{Binding RatingValue}">
-                </rating:RatingBar>
-
+                
             </Grid>
 
 
             <Label Text="מי מגיע:" TextColor="Black" Padding="0" HeightRequest="15" TextDecorations="Underline"/>
 
-            <CollectionView x:Name="collectionName" ItemsSource="{Binding VolunteersList}" SelectionMode="None">
+            <CollectionView x:Name="collectionName" ItemsSource="{Binding VolunteersList}" SelectionMode="None" >
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Span="1" VerticalItemSpacing="0" Orientation="Vertical"/>
                 </CollectionView.ItemsLayout>
@@ -59,15 +51,24 @@
                         <Grid HorizontalOptions="Center" Margin="7" RowSpacing="0" WidthRequest="0">
 
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="70" />
+                                <ColumnDefinition Width="70" />
+                                <ColumnDefinition Width="100" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="50"/>
                             </Grid.RowDefinitions>
                             <Label Text="{Binding Path=Volunteer.FName}" FontSize="12" TextColor="Black" Grid.Row="0" Grid.Column="0"/>
                             <Image Source="{Binding Path=Volunteer.ProfilePic}" Grid.Row="0" Grid.Column="1"/>
-                            
+                            <rating:RatingBar                   
+                                x:Name="rating" 
+                                HorizontalOptions="Center" 
+                                ImageWidth="30" ImageHeight="30" 
+                                FlowDirection="LeftToRight" 
+                                EmptyStarImage="emptyStar.png" 
+                                FillStarImage="blackStar.png" 
+                                SelectedStarValue="{Binding Path=Volunteer.RatingNum}" Grid.Row="0" Grid.Column="2">
+                            </rating:RatingBar>
 
                         </Grid>
 
