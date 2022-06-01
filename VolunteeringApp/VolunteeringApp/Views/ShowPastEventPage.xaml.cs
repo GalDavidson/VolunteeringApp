@@ -16,7 +16,7 @@ namespace VolunteeringApp.Views
         {
             InitializeComponent();
         }
-        public ShowPastEventPage(ShowEventViewModel vm)
+        public ShowPastEventPage(ShowPastEventViewModel vm)
         {
             this.BindingContext = vm;
             InitializeComponent();

@@ -15,9 +15,8 @@ using Xamarin.Essentials;
 
 namespace VolunteeringApp.ViewModels
 {
-    public class ShowEventViewModel: INotifyPropertyChanged
+    public class ShowPastEventViewModel: INotifyPropertyChanged
     {
-
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName)

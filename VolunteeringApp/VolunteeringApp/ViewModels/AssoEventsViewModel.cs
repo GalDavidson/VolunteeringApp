@@ -125,9 +125,9 @@ namespace VolunteeringApp.ViewModels
             }
 
             if (this.UpComingEvents.Count == 0)
-                this.UpComingEvMessage = "אין אירועים קרובים :(";
+                this.UpComingEvMessage = "לא נמצאו אירועים קרובים :(";
             if (this.PastEvents.Count == 0)
-                this.PastEvMessage = "אין אירועים קודמים :(";
+                this.PastEvMessage = "לא נמצאו אירועים קודמים :(";
         }
         #endregion
 
@@ -160,30 +160,45 @@ namespace VolunteeringApp.ViewModels
 
         public void OnSelectionEventChanged(DailyEvent e)
         {
-
-            
-            ObservableCollection<VolunteersInEvent> lst = new ObservableCollection<VolunteersInEvent>();
-            foreach (VolunteersInEvent v in e.VolunteersInEvents)
+            if (this.PastEvents.Contains(e)) 
             {
-                lst.Add(v);
+                ShowPastEventViewModel pastEventContext = new ShowPastEventViewModel()
+                {
+                    EventName = e.EventName,
+                    EventLocation = e.EventLocation,
+                    EventDate = (DateTime)e.StartTime,
+                    StartTime = ((DateTime)e.StartTime).TimeOfDay,
+                    EndTime = ((DateTime)e.EndTime).TimeOfDay,
+                    Caption = e.Caption,
+                    VolunteersList = new ObservableCollection<VolunteersInEvent>(e.VolunteersInEvents)
+                };
+                Page pastEventPage = new ShowPastEventPage(pastEventContext);
+
+                if (NavigateToPageEvent != null)
+                    NavigateToPageEvent(pastEventPage);
+
+                SelectedDailyEvent = null;
             }
 
-            ShowEventViewModel eventContext = new ShowEventViewModel()
+            else if (this.UpComingEvents.Contains(e))
             {
-                EventName = e.EventName,
-                EventLocation = e.EventLocation,
-                EventDate = (DateTime)e.StartTime,
-                StartTime = ((DateTime)e.StartTime).TimeOfDay,
-                EndTime = ((DateTime)e.EndTime).TimeOfDay,
-                Caption = e.Caption,
-                VolunteersList = lst
-            };
-            Page eventPage = new ShowEventPage(eventContext);
+                ShowEventViewModel eventContext = new ShowEventViewModel()
+                {
+                    EventName = e.EventName,
+                    EventLocation = e.EventLocation,
+                    EventDate = (DateTime)e.StartTime,
+                    StartTime = ((DateTime)e.StartTime).TimeOfDay,
+                    EndTime = ((DateTime)e.EndTime).TimeOfDay,
+                    Caption = e.Caption,
+                    VolunteersList = new ObservableCollection<VolunteersInEvent>(e.VolunteersInEvents)
+                };
+                Page eventPage = new ShowEventPage(eventContext);
 
-            if (NavigateToPageEvent != null)
-                NavigateToPageEvent(eventPage);
+                if (NavigateToPageEvent != null)
+                    NavigateToPageEvent(eventPage);
 
-            SelectedDailyEvent = null;
+                SelectedDailyEvent = null;
+            }
         }
 
         public Action<Page> NavigateToPageEvent;
