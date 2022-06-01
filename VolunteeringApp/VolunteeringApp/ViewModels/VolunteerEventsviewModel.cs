@@ -42,10 +42,12 @@ namespace VolunteeringApp.ViewModels
                 }
             }
         }
-        private void CreateEventsCollection()
+        private async void CreateEventsCollection()
         {
+            VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
+            List<DailyEvent> events = await proxy.GetEvents();
+
             App theApp = (App)App.Current;
-            List<DailyEvent> events = theApp.LookupTables.Events;
             Volunteer vol = (Volunteer)theApp.CurrentUser;
 
             foreach (DailyEvent e in events) 
@@ -83,10 +85,9 @@ namespace VolunteeringApp.ViewModels
                     
             }
         }
-        public ICommand SelectionEventChanged => new Command<DailyEvent>(OnSelectionEventChanged);
+        //public ICommand SelectionEventChanged => new Command<DailyEvent>(OnSelectionEventChanged);
         public void OnSelectionEventChanged(DailyEvent e)
-        {
-           
+        { 
             App theApp = (App)App.Current;
             Volunteer vol = (Volunteer)theApp.CurrentUser;
 
@@ -97,7 +98,7 @@ namespace VolunteeringApp.ViewModels
                     lst.Add(v);
             }
 
-            Page eventPage = new ShowEventPage();
+            
             ShowEventViewModel eventContext = new ShowEventViewModel
             {
                 EventName = e.EventName,
@@ -108,7 +109,9 @@ namespace VolunteeringApp.ViewModels
                 Caption = e.Caption,
                 VolunteersList = lst
             };
-            eventPage.BindingContext = eventContext;
+
+            Page eventPage = new ShowEventPage(eventContext);
+
             if (NavigateToPageEvent != null)
                 NavigateToPageEvent(eventPage);
 

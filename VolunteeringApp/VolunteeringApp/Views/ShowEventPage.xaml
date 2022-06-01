@@ -26,7 +26,7 @@
                     <Label Text="איפה?" FontSize="12" TextColor="Black" Grid.Row="1" Grid.Column="0"/>
                     <Label Text="{Binding EventLocation, StringFormat='{0}'}" FontSize="12" TextColor="Black" Grid.Row="1" Grid.Column="1"  Grid.ColumnSpan="2"/>
                     <Label Text="מתי?" FontSize="12" TextColor="Black" Grid.Row="2" Grid.Column="0"/>
-                    <Label Text="{Binding EventDate, StringFormat='{0:MMMM dd, yyyy}'}" FontSize="12" TextColor="Black" Grid.Row="2" Grid.Column="1"  Grid.ColumnSpan="2"/>
+                    <Label Text="{Binding EventDate, StringFormat='{0:dd.MM.yyyy}'}" FontSize="12" TextColor="Black" Grid.Row="2" Grid.Column="1"  Grid.ColumnSpan="2"/>
                     <Label Text="מתי?" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="0"/>
                     <Label Text="{Binding EndTime, StringFormat='{0:hh\\:mm}'}" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="1"/>
                     <Label Text="---" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="2"/>

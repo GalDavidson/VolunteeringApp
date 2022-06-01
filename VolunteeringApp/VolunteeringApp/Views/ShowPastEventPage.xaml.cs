@@ -3,21 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using VolunteeringApp.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using VolunteeringApp.ViewModels;
 
 namespace VolunteeringApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ShowEventPage : ContentPage
+    public partial class ShowPastEventPage : ContentPage
     {
-        public ShowEventPage()
+        public ShowPastEventPage()
         {
             InitializeComponent();
         }
-        public ShowEventPage(ShowEventViewModel vm)
+        public ShowPastEventPage(ShowEventViewModel vm)
         {
             this.BindingContext = vm;
             InitializeComponent();

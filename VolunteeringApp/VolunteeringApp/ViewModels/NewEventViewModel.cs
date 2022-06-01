@@ -145,6 +145,7 @@ namespace VolunteeringApp.ViewModels
             set
             {
                 showDateError = value;
+                ValidateDate();
                 OnPropertyChanged("ShowDateError");
             }
         }
@@ -156,37 +157,29 @@ namespace VolunteeringApp.ViewModels
             set
             {
                 dateError = value;
+                ValidateDate();
                 OnPropertyChanged("DateError");
             }
         }
 
         private void ValidateDate()
         {
-            //DateError = "";
+            DateTime today = DateTime.Now;
 
-            //int curStart = 0;
-            //int curEnd = 0;
+            if (today.Date == EntryDate.Date)
+            {
+                ShowDateError = true;
+                DateError += "לא ניתן לקבוע אירוע להיום";
+                return;
+            }
 
-            //if (EntryStartTime.Hours == 0)
-            //    curStart = 24;
-            //if (EntryEndTime.Hours == 0)
-            //    curEnd = 24;
+            TimeSpan ts = EntryEndTime - EntryStartTime;
 
-            //if (DateTime.Now.Date == EntryDate.Date)
-            //{
-            //    if ((EntryEndTime-EntryStartTime).Minutes < 30)
-            //    {
-            //        ShowDateError = true;
-            //        DateError += "לא ניתן לקיים אירוע שנמשך פחות מחצי שעה";
-            //    }
-            //}
-
-            //TimeSpan t = DateTime.Now.TimeOfDay;
-            //if ((EntryStartTime - t).Hours < 1)
-            //{
-            //    ShowDateError = true;
-            //    DateError += "לא ניתן לפרסם אירוע שמתקיים בעוד פחות משעה";
-            //}
+            if (ts.TotalMinutes < 30)
+            {
+                ShowDateError = true;
+                DateError += "לא ניתן לקיים אירוע שנמשך פחות מחצי שעה";
+            }
         }
         #endregion
 

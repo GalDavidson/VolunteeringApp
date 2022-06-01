@@ -32,6 +32,10 @@ namespace VolunteeringApp.ViewModels
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }
         public string Caption { get; set; }
-        public ObservableCollection<VolunteersInEvent> VolunteersList { get; set; }
+        public ObservableCollection<VolunteersInEvent> VolunteersList 
+        {
+            get;
+            set;
+        }
     }
 }

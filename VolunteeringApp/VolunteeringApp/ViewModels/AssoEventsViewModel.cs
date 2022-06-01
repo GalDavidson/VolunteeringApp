@@ -141,23 +141,34 @@ namespace VolunteeringApp.ViewModels
                 return this.selectedDailyEvent;
             }
             set
-            {
+            { 
 
-                if (value != this.selectedDailyEvent)
+                if (value != null && value != this.selectedDailyEvent)
                 {
                     this.selectedDailyEvent = value;
                     OnSelectionEventChanged(value);
-                    OnPropertyChanged("SelectedDailyEvent");
                 }
-                
+                if (value == null)
+                {
+                    this.selectedDailyEvent = null;
+                    OnPropertyChanged("SelectedDailyEvent");
+
+                }
+
             }
         }
+
         public void OnSelectionEventChanged(DailyEvent e)
         {
-            if (e == null)
-                return;
-            Page eventPage = new ShowEventPage();
-            ShowEventViewModel eventContext = new ShowEventViewModel
+
+            
+            ObservableCollection<VolunteersInEvent> lst = new ObservableCollection<VolunteersInEvent>();
+            foreach (VolunteersInEvent v in e.VolunteersInEvents)
+            {
+                lst.Add(v);
+            }
+
+            ShowEventViewModel eventContext = new ShowEventViewModel()
             {
                 EventName = e.EventName,
                 EventLocation = e.EventLocation,
@@ -165,14 +176,14 @@ namespace VolunteeringApp.ViewModels
                 StartTime = ((DateTime)e.StartTime).TimeOfDay,
                 EndTime = ((DateTime)e.EndTime).TimeOfDay,
                 Caption = e.Caption,
-                VolunteersList = new ObservableCollection<VolunteersInEvent>(e.VolunteersInEvents)
+                VolunteersList = lst
             };
-            eventPage.BindingContext = eventContext;
+            Page eventPage = new ShowEventPage(eventContext);
+
             if (NavigateToPageEvent != null)
                 NavigateToPageEvent(eventPage);
-            
-            //selectedDailyEvent = null;
-            //OnPropertyChanged("SelectedDailyEvent");
+
+            SelectedDailyEvent = null;
         }
 
         public Action<Page> NavigateToPageEvent;
@@ -221,6 +232,7 @@ namespace VolunteeringApp.ViewModels
             UpComingEvents = new ObservableCollection<DailyEvent>();
             PastEvents = new ObservableCollection<DailyEvent>();
             InitEvents();
+            SelectedDailyEvent = null;
             //((App)App.Current).DeleteEvent += InitEvents;
         }
     }

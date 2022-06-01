@@ -34,7 +34,7 @@
                                            CommandParameter="{Binding}" />
                                 </SwipeItems>
                             </SwipeView.LeftItems>
-                            <SwipeView>
+                           
                                 <Grid HorizontalOptions="Center" Margin="7" RowSpacing="-20" >
 
                                     <Grid.ColumnDefinitions>
@@ -59,7 +59,7 @@
                                     <Label Text="{Binding Path=StartTime, StringFormat='{0:HH\\:mm}'}" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="2"/>
                                     
                                 </Grid>
-                            </SwipeView>
+                           
                         </SwipeView>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
