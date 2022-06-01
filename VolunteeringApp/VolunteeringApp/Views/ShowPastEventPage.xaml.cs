@@ -20,6 +20,7 @@ namespace VolunteeringApp.Views
         {
             this.BindingContext = vm;
             InitializeComponent();
+            RatingValue = 0;
         }
     }
 }

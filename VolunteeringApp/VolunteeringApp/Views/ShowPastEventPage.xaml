@@ -34,6 +34,15 @@
                 <Label Text="{Binding StartTime, StringFormat='{0:hh\\:mm}'}" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="3"/>
                 <Label Text="מה בתכנית:" FontSize="12" TextColor="Black" Grid.Row="4" Grid.Column="0"/>
                 <Label Text="{Binding Caption, StringFormat='{0}'}" FontSize="12" TextColor="Black" Grid.Row="4" Grid.Column="1"  Grid.ColumnSpan="2"/>
+                <rating:RatingBar
+                    x:Name="rating" 
+                          HorizontalOptions="Center" 
+                          ImageWidth="30" ImageHeight="30" 
+                          FlowDirection="LeftToRight" 
+                          EmptyStarImage="ic_star.png" 
+                          FillStarImage="ic_star_orange.png" 
+                          SelectedStarValue="{Binding RatingValue}">
+                </rating:RatingBar>
 
             </Grid>
 
@@ -58,7 +67,7 @@
                             </Grid.RowDefinitions>
                             <Label Text="{Binding Path=Volunteer.FName}" FontSize="12" TextColor="Black" Grid.Row="0" Grid.Column="0"/>
                             <Image Source="{Binding Path=Volunteer.ProfilePic}" Grid.Row="0" Grid.Column="1"/>
-                            <rat
+                            
 
                         </Grid>
 
