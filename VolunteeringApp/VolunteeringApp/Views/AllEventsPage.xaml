@@ -83,7 +83,6 @@
             <Button Text="סינון" Command="{Binding FilterEventsCommand}" FontAttributes="Bold" CornerRadius="15"  HorizontalOptions="Start" HeightRequest="37"/>
             <Button Text="ניקוי בחירה" Command="{Binding CleanFilterEventsCommand}" FontAttributes="Bold" CornerRadius="15"  HorizontalOptions="Start" HeightRequest="37"/>
 
-
             <RefreshView x:Name="refreshView" Command="{Binding RefreshEventsCommand}" IsRefreshing="{Binding IsRefresh}">
 
                 <CollectionView x:Name="collection" HorizontalOptions="Center" ItemsSource="{Binding FilteredEvents}" SelectionMode="None"  BackgroundColor="Transparent" Style="{StaticResource NoBackround}" >

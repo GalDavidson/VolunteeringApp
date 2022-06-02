@@ -60,7 +60,7 @@
                             </Grid.RowDefinitions>
                             <Label Text="{Binding Path=Volunteer.FName}" FontSize="12" TextColor="Black" Grid.Row="0" Grid.Column="0"/>
                             <Frame CornerRadius="200" IsClippedToBounds="True" Padding="0" HeightRequest="20" WidthRequest="10" Grid.Row="0" Grid.Column="1">
-                                <Image Source="{Binding Path=Volunteer.ProfilePic}"  Aspect="AspectFill"/>
+                                <Image Source="{Binding Path=Volunteer.ProfilePic}" Aspect="AspectFill"/>
                             </Frame>
                             <rating:RatingBar                   
                                 x:Name="rating" 

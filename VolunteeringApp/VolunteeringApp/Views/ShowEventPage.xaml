@@ -45,20 +45,21 @@
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        
-                            <Grid HorizontalOptions="Center" Margin="7" RowSpacing="0" WidthRequest="0">
+                        <Grid HorizontalOptions="Center" Margin="7" RowSpacing="0" WidthRequest="0">
 
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="50"/>
-                                </Grid.RowDefinitions>
-                                <Image Source="{Binding Path=Volunteer.ProfilePic}" Grid.Row="0" Grid.Column="0"/>
-                                <Label Text="{Binding Path=Volunteer.FName}" FontSize="12" TextColor="Black" Grid.Row="0" Grid.Column="1"/>
-                                
-                            </Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="70" />
+                                <ColumnDefinition Width="70" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="70"/>
+                            </Grid.RowDefinitions>
+                            <Frame CornerRadius="200" IsClippedToBounds="True" Padding="0" HeightRequest="20" WidthRequest="10" Grid.Row="0" Grid.Column="1">
+                                <Image Source="{Binding Path=Volunteer.ProfilePic}" Aspect="AspectFill"/>
+                            </Frame>
+                            <Label Text="{Binding Path=Volunteer.FName}"  FontSize="12" TextColor="Black" Grid.Row="0" Grid.Column="0"/>
+
+                        </Grid>
                        
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
