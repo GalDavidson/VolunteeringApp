@@ -53,13 +53,15 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="70" />
                                 <ColumnDefinition Width="70" />
-                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="70"/>
                             </Grid.RowDefinitions>
                             <Label Text="{Binding Path=Volunteer.FName}" FontSize="12" TextColor="Black" Grid.Row="0" Grid.Column="0"/>
-                            <Image Source="{Binding Path=Volunteer.ProfilePic}" Grid.Row="0" Grid.Column="1"/>
+                            <Frame CornerRadius="200" IsClippedToBounds="True" Padding="0" HeightRequest="20" WidthRequest="10" Grid.Row="0" Grid.Column="1">
+                                <Image Source="{Binding Path=Volunteer.ProfilePic}"  Aspect="AspectFill"/>
+                            </Frame>
                             <rating:RatingBar                   
                                 x:Name="rating" 
                                 HorizontalOptions="Center" 
@@ -67,9 +69,9 @@
                                 FlowDirection="LeftToRight" 
                                 EmptyStarImage="emptyStar.png" 
                                 FillStarImage="blackStar.png" 
-                                SelectedStarValue="{Binding Path=Volunteer.RatingNum}" Grid.Row="0" Grid.Column="2">
+                                SelectedStarValue="{Binding Path=RatingNum, Mode=TwoWay}" Grid.Row="0" Grid.Column="2">
                             </rating:RatingBar>
-
+                          
                         </Grid>
 
                     </DataTemplate>

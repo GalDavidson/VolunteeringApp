@@ -6,6 +6,7 @@
             FlowDirection="RightToLeft">
 
     <TabbedPage.ToolbarItems>
+        <ToolbarItem Text="דף הבית" Priority='0' Order='Secondary' Clicked='ToolbarItem_Clicked_AllEvents'/>
         <ToolbarItem Text="התחברות" Priority='0' Order='Secondary' Clicked='ToolbarItem_Clicked_Login'/>
     </TabbedPage.ToolbarItems>
     

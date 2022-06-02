@@ -25,5 +25,11 @@ namespace VolunteeringApp.Views
             Page p = new NavigationPage(new Views.RegisterNavigation());
             App.Current.MainPage = p;
         }
+
+        private void ToolbarItem_Clicked_AllEvents(object sender, EventArgs e)
+        {
+            Page p = new NavigationPage(new Views.AllEventsPage());
+            App.Current.MainPage = p;
+        }
     }
 }

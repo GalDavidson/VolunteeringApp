@@ -21,5 +21,10 @@ namespace VolunteeringApp.Views
             this.BindingContext = vm;
             InitializeComponent();
         }
+
+        private void rating_ItemTapped(object sender, EventArgs e)
+        {
+
+        }
     }
 }

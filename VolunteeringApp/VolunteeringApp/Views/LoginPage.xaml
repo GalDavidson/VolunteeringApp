@@ -5,6 +5,7 @@
              FlowDirection="RightToLeft">
 
     <ContentPage.ToolbarItems>
+        <ToolbarItem Text="דף הרשמה" Priority='0' Order='Secondary' Clicked='ToolbarItem_Clicked_AllEvents'/>
         <ToolbarItem Text="הרשמה" Priority='0' Order='Secondary' Clicked='ToolbarItem_Clicked_Register'/>
     </ContentPage.ToolbarItems>
 

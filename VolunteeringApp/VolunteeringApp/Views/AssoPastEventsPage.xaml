@@ -4,9 +4,10 @@
              x:Class="VolunteeringApp.Views.AssoPastEventsPage"
              x:Name="ThePage"
              FlowDirection="RightToLeft">
+    
 
     <ContentPage.Content>
-        <StackLayout BackgroundColor="Transparent" HorizontalOptions="Center" VerticalOptions="Center" Spacing="25">
+        <StackLayout BackgroundColor="Transparent" HorizontalOptions="Center" VerticalOptions="Center" Spacing="25" Margin="17">
 
             <Label Text="אירועי ההתנדבות הקודמים של העמותה " TextColor="Black" Padding="0" HeightRequest="18" TextDecorations="Underline"/>
             <Label Text="על מנת לראות את משתתפיו, לחצ.י עליו" TextColor="Black" Padding="0" HeightRequest="15"/>
@@ -20,7 +21,7 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         
-                        <Grid HorizontalOptions="Center" Margin="7" RowSpacing="-20" WidthRequest="350">
+                        <Grid HorizontalOptions="Center"  RowSpacing="-20" WidthRequest="350">
 
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />

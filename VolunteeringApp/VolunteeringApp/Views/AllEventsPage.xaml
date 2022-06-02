@@ -5,7 +5,7 @@
              FlowDirection="RightToLeft"
              x:Name="ThePage">
 
-    <ContentPage.ToolbarItems>
+    <ContentPage.ToolbarItems >
     </ContentPage.ToolbarItems>
 
 

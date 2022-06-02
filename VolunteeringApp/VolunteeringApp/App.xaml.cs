@@ -50,7 +50,13 @@ namespace VolunteeringApp
                 MainPage = new Views.ServerStatusPage(vm);
             }
             else
-                MainPage = new NavigationPage(new AllEventsPage());
+            {
+                MainPage = new NavigationPage(new AllEventsPage())
+                {
+                    BarBackgroundColor = Color.Transparent
+                };
+
+            }
         }
 
         protected override void OnSleep()

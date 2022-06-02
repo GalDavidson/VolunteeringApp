@@ -19,7 +19,12 @@ namespace VolunteeringApp.Views
             InitializeComponent();
         }
 
-       
+        private void ToolbarItem_Clicked_AllEvents(object sender, EventArgs e)
+        {
+            Page p = new NavigationPage(new Views.AllEventsPage());
+            App.Current.MainPage = p;
+        }
+
         private void ToolbarItem_Clicked_Login(object sender, EventArgs e)
         {
             Page p = new NavigationPage(new Views.LoginPage());
