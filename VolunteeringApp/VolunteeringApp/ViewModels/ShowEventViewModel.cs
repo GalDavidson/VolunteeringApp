@@ -34,5 +34,11 @@ namespace VolunteeringApp.ViewModels
         public string Caption { get; set; }
         public ObservableCollection<VolunteersInEvent> VolunteersList { get; set; }
         
+        ICommand MoveToVolPageCommand => new Command(VolPageCommand);
+
+        public void VolPageCommand()
+        {
+
+        }
     }
 }
