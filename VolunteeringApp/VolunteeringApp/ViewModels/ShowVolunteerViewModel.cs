@@ -9,7 +9,7 @@ using VolunteeringApp.Models;
 
 namespace VolunteeringApp.ViewModels
 {
-    public class ShowVolunteerViewModel
+    public class ShowVolunteerViewModel: INotifyPropertyChanged
     {
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -21,10 +21,19 @@ namespace VolunteeringApp.ViewModels
 
         public string FName { get; set; }
         public string LName { get; set; }
-        public string Email { get; set; }
         public string UserName { get; set; }
         public DateTime BirthDate { get; set; }
-        public int GenderID { get; set; }
 
+        private string age;
+        public string Age
+        {
+            get => age;
+            set
+            {
+                if (age != value)
+                age = value;
+                OnPropertyChanged("Age");
+            }
+        }
     }
 }

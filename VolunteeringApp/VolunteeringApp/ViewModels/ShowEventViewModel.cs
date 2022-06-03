@@ -38,7 +38,8 @@ namespace VolunteeringApp.ViewModels
 
         public void VolPageCommand()
         {
-
+            Page p = new NavigationPage(new Views.AllEventsPage());
+            App.Current.MainPage = p;
         }
     }
 }
