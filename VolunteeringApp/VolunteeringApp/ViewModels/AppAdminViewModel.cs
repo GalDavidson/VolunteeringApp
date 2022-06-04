@@ -327,8 +327,8 @@ namespace VolunteeringApp.ViewModels
                     LName = chosenVol.LName,
                     FName = chosenVol.FName,
                     UserName = chosenVol.UserName,
-                    BirthDate = chosenVol.BirthDate,
-                    Age = (DateTime.Now -chosenVol.BirthDate).ToString()
+                    
+                    Age = (DateTime.Now -chosenVol.BirthDate).ToString().Length
                 };
 
                 //Gender = genders[(int)chosenVol.GenderId].GenderType;

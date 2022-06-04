@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="VolunteeringApp.Views.ShowEventPage"
+             x:Name="ThePage"
              FlowDirection="RightToLeft">
 
     <ContentPage.Content>
@@ -54,9 +55,9 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="70"/>
                             </Grid.RowDefinitions>
-                            <Frame CornerRadius="200" IsClippedToBounds="True" Padding="0" HeightRequest="20" WidthRequest="10" Grid.Row="0" Grid.Column="1">
-                                <ImageButton Source="{Binding Path=Volunteer.ProfilePic}" Aspect="AspectFill" Command="{Binding MoveToVolPageCommand}" CommandParameter="{Binding}"/>
-                            </Frame>
+
+                            <ImageButton Source="{Binding Path=Volunteer.ProfilePic}" Aspect="AspectFill" Command="{Binding Source={x:Reference ThePage}, Path=BindingContext.MoveToVolPageCommand}" CommandParameter="{Binding}" Grid.Row="0" Grid.Column="1"/>
+                          
                             <Label Text="{Binding Path=Volunteer.FName}" FontSize="12" TextColor="Black" Grid.Row="0" Grid.Column="0"/>
 
                         </Grid>

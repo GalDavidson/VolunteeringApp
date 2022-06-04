@@ -93,8 +93,6 @@ namespace VolunteeringApp.Views
                 this.ToolbarItems.Add(assoEventsItem);
                 this.ToolbarItems.Add(newEventItem);
                 this.ToolbarItems.Add(logoutItem);
-
-             
             }
 
             if (o is Volunteer)

@@ -3,9 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="VolunteeringApp.Views.AllEventsPage"
              FlowDirection="RightToLeft"
-             x:Name="ThePage">
+             x:Name="ThePage"
+             BackgroundColor="#OC4876"
+             
+             >
 
-    <ContentPage.ToolbarItems >
+    <ContentPage.ToolbarItems>
     </ContentPage.ToolbarItems>
 
 

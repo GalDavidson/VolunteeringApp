@@ -3,8 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="VolunteeringApp.Views.AssoEventsNavigationPage"
             xmlns:local="clr-namespace:VolunteeringApp.Views"
-            FlowDirection="RightToLeft"
-            BarBackgroundColor="AliceBlue" >
+            FlowDirection="RightToLeft" >
+    <!-- <BarBackgroundColor --> 
 
     <TabbedPage.ToolbarItems>
         <ToolbarItem Text="כל האירועים" Priority='0' Order='Secondary' Clicked='ToolbarItem_Clicked_AllEvents'/>

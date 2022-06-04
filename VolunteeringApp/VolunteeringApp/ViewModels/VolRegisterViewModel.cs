@@ -542,7 +542,8 @@ namespace VolunteeringApp.ViewModels
             TimeSpan ts = DateTime.Now - this.EntryBirthDate;
             this.ShowBirthDateError = ts.TotalDays < (MIN_AGE * 365);
             if (ShowBirthDateError)
-                BirthDateError = "לא ניתן לפרסם אירוע שמתקיים בעוד פחות משעה";
+                BirthDateError = "לא ניתן להתנדב מתחת לגיל 14";
+
         }
         #endregion
 

@@ -22,18 +22,22 @@ namespace VolunteeringApp.ViewModels
         public string FName { get; set; }
         public string LName { get; set; }
         public string UserName { get; set; }
-        public DateTime BirthDate { get; set; }
 
-        private string age;
-        public string Age
+        private int age;
+        public int Age
         {
             get => age;
             set
             {
                 if (age != value)
-                age = value;
-                OnPropertyChanged("Age");
+                {
+                    age = value;
+                    OnPropertyChanged("Age");
+                }
             }
         }
+
+        public int RatingNum { get; set; }
+        public int TotalEvents { get; set; }
     }
 }
