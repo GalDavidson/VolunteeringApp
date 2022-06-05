@@ -9,7 +9,7 @@
     <ContentPage.Content>
         <StackLayout BackgroundColor="Transparent" HorizontalOptions="Center" VerticalOptions="Center" Spacing="25">
 
-            <Grid HorizontalOptions="Center" Margin="7" RowSpacing="-20" HeightRequest="150" WidthRequest="240">
+            <Grid HorizontalOptions="CenterAndExpand" Margin="7" RowSpacing="-20" HeightRequest="150">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -34,14 +34,14 @@
                 <Label Text="---" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="2"/>
                 <Label Text="{Binding StartTime, StringFormat='{0:hh\\:mm}'}" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="3"/>
                 <Label Text="מה בתכנית:" FontSize="12" TextColor="Black" Grid.Row="4" Grid.Column="0"/>
-                <Label Text="{Binding Caption, StringFormat='{0}'}" FontSize="12" TextColor="Black" Grid.Row="4" Grid.Column="1"  Grid.ColumnSpan="2"/>
+                <Label Text="{Binding Caption, StringFormat='{0}'}" FontSize="12" TextColor="Black" Grid.Row="4" Grid.Column="2"  Grid.ColumnSpan="2"/>
                 
             </Grid>
 
 
             <Label Text="מי מגיע:" TextColor="Black" Padding="0" HeightRequest="15" TextDecorations="Underline"/>
 
-            <CollectionView x:Name="collectionName" ItemsSource="{Binding VolunteersList}" SelectionMode="None" >
+            <CollectionView x:Name="collectionName" ItemsSource="{Binding VolunteersList}" SelectionMode="None">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Span="1" VerticalItemSpacing="0" Orientation="Vertical"/>
                 </CollectionView.ItemsLayout>
@@ -57,10 +57,13 @@
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="70"/>
+                                <RowDefinition Height="30"/>
                             </Grid.RowDefinitions>
-                            <Label Text="{Binding Path=Volunteer.FName}" FontSize="12" TextColor="Black" Grid.Row="0" Grid.Column="0"/>
-                            <Frame CornerRadius="200" IsClippedToBounds="True" Padding="0" HeightRequest="20" WidthRequest="10" Grid.Row="0" Grid.Column="1">
-                                <Image Source="{Binding Path=Volunteer.ProfilePic}" Aspect="AspectFill"/>
+
+                            <Label Text="{Binding Path=Volunteer.FName}" FontSize="20" TextColor="Black" Grid.Row="0" Grid.Column="1"/>
+                            <Button Text="{Binding UserName}" Grid.Row="1" Grid.Column="0" BackgroundColor="Transparent" Command="{Binding }"/>
+                            <Frame CornerRadius="200" IsClippedToBounds="True" Padding="0" HeightRequest="20" WidthRequest="10" Grid.Row="0" Grid.Column="0" BackgroundColor="Transparent">
+                                <Image Source="{Binding Path=Volunteer.ProfilePic}" Aspect="AspectFill" />
                             </Frame>
                             <rating:RatingBar                   
                                 x:Name="rating" 
@@ -71,7 +74,6 @@
                                 FillStarImage="blackStar.png" 
                                 SelectedStarValue="{Binding Path=RatingNum, Mode=TwoWay}" Grid.Row="0" Grid.Column="2">
                             </rating:RatingBar>
-                          
                         </Grid>
 
                     </DataTemplate>

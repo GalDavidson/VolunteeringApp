@@ -19,8 +19,17 @@ namespace VolunteeringApp.Views
         }
         public ShowEventPage(ShowEventViewModel vm)
         {
+            ShowEventViewModel context = vm;
+            context.NavigateToPageEvent += NavigateToAsync;
             this.BindingContext = vm;
             InitializeComponent();
         }
+
+        public async void NavigateToAsync(Page p)
+        {
+            await Navigation.PushAsync(p);
+
+        }
+
     }
 }

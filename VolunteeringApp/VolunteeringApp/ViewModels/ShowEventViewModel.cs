@@ -34,34 +34,32 @@ namespace VolunteeringApp.ViewModels
         public string Caption { get; set; }
         public ObservableCollection<VolunteersInEvent> VolunteersList { get; set; }
         
-        ICommand MoveToVolPageCommand => new Command<VolunteersInEvent>(VolPageCommand);
+        public ICommand MoveToVolPageCommand => new Command<VolunteersInEvent>(VolPageCommand);
 
         public void VolPageCommand(VolunteersInEvent v)
         {
-            //Volunteer vol = v.Volunteer;
+            Volunteer vol = v.Volunteer;
 
-            //int age = 0;
-            //age = DateTime.Now.Subtract(vol.BirthDate).Days;
-            //age = age / 365;
+            int age = 0;
+            age = DateTime.Now.Subtract(vol.BirthDate).Days;
+            age = age / 365;
 
-            //List<VolunteersInEvent> lst = vol.VolunteersInEvents;
+            List<VolunteersInEvent> lst = vol.VolunteersInEvents;
 
-            //ShowVolunteerViewModel volContext = new ShowVolunteerViewModel()
-            //{
-            //    FName = vol.FName,
-            //    LName = vol.LName,
-            //    UserName = vol.UserName,
-            //    Age = age,
-            //    RatingNum= v.RatingNum,
-            //    TotalEvents = lst.Count
-            //};
-            //Page volPage = new VolProfilePage(volContext);
+            ShowVolunteerViewModel volContext = new ShowVolunteerViewModel()
+            {
+                FName = vol.FName,
+                LName = vol.LName,
+                UserName = vol.UserName,
+                Age = age,
+                RatingNum = v.RatingNum,
+                TotalEvents = lst.Count,
+                ProfilePic = vol.ProfilePic
+            };
+            Page volPage = new VolProfilePage(volContext);
 
-            //if (NavigateToPageEvent != null)
-            //    NavigateToPageEvent(volPage);
-
-            Page p = new NavigationPage(new Views.AllEventsPage());
-            App.Current.MainPage = p;
+            if (NavigateToPageEvent != null)
+                NavigateToPageEvent(volPage);
         }
 
         public Action<Page> NavigateToPageEvent;

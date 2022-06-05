@@ -6,6 +6,7 @@ using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
 using VolunteeringApp.Models;
+using VolunteeringApp.Services;
 
 namespace VolunteeringApp.ViewModels
 {
@@ -37,7 +38,9 @@ namespace VolunteeringApp.ViewModels
             }
         }
 
+        public string ProfilePic { get; set; }
         public int RatingNum { get; set; }
         public int TotalEvents { get; set; }
+        public string Rank { get; set; }
     }
 }

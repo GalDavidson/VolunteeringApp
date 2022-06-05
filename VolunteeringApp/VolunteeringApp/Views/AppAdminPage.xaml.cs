@@ -45,7 +45,6 @@ namespace VolunteeringApp.Views
         public async void NavigateToAsync(Page p)
         {
             await Navigation.PushAsync(p);
-
         }
     }
 }

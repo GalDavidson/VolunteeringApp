@@ -22,10 +22,5 @@ namespace VolunteeringApp.Views
             this.BindingContext = vm;
             InitializeComponent();
         }
-
-        public async void NavigateToAsync(Page p)
-        {
-            await Navigation.PushAsync(p);
-        }
     }
 }
