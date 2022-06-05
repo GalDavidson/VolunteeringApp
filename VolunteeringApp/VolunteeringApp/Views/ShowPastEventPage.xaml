@@ -48,21 +48,23 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
 
-                        <Grid HorizontalOptions="Center" Margin="7" RowSpacing="0" WidthRequest="0">
+                        <Grid HorizontalOptions="Center" Margin="7" RowSpacing="7" WidthRequest="0">
 
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="70" />
+                                <ColumnDefinition Width="85" />
                                 <ColumnDefinition Width="70" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="70"/>
-                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="85"/>
+                                <RowDefinition Height="35"/>
                             </Grid.RowDefinitions>
 
-                            <Label Text="{Binding Path=Volunteer.FName}" FontSize="20" TextColor="Black" Grid.Row="0" Grid.Column="1"/>
-                            <Button Text="{Binding UserName}" Grid.Row="1" Grid.Column="0" BackgroundColor="Transparent" Command="{Binding }"/>
-                            <Frame CornerRadius="200" IsClippedToBounds="True" Padding="0" HeightRequest="20" WidthRequest="10" Grid.Row="0" Grid.Column="0" BackgroundColor="Transparent">
+                            <Label Text="{Binding Path=Volunteer.FName}" FontSize="17" TextColor="Black" Grid.Row="0" VerticalOptions="Center" Grid.Column="1"/>
+                            <Frame Grid.Row="1" Grid.Column="0" BackgroundColor="Transparent" >
+                                <Button Text="{Binding Path=Volunteer.UserName}" TextTransform="Lowercase" BorderColor="Black" FontSize="13" BackgroundColor="Transparent" Command="{Binding Source={x:Reference collectionName}, Path=BindingContext.RateVolunteerCommand}" CommandParameter="{Binding}"/>
+                            </Frame>
+                            <Frame CornerRadius="200" IsClippedToBounds="True" Padding="0" Grid.Row="0" Grid.Column="0" BackgroundColor="Transparent">
                                 <Image Source="{Binding Path=Volunteer.ProfilePic}" Aspect="AspectFill" />
                             </Frame>
                             <rating:RatingBar                   

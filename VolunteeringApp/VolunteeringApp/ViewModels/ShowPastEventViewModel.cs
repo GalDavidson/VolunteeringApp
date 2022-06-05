@@ -46,7 +46,11 @@ namespace VolunteeringApp.ViewModels
             }
         }
 
-
+        public ICommand RateVolunteerCommand => new Command<VolunteersInEvent>(RateVol);
+        public async void RateVol(VolunteersInEvent vol)
+        {
+            await App.Current.MainPage.DisplayAlert("שגיאה", " יש להתחבר למערכת...", "אישור", FlowDirection.RightToLeft);
+        }
 
         #region rating
         private int ratingValue;

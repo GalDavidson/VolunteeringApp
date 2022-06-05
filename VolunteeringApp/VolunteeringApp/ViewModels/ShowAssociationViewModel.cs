@@ -8,7 +8,7 @@ using Xamarin.Forms;
 
 namespace VolunteeringApp.ViewModels
 {
-    public class ShowAssociationViewModel
+    public class ShowAssociationViewModel: INotifyPropertyChanged
     {
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;

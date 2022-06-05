@@ -240,13 +240,6 @@ namespace VolunteeringApp.ViewModels
             }
         }
 
-        public ICommand RateVolunteerCommand => new Command<VolunteersInEvent>(RateVol);
-        public void RateVol(VolunteersInEvent vol)
-        {
-            Page p = new NavigationPage(new Views.RateVolPage());
-            App.Current.MainPage = p;
-        }
-
         #endregion
 
         public AssoEventsViewModel()
