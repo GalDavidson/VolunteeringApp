@@ -4,8 +4,6 @@
              x:Class="VolunteeringApp.Views.AllEventsPage"
              FlowDirection="RightToLeft"
              x:Name="ThePage"
-             BackgroundColor="#OC4876"
-             
              >
 
     <ContentPage.ToolbarItems>

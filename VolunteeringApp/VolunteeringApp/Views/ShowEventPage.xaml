@@ -49,19 +49,19 @@
                         <Grid HorizontalOptions="Center" Margin="7" RowSpacing="0" WidthRequest="0">
 
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="80" />
-                                <ColumnDefinition Width="80" />
+                                <ColumnDefinition Width="60" />
+                                <ColumnDefinition Width="60" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="80"/>
+                                <RowDefinition Height="60"/>
                                 <RowDefinition Height="40"/>
                             </Grid.RowDefinitions>
 
                             <Frame CornerRadius="200" IsClippedToBounds="True" Padding="0" Grid.Row="0" Grid.Column="0">
                                 <Image Source="{Binding Path=Volunteer.ProfilePic}" Aspect="AspectFill"/>
                             </Frame>
-                            <Button BackgroundColor="Transparent" BorderColor="Black" FontSize="12" Text="{Binding Path=Volunteer.UserName}" Command="{Binding Source={x:Reference collectionName}, Path=BindingContext.MoveToVolPageCommand}" CommandParameter="{Binding}"  Grid.Row="1" Grid.Column="0"/>
-                            <Label Text="{Binding Path=Volunteer.FName}" FontSize="12" TextColor="Black" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"/>
+                            <Button BackgroundColor="Transparent" BorderColor="Black" FontSize="12" Text="{Binding Path=Volunteer.UserName}" Command="{Binding Source={x:Reference collectionName}, Path=BindingContext.MoveToVolPageCommand}" CommandParameter="{Binding}"  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="StartAndExpand"/>
+                            <Label Text="{Binding Path=Volunteer.FName}" FontSize="15" TextColor="Black" Grid.Row="0" Grid.Column="1" VerticalOptions="Center"/>
 
                         </Grid>
                        

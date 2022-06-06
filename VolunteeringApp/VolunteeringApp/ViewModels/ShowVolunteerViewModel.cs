@@ -40,6 +40,7 @@ namespace VolunteeringApp.ViewModels
         }
 
         public string ProfilePic { get; set; }
+        public Gender Gender { get; set; }
         public int RatingNum { get; set; }
         public int TotalEvents { get; set; }
         public string Rank { get; set; }

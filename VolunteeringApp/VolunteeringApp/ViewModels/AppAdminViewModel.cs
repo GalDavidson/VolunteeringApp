@@ -238,15 +238,19 @@ namespace VolunteeringApp.ViewModels
             {
                 Association chosenAsso = (Association)obj;
                 Page associationPage = new ShowAssociationPage();
+
                 ShowAssociationViewModel assoContext = new ShowAssociationViewModel
                 {
                     Email = chosenAsso.Email,
                     UserName = chosenAsso.UserName,
                     InformationAbout = chosenAsso.InformationAbout,
-                    PhoneNum = chosenAsso.PhoneNum
+                    PhoneNum = chosenAsso.PhoneNum,
+                    BranchLst = chosenAsso.BranchesOfAssociations.ToList(),
+                    OccuAreasLst = chosenAsso.OccupationalAreasOfAssociations.ToList(),
+                    ProfilePic = chosenAsso.ProfilePic
                 };
                 associationPage.BindingContext = assoContext;
-                associationPage.Title = assoContext.UserName;
+
                 if (NavigateToPageEvent != null)
                     NavigateToPageEvent(associationPage);
             }
@@ -320,23 +324,37 @@ namespace VolunteeringApp.ViewModels
         {
             if (obj is Volunteer)
             {
-                Volunteer chosenVol = (Volunteer)obj;
+                Volunteer vol = (Volunteer)obj;
                 Page volunteerPage = new ShowVolunteerPage();
-                ShowVolunteerViewModel volContext = new ShowVolunteerViewModel
+
+                int age = 0;
+                age = DateTime.Now.Subtract(vol.BirthDate).Days;
+                age = age / 365;
+
+                List<VolunteersInEvent> lst = vol.VolunteersInEvents;
+                int ratingSum = 0;
+                foreach(VolunteersInEvent v in lst)
                 {
-                    LName = chosenVol.LName,
-                    FName = chosenVol.FName,
-                    UserName = chosenVol.UserName,
-                    
-                    Age = (DateTime.Now -chosenVol.BirthDate).ToString().Length
+                    ratingSum += v.RatingNum;
+                }
+
+                ShowVolunteerViewModel volContext = new ShowVolunteerViewModel()
+                {
+                    FName = vol.FName,
+                    LName = vol.LName,
+                    UserName = vol.UserName,
+                    Age = age,
+                    RatingNum = ratingSum / lst.Count,
+                    TotalEvents = lst.Count,
+                    ProfilePic = vol.ProfilePic,
+                    Gender = vol.Gender
                 };
+                Page volPage = new VolProfilePage(volContext);
+
+                if (NavigateToPageEvent != null)
+                    NavigateToPageEvent(volPage);
 
                 //Gender = genders[(int)chosenVol.GenderId].GenderType;
-
-                volunteerPage.BindingContext = volContext;
-                volunteerPage.Title = volContext.UserName;
-                if (NavigateToPageEvent != null)
-                    NavigateToPageEvent(volunteerPage);
             }
         }
         //Delete volunteer

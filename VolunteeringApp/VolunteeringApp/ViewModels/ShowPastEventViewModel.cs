@@ -49,7 +49,12 @@ namespace VolunteeringApp.ViewModels
         public ICommand RateVolunteerCommand => new Command<VolunteersInEvent>(RateVol);
         public async void RateVol(VolunteersInEvent vol)
         {
-            await App.Current.MainPage.DisplayAlert("שגיאה", " יש להתחבר למערכת...", "אישור", FlowDirection.RightToLeft);
+            string result = await App.Current.MainPage.DisplayPromptAsync("", "מילוי חוות דעת כתובה על המתנדב", "שלח", "לא תודה");
+            if (result != null)
+            {
+                vol.WrittenRating = result;
+
+            }
         }
 
         #region rating

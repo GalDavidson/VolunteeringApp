@@ -39,7 +39,7 @@
             </Grid>
 
 
-            <Label Text="מי מגיע:" TextColor="Black" Padding="0" HeightRequest="15" TextDecorations="Underline"/>
+            <Label Text="מי היה:" TextColor="Black" FontSize="15" Padding="0" HeightRequest="19" TextDecorations="Underline"/>
 
             <CollectionView x:Name="collectionName" ItemsSource="{Binding VolunteersList}" SelectionMode="None">
                 <CollectionView.ItemsLayout>
@@ -48,22 +48,22 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
 
-                        <Grid HorizontalOptions="Center" Margin="7" RowSpacing="7" WidthRequest="0">
+                        <Grid HorizontalOptions="Center" Margin="17" >
 
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="85" />
                                 <ColumnDefinition Width="70" />
-                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="80" />
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="100" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="85"/>
-                                <RowDefinition Height="35"/>
+                                <RowDefinition Height="70"/>
+                                <RowDefinition Height="40"/>
                             </Grid.RowDefinitions>
 
                             <Label Text="{Binding Path=Volunteer.FName}" FontSize="17" TextColor="Black" Grid.Row="0" VerticalOptions="Center" Grid.Column="1"/>
-                            <Frame Grid.Row="1" Grid.Column="0" BackgroundColor="Transparent" >
-                                <Button Text="{Binding Path=Volunteer.UserName}" TextTransform="Lowercase" BorderColor="Black" FontSize="13" BackgroundColor="Transparent"/>
-                            </Frame>
+                            <Button Text="{Binding Path=Volunteer.UserName}" HorizontalOptions="Center" TextTransform="Lowercase" BorderColor="Black" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" FontSize="15" BackgroundColor="Transparent" />
+                            <Button Text="עדכון דירוג" BackgroundColor="Transparent" VerticalOptions="End" Command="{Binding Source={x:Reference ThePage}, Path=BindingContext.RateVolunteerCommand}" CommandParameter="{Binding}" Grid.Row="0" Grid.Column="3"/>
                             <Frame CornerRadius="200" IsClippedToBounds="True" Padding="0" Grid.Row="0" Grid.Column="0" BackgroundColor="Transparent">
                                 <Image Source="{Binding Path=Volunteer.ProfilePic}" Aspect="AspectFill" />
                             </Frame>

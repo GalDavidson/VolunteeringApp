@@ -5,11 +5,84 @@
              FlowDirection="RightToLeft">
 
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="{Binding Email}" HorizontalTextAlignment="Center" FontSize="Large"/>
-            <Label Text="{Binding UserName}" HorizontalTextAlignment="Center" FontSize="Large"/>
-            <Label Text="{Binding InformationAbout}" HorizontalTextAlignment="Center" FontSize="Caption"/>
-            <Label Text="{Binding PhoneNum}" HorizontalTextAlignment="Center" FontSize="Body"/>
+        <StackLayout Margin="0,6" BackgroundColor="Transparent">
+            <!--StringFormat='{0}'-->
+          
+                <Grid HorizontalOptions="Center" WidthRequest="200" FlowDirection="RightToLeft">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="3"/>
+                        <ColumnDefinition Width="100"/>
+                </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="220"/>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="70"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="110"/>
+                    </Grid.RowDefinitions>
+                    <Frame CornerRadius="200" IsClippedToBounds="True" Padding="0" Grid.ColumnSpan="3" Grid.Column="0" Grid.Row="0">
+                        <Image Source="{Binding ProfilePic}" Aspect="AspectFill"/>
+                    </Frame>
+                    <Label Padding="0" Text="{Binding UserName}" HorizontalOptions="Center" TextColor="Black" FontSize="19" Grid.ColumnSpan="3" Grid.Column="0" Grid.Row="1" TextDecorations="Underline"/>
+                   <Label Padding="0" Text="|" HorizontalOptions="StartAndExpand" FontAttributes="Bold" VerticalOptions="Center" TextColor="Black" FontSize="21" Grid.Column="1" Grid.Row="2" />
+                    <Label Padding="0" Text="{Binding Email}" HorizontalOptions="StartAndExpand" VerticalOptions="Center" TextColor="#8C7A76" FontSize="15" CharacterSpacing="0" Grid.Column="0" Grid.Row="2" />
+                    <Label Padding="0" Text="{Binding PhoneNum}" HorizontalOptions="StartAndExpand" VerticalOptions="Center" TextColor="#8C7A76" FontSize="15" Grid.Column="2" Grid.Row="2" CharacterSpacing="1"/>
+                    <Label Padding="0" Text="{Binding InformationAbout}" HorizontalOptions="Center" TextColor="Black" FontSize="15" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3"/>
+                    <Label Padding="0" Text="סניפים:" HorizontalOptions="Center" TextColor="Black" FontSize="16" Grid.Column="0" Grid.Row="4" TextDecorations="Underline"/>
+                    <Label Padding="0" Text="תחומי עיסוק:" HorizontalOptions="Center" TextColor="Black" FontSize="16" Grid.Column="2" Grid.Row="4" TextDecorations="Underline"/>
+
+                <CollectionView x:Name="branchLst" ItemsSource="{Binding BranchLst}" SelectionMode="None" BackgroundColor="Transparent" Grid.Column="0" Grid.Row="5">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Span="1" Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="7" ColumnSpacing="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="40"/>
+                                </Grid.RowDefinitions>
+                                <Frame CornerRadius="10" IsClippedToBounds="True" Padding="0" Grid.ColumnSpan="3" Grid.Column="0" Grid.Row="0" BackgroundColor="#E7FAFA">
+                                    <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Text="{Binding Path=Branch.BranchLocation, StringFormat=' {0} '}" HorizontalOptions="CenterAndExpand" FontSize="14" TextColor="Black" />
+                                </Frame>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <CollectionView x:Name="occuAreasLst" ItemsSource="{Binding OccuAreasLst}" SelectionMode="None" Grid.Column="2" Grid.Row="5">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Span="1" Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="7" ColumnSpacing="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="40" />
+                                </Grid.RowDefinitions>
+                                <Frame CornerRadius="10" IsClippedToBounds="True" Padding="0" Grid.ColumnSpan="3" Grid.Column="0" Grid.Row="0" BackgroundColor="#E7FAFA">
+                                    <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Text="{Binding Path=OccupationalArea.OccupationName, StringFormat=' {0} '}" HorizontalOptions="CenterAndExpand" FontSize="14" TextColor="Black" />
+                                </Frame>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+
+                    <!--
+                    <Label Padding="0" Text="התנדבויות קרובות:" HorizontalOptions="Center" TextColor="Black" FontSize="17" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="5" />
+                    <Label Padding="0" Text="אירועים קודמים:" HorizontalOptions="Center" TextColor="Black" FontSize="17" Grid.Column="2" Grid.Row="5" FontAttributes="Bold" />
+                    -->
+
+                </Grid>
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
