@@ -4,9 +4,7 @@
              x:Class="VolunteeringApp.Views.RateVolPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="עליך להתחבר כדי להוסיף פוסט לרשימת המועדפים שלך" TextColor="Red"/>
-            <Button Text="להתחברות" Command="{Binding MoveToLoginPageButton}"/>
-            <Button Text="להרשמה" Command="{Binding MoveToSignUpPageButton}"/>
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

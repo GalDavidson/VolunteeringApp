@@ -62,7 +62,7 @@
 
                             <Label Text="{Binding Path=Volunteer.FName}" FontSize="17" TextColor="Black" Grid.Row="0" VerticalOptions="Center" Grid.Column="1"/>
                             <Frame Grid.Row="1" Grid.Column="0" BackgroundColor="Transparent" >
-                                <Button Text="{Binding Path=Volunteer.UserName}" TextTransform="Lowercase" BorderColor="Black" FontSize="13" BackgroundColor="Transparent" Command="{Binding Source={x:Reference collectionName}, Path=BindingContext.RateVolunteerCommand}" CommandParameter="{Binding}"/>
+                                <Button Text="{Binding Path=Volunteer.UserName}" TextTransform="Lowercase" BorderColor="Black" FontSize="13" BackgroundColor="Transparent"/>
                             </Frame>
                             <Frame CornerRadius="200" IsClippedToBounds="True" Padding="0" Grid.Row="0" Grid.Column="0" BackgroundColor="Transparent">
                                 <Image Source="{Binding Path=Volunteer.ProfilePic}" Aspect="AspectFill" />

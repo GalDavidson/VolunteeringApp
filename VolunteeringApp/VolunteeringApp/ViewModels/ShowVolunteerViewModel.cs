@@ -48,17 +48,8 @@ namespace VolunteeringApp.ViewModels
         {
             App app = (App)App.Current;
 
-            if (app.CurrentUser == null)
-            {
-                bool result = await App.Current.MainPage.DisplayAlert("שגיאה", " יש להתחבר למערכת...", "אישור", "ביטול", FlowDirection.RightToLeft);
-                if (result)
-                    await app.MainPage.Navigation.PushModalAsync(new RateVolPage());
-                else
-                {
-                    await App.Current.MainPage.DisplayAlert("יש", " יש להתחבר למערכת...", "אישור", "כל הכבוד !!", FlowDirection.RightToLeft);
+            await app.MainPage.Navigation.PushModalAsync(new RateVolPage());
 
-                }
-            }
 
             //else
             //{
@@ -66,5 +57,8 @@ namespace VolunteeringApp.ViewModels
             //    ImgUrl = app.CurrentUser.ImageUrl;
             //}
         }
+
+
+
     }
 }
