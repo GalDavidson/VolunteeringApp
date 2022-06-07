@@ -15,7 +15,7 @@ using Xamarin.Essentials;
 
 namespace VolunteeringApp.ViewModels
 {
-    public class AppAdminViewModel
+    public class AppAdminViewModel: INotifyPropertyChanged
     {
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -231,6 +231,32 @@ namespace VolunteeringApp.ViewModels
             }
         }
 
+
+        private Association selectedAsso;
+        public Association SelectedAsso
+        {
+            get
+            {
+                return this.selectedAsso;
+            }
+            set
+            {
+
+                if (value != null && value != this.selectedAsso)
+                {
+                    this.selectedAsso = value;
+                    OnSelectionAssociationChanged(value);
+                }
+                if (value == null)
+                {
+                    this.selectedAsso = null;
+                    OnPropertyChanged("SelectedAsso");
+
+                }
+
+            }
+        }
+
         public ICommand SelectionAssociationChanged => new Command<Object>(OnSelectionAssociationChanged);
         public void OnSelectionAssociationChanged(Object obj)
         {
@@ -253,6 +279,8 @@ namespace VolunteeringApp.ViewModels
 
                 if (NavigateToPageEvent != null)
                     NavigateToPageEvent(associationPage);
+
+                //SelectedAsso = null;
             }
         }
         //Delete association

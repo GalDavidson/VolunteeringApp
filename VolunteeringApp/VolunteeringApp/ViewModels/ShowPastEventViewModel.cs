@@ -53,9 +53,48 @@ namespace VolunteeringApp.ViewModels
             if (result != null)
             {
                 vol.WrittenRating = result;
-
             }
+            else
+                return;
+            
+            VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
+            bool success = await proxy.UpdateRate(vol);
+
+            if (success)
+                await App.Current.MainPage.DisplayAlert("", "עודכן בהצלחה", "בסדר");
+            else
+                await App.Current.MainPage.DisplayAlert("שגיאה", "לא עודכן", "בסדר");
         }
+
+        public ICommand MoveToVolPageCommand => new Command<VolunteersInEvent>(VolPageCommand);
+
+        public void VolPageCommand(VolunteersInEvent v)
+        {
+            Volunteer vol = v.Volunteer;
+
+            int age = 0;
+            age = DateTime.Now.Subtract(vol.BirthDate).Days;
+            age = age / 365;
+
+            List<VolunteersInEvent> lst = vol.VolunteersInEvents;
+
+            ShowVolunteerViewModel volContext = new ShowVolunteerViewModel()
+            {
+                FName = vol.FName,
+                LName = vol.LName,
+                UserName = vol.UserName,
+                Age = age,
+                RatingNum = v.RatingNum,
+                TotalEvents = lst.Count,
+                ProfilePic = vol.ProfilePic
+            };
+            Page volPage = new VolProfilePage(volContext);
+
+            if (NavigateToPageEvent != null)
+                NavigateToPageEvent(volPage);
+        }
+
+        public Action<Page> NavigateToPageEvent;
 
         #region rating
         private int ratingValue;

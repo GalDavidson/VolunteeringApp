@@ -18,8 +18,14 @@ namespace VolunteeringApp.Views
         }
         public ShowPastEventPage(ShowPastEventViewModel vm)
         {
+            ShowPastEventViewModel context = vm;
+            context.NavigateToPageEvent += NavigateToAsync;
             this.BindingContext = vm;
             InitializeComponent();
+        }
+        public async void NavigateToAsync(Page p)
+        {
+            await Navigation.PushAsync(p);
         }
     }
 }

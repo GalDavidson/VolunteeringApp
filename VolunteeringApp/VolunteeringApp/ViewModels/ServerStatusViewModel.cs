@@ -16,7 +16,7 @@ using Xamarin.Forms.Xaml;
 
 namespace VolunteeringApp.ViewModels
 {
-    class ServerStatusViewModel
+    class ServerStatusViewModel: INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName)

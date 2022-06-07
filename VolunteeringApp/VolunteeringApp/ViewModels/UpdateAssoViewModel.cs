@@ -16,7 +16,7 @@ using Xamarin.Essentials;
 
 namespace VolunteeringApp.ViewModels
 {
-    public class UpdateAssoViewModel
+    public class UpdateAssoViewModel: INotifyPropertyChanged
     {
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;

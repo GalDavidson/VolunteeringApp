@@ -572,10 +572,10 @@ namespace VolunteeringApp.ViewModels
 
         public NewEventViewModel()
         {
-            this.ShowEventNameError = false;
-            this.ShowLocationError = false;
-            this.ShowDateError = false;
-            this.ShowCaptionError = false;
+            this.showEventNameError = false;
+            this.showLocationError = false;
+            this.showDateError = false;
+            this.showCaptionError = false;
 
             this.ImgSrc = DEFAULT_PHOTO_SRC;
             this.imageFileResult = null; //mark that no picture was chosen

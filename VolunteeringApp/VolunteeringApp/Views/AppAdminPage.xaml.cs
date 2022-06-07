@@ -46,5 +46,11 @@ namespace VolunteeringApp.Views
         {
             await Navigation.PushAsync(p);
         }
+
+        protected override void OnAppearing()
+        {
+            assCollection.SelectedItem = null;
+            base.OnAppearing();
+        }
     }
 }

@@ -52,18 +52,18 @@
 
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="70" />
-                                <ColumnDefinition Width="80" />
-                                <ColumnDefinition Width="150" />
-                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="70" />
+                                <ColumnDefinition Width="170" />
+                                <ColumnDefinition Width="90" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="70"/>
                                 <RowDefinition Height="40"/>
                             </Grid.RowDefinitions>
 
-                            <Label Text="{Binding Path=Volunteer.FName}" FontSize="17" TextColor="Black" Grid.Row="0" VerticalOptions="Center" Grid.Column="1"/>
-                            <Button Text="{Binding Path=Volunteer.UserName}" HorizontalOptions="Center" TextTransform="Lowercase" BorderColor="Black" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" FontSize="15" BackgroundColor="Transparent" />
-                            <Button Text="עדכון דירוג" BackgroundColor="Transparent" VerticalOptions="End" Command="{Binding Source={x:Reference ThePage}, Path=BindingContext.RateVolunteerCommand}" CommandParameter="{Binding}" Grid.Row="0" Grid.Column="3"/>
+                            <Label Text="{Binding Path=Volunteer.FName}" FontSize="17" TextColor="Black" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="1"/>
+                            <Button Text="{Binding Path=Volunteer.UserName}" HorizontalOptions="StartAndExpand" TextTransform="Lowercase" BorderColor="Black" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" FontSize="15" BackgroundColor="Transparent" Command="{Binding Source={x:Reference ThePage}, Path=BindingContext.MoveToVolPageCommand}" CommandParameter="{Binding}" />
+                            <Button Text="עדכון דירוג" BackgroundColor="Transparent" HorizontalOptions="EndAndExpand" VerticalOptions="End" Command="{Binding Source={x:Reference ThePage}, Path=BindingContext.RateVolunteerCommand}" CommandParameter="{Binding}" Grid.Row="0" Grid.Column="3"/>
                             <Frame CornerRadius="200" IsClippedToBounds="True" Padding="0" Grid.Row="0" Grid.Column="0" BackgroundColor="Transparent">
                                 <Image Source="{Binding Path=Volunteer.ProfilePic}" Aspect="AspectFill" />
                             </Frame>

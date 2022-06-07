@@ -74,7 +74,7 @@
                     <!-- InformationAbout-->
                     <Label Text="מידע על העמותה" HorizontalOptions="End" Style="{StaticResource labelNameStyle}"/>
                     <Entry Text="{Binding InformationAbout}" HeightRequest="40" MaxLength="100" WidthRequest="20"></Entry>
-                    <Label Padding="0" Text="{Binding InformationAboutError}"  HorizontalOptions="Center" IsVisible="{Binding ShowInformationAboutError}" Style="{StaticResource labelErrorStyle}"/>
+                    <Label Text="{Binding InformationAboutError}"  HorizontalOptions="Center" IsVisible="{Binding ShowInformationAboutError}" Style="{StaticResource labelErrorStyle}"/>
 
                     <!-- Password-->
                     <Label Text="סיסמה" HorizontalOptions="End" Style="{StaticResource labelNameStyle}"/>

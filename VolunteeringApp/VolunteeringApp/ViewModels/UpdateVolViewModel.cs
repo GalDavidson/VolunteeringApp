@@ -15,7 +15,7 @@ using Xamarin.Essentials;
 
 namespace VolunteeringApp.ViewModels
 {
-    class UpdateVolViewModel
+    class UpdateVolViewModel: INotifyPropertyChanged
     {
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
