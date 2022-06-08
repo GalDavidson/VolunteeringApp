@@ -17,7 +17,7 @@
                 <Setter Property="FontSize" Value="Small" />
             </Style>
             <Style x:Key="labelErrorStyle" TargetType="Label">
-                <Setter Property="HorizontalOptions" Value="End" />
+                <Setter Property="HorizontalOptions" Value="Start" />
                 <Setter Property="TextColor" Value="Red" />
                 <Setter Property="FontSize" Value="Small" />
             </Style>
@@ -33,10 +33,10 @@
     <ContentPage.Content>
         <StackLayout>
             <ScrollView>
-                <StackLayout>
+                <StackLayout Padding="80,0">
 
                     <Label Text="עדכון נתונים" TextDecorations="Underline"/>
-
+                    <Label/>
                     <!-- Photo -->
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -49,7 +49,7 @@
                             <RowDefinition Height="30" />
                             <RowDefinition Height="150" />
                         </Grid.RowDefinitions>
-                        <Frame Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="1">
+                        <Frame Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="1" BackgroundColor="Transparent">
                             <Image x:Name="theImage" Source="{Binding UserImgSrc}" />
                         </Frame>
                         <ImageButton Padding="0" Margin="0" Source="photogallery.png" HorizontalOptions="End" BackgroundColor="Transparent" Grid.Column="1" Grid.Row="0" Command="{Binding PickImageCommand}"/>
@@ -57,32 +57,32 @@
                     </Grid>
 
                     <!-- Email-->
-                    <Label Text="מייל" HorizontalOptions="End" Style="{StaticResource labelNameStyle}"/>
-                    <Frame CornerRadius="10" BorderColor="DarkGray" HorizontalOptions="End" BackgroundColor="Transparent" WidthRequest="140" HeightRequest="18" Padding="10" >
+                    <Label Text="מייל" HorizontalOptions="Start" Style="{StaticResource labelNameStyle}"/>
+                    <Frame CornerRadius="10" BorderColor="DarkGray" HorizontalOptions="Start" BackgroundColor="Transparent" WidthRequest="140" HeightRequest="18" Padding="10" >
                         <Label Text="{Binding Email}"/>
                     </Frame>
                     <Label />
 
                     <!-- User Name-->
 
-                    <Label Text="שם משתמש" HorizontalOptions="End" Style="{StaticResource labelNameStyle}"/>
-                    <Frame CornerRadius="10" BorderColor="DarkGray" HorizontalOptions="End" BackgroundColor="Transparent" WidthRequest="140" HeightRequest="18" Padding="10" >
+                    <Label Text="שם משתמש" HorizontalOptions="Start" Style="{StaticResource labelNameStyle}"/>
+                    <Frame CornerRadius="10" BorderColor="DarkGray" HorizontalOptions="Start" BackgroundColor="Transparent" WidthRequest="140" HeightRequest="18" Padding="10" >
                         <Label Text="{Binding Username}"/>
                     </Frame>
                     <Label />
 
                     <!-- InformationAbout-->
-                    <Label Text="מידע על העמותה" HorizontalOptions="End" Style="{StaticResource labelNameStyle}"/>
+                    <Label Text="מידע על העמותה" HorizontalOptions="Start" Style="{StaticResource labelNameStyle}"/>
                     <Entry Text="{Binding InformationAbout}" HeightRequest="40" MaxLength="100" WidthRequest="20"></Entry>
                     <Label Text="{Binding InformationAboutError}"  HorizontalOptions="Center" IsVisible="{Binding ShowInformationAboutError}" Style="{StaticResource labelErrorStyle}"/>
 
                     <!-- Password-->
-                    <Label Text="סיסמה" HorizontalOptions="End" Style="{StaticResource labelNameStyle}"/>
+                    <Label Text="סיסמה" HorizontalOptions="Start" Style="{StaticResource labelNameStyle}"/>
                     <Entry Text="{Binding Password}" IsPassword="True" HeightRequest="40" MaxLength="15" WidthRequest="20"></Entry>
                     <Label Padding="0" Text="{Binding PasswordError}"  HorizontalOptions="Center" IsVisible="{Binding ShowPasswordError}" Style="{StaticResource labelErrorStyle}"/>
 
                     <!-- Phone Number -->
-                    <Label Text="מספר טלפון" HorizontalOptions="End" Style="{StaticResource labelNameStyle}"/>
+                    <Label Text="מספר טלפון" HorizontalOptions="Start" Style="{StaticResource labelNameStyle}"/>
                     <Entry Text="{Binding PhoneNum}" HeightRequest="40" MaxLength="15" WidthRequest="20"></Entry>
                     <Label Padding="0" Text="{Binding PhoneNumError}"  HorizontalOptions="Center" IsVisible="{Binding ShowPhoneNumError}" Style="{StaticResource labelErrorStyle}"/>
 
@@ -110,7 +110,7 @@
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="50"/>
                                             </Grid.RowDefinitions>
-                                            <Label Text="{Binding Path=OccupationName, StringFormat='{0}'}" HorizontalTextAlignment="End" FontSize="20" TextColor="Black" Grid.Row="0" Grid.Column="0"/>
+                                            <Label Text="{Binding Path=OccupationName, StringFormat='{0}'}" HorizontalTextAlignment="Start" FontSize="20" TextColor="Black" Grid.Row="0" Grid.Column="0"/>
                                         </Grid>
 
                                     </SwipeView>
@@ -119,10 +119,11 @@
                         </CollectionView>
                     </RefreshView>
 
-                    <Entry Placeholder="רשום תחום עיסוק חדש שתרצה להוסיף" MaxLength="30" Text="{Binding NewOccuArea}" TextColor="Black"></Entry>
-                    <Button Text=" הוסף תחום עיסוק לרשימה" Command="{Binding AddOccuArea}"></Button>
+                    <Entry Placeholder="תחום עיסוק חדש" MaxLength="30" Text="{Binding NewOccuArea}" TextColor="Black"></Entry>
+                    <Button Text=" הוספת תחום עיסוק לרשימה" Command="{Binding AddOccuArea}"></Button>
 
-
+                    <Label/>
+                    <Label/>
                     <SearchBar x:Name="searchBar2" 
                        Placeholder="חפש סניף" 
                        Text="{Binding SearchBranch}"
@@ -132,7 +133,7 @@
              Command="{Binding RefreshBranchesCommand}"
              IsRefreshing="{Binding IsRefresh}">
 
-                        <CollectionView  x:Name="collection" ItemsSource="{Binding FilteredBranches}" SelectionMode="Multiple" SelectedItems="{Binding SelectedBranches}" BackgroundColor="White"
+                        <CollectionView  x:Name="collection" ItemsSource="{Binding FilteredBranches}" SelectionMode="Multiple" SelectedItems="{Binding SelectedBranches}" BackgroundColor="Transparent"
                                 SelectionChangedCommand="{Binding UpdateBranches}" SelectionChangedCommandParameter="{Binding Source={x:Reference collection}, Path=SelectedItems}">
                             <CollectionView.ItemsLayout>
                                 <GridItemsLayout Span="1" Orientation="Vertical" />
@@ -147,7 +148,7 @@
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="50"/>
                                             </Grid.RowDefinitions>
-                                            <Label Text="{Binding Path=BranchLocation, StringFormat='{0}'}" HorizontalTextAlignment="End" FontSize="20" TextColor="Black" Grid.Row="0" Grid.Column="0"/>
+                                            <Label Text="{Binding Path=BranchLocation, StringFormat='{0}'}" HorizontalTextAlignment="Start" FontSize="20" TextColor="Black" Grid.Row="0" Grid.Column="0"/>
                                         </Grid>
 
                                     </SwipeView>
@@ -157,8 +158,8 @@
                     </RefreshView>
 
 
-                    <Entry Placeholder="רשום מיקום חדש שתרצה להוסיף" MaxLength="30" Text="{Binding NewBranch}" TextColor="Black"></Entry>
-                    <Button Text="הוסף סניף לרשימה" Command="{Binding AddBranch}"></Button>
+                    <Entry Placeholder="מיקום חדש לסניף" MaxLength="30" Text="{Binding NewBranch}" TextColor="Black"></Entry>
+                    <Button Text="הוספת סניף לרשימה" Command="{Binding AddBranch}"></Button>
 
 
                     <Label Padding="0" Text="{Binding NextError}" HorizontalOptions="Center" IsVisible="{Binding ShowNextError}" Style="{StaticResource labelErrorStyle}"/>

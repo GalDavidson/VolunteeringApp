@@ -13,41 +13,45 @@
             <Label Text="על מנת לראות את משתתפיו, לחצ.י עליו" TextColor="Black" Padding="0" HeightRequest="15"/>
 
             <Label Text="{Binding PastEvMessage}" TextColor="CadetBlue" Padding="0" HeightRequest="15" HorizontalOptions="Center"/>
+            <ScrollView WidthRequest="250">
+                <CollectionView x:Name="collectionName" ItemsSource="{Binding PastEvents}" SelectionMode="Single" SelectedItem="{Binding SelectedDailyEvent}">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Span="1" VerticalItemSpacing="60" Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid HorizontalOptions="Center" Margin="7" RowSpacing="-20" BackgroundColor="#FDECEF">
 
-            <CollectionView x:Name="collectionName" ItemsSource="{Binding PastEvents}" SelectionMode="Single" SelectedItem="{Binding SelectedDailyEvent}">
-                <CollectionView.ItemsLayout>
-                    <GridItemsLayout Span="1" VerticalItemSpacing="100" Orientation="Vertical" />
-                </CollectionView.ItemsLayout>
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        
-                        <Grid HorizontalOptions="Center"  RowSpacing="-20" WidthRequest="350">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="90" />
+                                    <ColumnDefinition Width="70" />
+                                    <ColumnDefinition Width="90" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="70"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
 
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="50"/>
-                                <RowDefinition Height="50"/>
-                                <RowDefinition Height="50"/>
-                                <RowDefinition Height="50"/>
-                            </Grid.RowDefinitions>
-                            <Label Text="ההתנדבות:" FontSize="12" TextColor="Black" Grid.Row="0" Grid.Column="0"/>
-                            <Label Text="{Binding Path=EventName, StringFormat='{0}'}" FontSize="12" TextColor="Black" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"/>
-                            <Label Text="איפה?" FontSize="12" TextColor="Black" Grid.Row="1" Grid.Column="0"/>
-                            <Label Text="{Binding Path=EventLocation, StringFormat='{0}'}" FontSize="12" TextColor="Black" Grid.Row="1" Grid.Column="1"  Grid.ColumnSpan="2"/>
-                            <Label Text="מתי?" FontSize="12" TextColor="Black" Grid.Row="2" Grid.Column="0"/>
-                            <Label Text="{Binding Path=StartTime, StringFormat='{0:MMMM dd, yyyy}'}" FontSize="12" TextColor="Black" Grid.Row="2" Grid.Column="1"  Grid.ColumnSpan="2"/>
-                            <Label Text="מתי?" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="0"/>
-                            <Label Text="{Binding Path=EndTime, StringFormat='{0:HH\\:mm}'}" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="1"/>
-                            <Label Text="{Binding Path=StartTime, StringFormat='{0:HH\\:mm}'}" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="2"/>
+                                </Grid.RowDefinitions>
+                                <Label Text="ההתנדבות:" FontSize="12" TextColor="Black" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                <Label Text="{Binding Path=EventName, StringFormat='{0}'}" FontSize="12" TextColor="Black" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" VerticalOptions="CenterAndExpand"/>
+                                <Label Text="איפה?" FontSize="12" TextColor="Black" Grid.Row="1" Grid.Column="0" HorizontalOptions="Center"/>
+                                <Label Text="{Binding Path=EventLocation, StringFormat='{0}'}" FontSize="12" TextColor="Black" Grid.Row="1" Grid.Column="1"  Grid.ColumnSpan="2"/>
+                                <Label Text="מתי?" FontSize="12" TextColor="Black" Grid.Row="2" Grid.Column="0" HorizontalOptions="Center"/>
+                                <Label Text="{Binding Path=StartTime, StringFormat='{0:dd.MM.yyyy}'}" FontSize="12" TextColor="Black" Grid.Row="2" Grid.Column="1"  Grid.ColumnSpan="2" HorizontalOptions="Start"/>
+                                <Label Text="{Binding Path=EndTime, StringFormat='-----  {0:HH\\:mm}'}" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="1" HorizontalOptions="Start"/>
 
-                        </Grid>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                                <Label Text="{Binding Path=StartTime, StringFormat='{0:HH\\:mm}'}" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="2" HorizontalOptions="Start"/>
+                                <Label Text="מה בתכנית:" FontSize="12" TextColor="Black" Grid.Row="4" Grid.Column="0" HorizontalOptions="Center"/>
+                                <Label Text="{Binding Path=Caption, StringFormat='{0}'}" FontSize="12" TextColor="Black" Grid.Row="4" Grid.Column="1"  Grid.ColumnSpan="2"/>
+                            </Grid>
+
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </ScrollView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
