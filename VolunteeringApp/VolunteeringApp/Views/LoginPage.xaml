@@ -42,11 +42,11 @@
                     <Entry x:Name="Email" Text="{Binding Email}" Placeholder="דואר אלקטרוני"   
                            Keyboard="Email"  
                            Style="{StaticResource LoginEntry}"/>
-                    <Entry x:Name="Password" IsPassword="True" Text="{Binding Password}" Placeholder="סיסמה" 
+                    <Entry x:Name="Password" Text="{Binding Password}" Placeholder="סיסמה" 
                            Style="{StaticResource LoginEntry}"/>
                 </StackLayout>
             </Frame>
-            <Button Command="{Binding SubmitCommand}" Text="התחבר" Style="{StaticResource LoginButton}" />
+            <Button Command="{Binding SubmitCommand}" Text="התחבר.י" Style="{StaticResource LoginButton}" />
 
             <Grid Padding="10" HorizontalOptions="FillAndExpand">
                 <Grid.RowDefinitions>
@@ -58,7 +58,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Grid.Column="0" Grid.Row="0" Margin="-14,0" Padding="0" Text="אין לך חשבון?" TextColor="Black" HorizontalOptions="End" FontAttributes="Bold"/>
-                <Button Grid.Column="1" Grid.Row="0" Padding="0" Command="{Binding MoveToRegister}" FontSize="14" Text="הירשמ.י"  TextColor="LightPink" FontAttributes="Bold" HorizontalOptions="Start" BackgroundColor="Transparent"  Margin="-7,-17" HeightRequest="50"/>
+                <Button Grid.Column="1" Grid.Row="0" Padding="0" Command="{Binding MoveToRegister}" FontSize="14" Text="הירשמ.י"  TextColor="DarkOliveGreen" FontAttributes="Bold" HorizontalOptions="Start" BackgroundColor="Transparent"  Margin="-7,-17" HeightRequest="50"/>
                 
             </Grid>
 

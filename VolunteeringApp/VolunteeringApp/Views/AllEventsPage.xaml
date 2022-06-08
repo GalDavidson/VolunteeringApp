@@ -68,7 +68,7 @@
     </ContentPage.Resources>
 
     <ContentPage.Content>
-        <StackLayout BackgroundColor="Transparent" HorizontalOptions="Center" VerticalOptions="Center" Spacing="25">
+        <StackLayout BackgroundColor="Transparent" HorizontalOptions="Center" VerticalOptions="Center">
 
             <!-- <Label Text="חיפוש לפי איזורים בארץ" TextDecorations="Underline" ></Label> -->
             <Frame CornerRadius="10" BorderColor="DarkGray" HorizontalOptions="Start" BackgroundColor="Transparent" Padding="0">
@@ -81,46 +81,51 @@
                 </Picker>
             </Frame>
 
-            <Button Text="סינון" Command="{Binding FilterEventsCommand}" FontAttributes="Bold" CornerRadius="15"  HorizontalOptions="Start" HeightRequest="37"/>
-            <Button Text="ניקוי בחירה" Command="{Binding CleanFilterEventsCommand}" FontAttributes="Bold" CornerRadius="15"  HorizontalOptions="Start" HeightRequest="37"/>
+            <Label/>
+            <Button Text="סינון" Command="{Binding FilterEventsCommand}" FontAttributes="Bold" CornerRadius="15" WidthRequest="60" HorizontalOptions="Start" HeightRequest="36" />
+            <Button Text="ניקוי בחירה" Command="{Binding CleanFilterEventsCommand}" FontAttributes="Bold" CornerRadius="15"  HorizontalOptions="Start" HeightRequest="36" />
+            <Label/>
 
             <RefreshView x:Name="refreshView" Command="{Binding RefreshEventsCommand}" IsRefreshing="{Binding IsRefresh}">
 
                 <CollectionView x:Name="collection" HorizontalOptions="Center" ItemsSource="{Binding FilteredEvents}" SelectionMode="None"  BackgroundColor="Transparent" Style="{StaticResource NoBackround}" >
                     <CollectionView.ItemsLayout>
-                        <GridItemsLayout Span="1" VerticalItemSpacing="120" Orientation="Vertical" />
+                        <GridItemsLayout Span="1" VerticalItemSpacing="60" Orientation="Vertical" />
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <SwipeView>
-                                <Grid HorizontalOptions="Center" Margin="7" RowSpacing="-20" Style="{StaticResource NoBackround}">
+                            <ScrollView>
+                                <Grid HorizontalOptions="Center" Margin="7" RowSpacing="-20" BackgroundColor="#FDECEF">
                                     
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="90" />
+                                        <ColumnDefinition Width="70" />
+                                        <ColumnDefinition Width="70" />
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
+                                        <RowDefinition Height="70"/>
                                         <RowDefinition Height="50"/>
                                         <RowDefinition Height="50"/>
                                         <RowDefinition Height="50"/>
                                         <RowDefinition Height="50"/>
+                                        <RowDefinition Height="35"/>
                                     </Grid.RowDefinitions>
-                                    <Label Text="ההתנדבות:" FontSize="12" TextColor="Black" Grid.Row="0" Grid.Column="0"/>
-                                    <Label Text="{Binding Path=EventName, StringFormat='{0}'}" FontSize="12" TextColor="Black" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"/>
-                                    <Label Text="איפה?" FontSize="12" TextColor="Black" Grid.Row="1" Grid.Column="0"/>
+                                    <Label Text="ההתנדבות:" FontSize="12" TextColor="Black" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <Label Text="{Binding Path=EventName, StringFormat='{0}'}" FontSize="12" TextColor="Black" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" VerticalOptions="CenterAndExpand"/>
+                                    <Label Text="איפה?" FontSize="12" TextColor="Black" Grid.Row="1" Grid.Column="0" HorizontalOptions="Center"/>
                                     <Label Text="{Binding Path=EventLocation, StringFormat='{0}'}" FontSize="12" TextColor="Black" Grid.Row="1" Grid.Column="1"  Grid.ColumnSpan="2"/>
-                                    <Label Text="מתי?" FontSize="12" TextColor="Black" Grid.Row="2" Grid.Column="0"/>
-                                    <Label Text="{Binding Path=EventDate, StringFormat='{0:dd.MM.yyyy}'}" FontSize="12" TextColor="Black" Grid.Row="2" Grid.Column="1"  Grid.ColumnSpan="2"/>
-                                    <Label Text="מתי?" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="0"/>
-                                    <Label Text="{Binding Path=EndTime, StringFormat='{0:HH\\:mm}'}" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="1"/>
-                                    <Label Text="{Binding Path=StartTime, StringFormat='{0:HH\\:mm}'}" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="2"/>
-                                    <Label Text="מה בתכנית:" FontSize="12" TextColor="Black" Grid.Row="4" Grid.Column="0"/>
+                                    <Label Text="מתי?" FontSize="12" TextColor="Black" Grid.Row="2" Grid.Column="0" HorizontalOptions="Center"/>
+                                    <Label Text="{Binding Path=StartTime, StringFormat='{0:dd.MM.yyyy}'}" FontSize="12" TextColor="Black" Grid.Row="2" Grid.Column="1"  Grid.ColumnSpan="2" HorizontalOptions="Start"/>
+                                    <Label Text="מתי?" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="0" HorizontalOptions="Center"/>
+                                    <Label Text="{Binding Path=EndTime, StringFormat='-----  {0:HH\\:mm}'}" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="1" HorizontalOptions="Start"/>
+                                  
+                                    <Label Text="{Binding Path=StartTime, StringFormat='{0:HH\\:mm}'}" FontSize="12" TextColor="Black" Grid.Row="3" Grid.Column="2" HorizontalOptions="Start"/>
+                                    <Label Text="מה בתכנית:" FontSize="12" TextColor="Black" Grid.Row="4" Grid.Column="0" HorizontalOptions="Center"/>
                                     <Label Text="{Binding Path=Caption, StringFormat='{0}'}" FontSize="12" TextColor="Black" Grid.Row="4" Grid.Column="1"  Grid.ColumnSpan="2"/>
-                                    <Button x:Name="theButton" Text="הרשמה לאירוע" Command="{Binding Source={x:Reference ThePage}, Path= BindingContext.RegisterToEventCommand}" CommandParameter="{Binding}"  FontAttributes="Bold" CornerRadius="15" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" IsVisible="{Binding Source={x:Reference ThePage}, Path= BindingContext.IsVisible}"/>
+                                    <Button x:Name="theButton" Text="הרשמה לאירוע" Command="{Binding Source={x:Reference ThePage}, Path= BindingContext.RegisterToEventCommand}" CommandParameter="{Binding}"  FontAttributes="Bold" CornerRadius="15" BackgroundColor="LightBlue" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" IsVisible="{Binding Source={x:Reference ThePage}, Path= BindingContext.IsVisible}"/>
 
                                 </Grid>
-                            </SwipeView>
+                            </ScrollView>
                             
                         </DataTemplate>
                     </CollectionView.ItemTemplate>

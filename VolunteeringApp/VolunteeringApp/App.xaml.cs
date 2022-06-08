@@ -51,10 +51,10 @@ namespace VolunteeringApp
             }
             else
             {
-                MainPage = new NavigationPage(new AllEventsPage())
-                {
-                    BarBackgroundColor = Color.Navy
-                };
+                MainPage = new NavigationPage(new AllEventsPage());
+               // {
+                 //   BarBackgroundColor = Color.Navy
+               // };
 
             }
         }

@@ -978,7 +978,7 @@ namespace VolunteeringApp.ViewModels
 
                         if (success)
                         {
-                            AssoImgSrc = asso.ImgSource;
+                            AssoImgSrc = asso.ProfilePic;
                         }
                     }
                     ServerStatus = "שומר נתונים...";
