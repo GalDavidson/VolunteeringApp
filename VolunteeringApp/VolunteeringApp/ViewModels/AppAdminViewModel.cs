@@ -131,19 +131,8 @@ namespace VolunteeringApp.ViewModels
             List<DailyEvent> eventsList = await proxy.GetEvents();
             foreach (DailyEvent de in eventsList)
             {
-                if (((DateTime)v.ActionDate).Month == DateTime.Now.Month)
-                    this.MonthVolList++;
-            }
-
-
-            if (((App)App.Current).LookupTables != null)
-            {
-                List<DailyEvent> eventsList = ((App)App.Current).LookupTables.Events;
-                foreach (DailyEvent e in eventsList)
-                {
-                    if (((DateTime)e.StartTime).Day == DateTime.Now.Day)
-                        TodayEventsList++;
-                }
+                if (((DateTime)de.StartTime).Day == DateTime.Now.Day)
+                    this.TodayEventsList++;
             }
         }
         #endregion
@@ -166,16 +155,15 @@ namespace VolunteeringApp.ViewModels
             }
         }
 
-        private void CreateMonthEventsCollection()
+        private async void CreateMonthEventsCollection()
         {
-            if (((App)App.Current).LookupTables != null)
+            VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
+
+            List<DailyEvent> eventsList = await proxy.GetEvents();
+            foreach (DailyEvent de in eventsList)
             {
-                List<DailyEvent> eventsList = ((App)App.Current).LookupTables.Events;
-                foreach (DailyEvent e in eventsList)
-                {
-                    if (((DateTime)e.StartTime).Month == DateTime.Now.Month)
-                        MonthEventsList++;
-                }
+                if (((DateTime)de.StartTime).Month == DateTime.Now.Month)
+                    this.MonthEventsList++;
             }
         }
         #endregion
@@ -198,16 +186,15 @@ namespace VolunteeringApp.ViewModels
             }
         }
 
-        private void CreateVolsInEventsCollection()
+        private async void CreateVolsInEventsCollection()
         {
-            if (((App)App.Current).LookupTables != null)
+            VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
+
+            List<VolunteersInEvent> volList = await proxy.GetVolunteersInEvents();
+            foreach (VolunteersInEvent de in volList)
             {
-                List<VolunteersInEvent> volsList = ((App)App.Current).LookupTables.VolsInEvents;
-                foreach (VolunteersInEvent v in volsList)
-                {
-                    if (((DateTime)v.ActionDate).Month == DateTime.Now.Month)
-                        VolsInEvents++;
-                }
+                if (((DateTime)de.ActionDate).Month == DateTime.Now.Month)
+                    this.VolsInEvents++;
             }
         }
         #endregion

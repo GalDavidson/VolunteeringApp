@@ -306,6 +306,35 @@ namespace VolunteeringApp.Services
             }
         }
 
+        public async Task<List<VolunteersInEvent>> GetVolunteersInEvents()
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetAllVolsInEvents");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        ReferenceHandler = ReferenceHandler.Preserve, //avoid reference loops!
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    List<VolunteersInEvent> lst = JsonSerializer.Deserialize<List<VolunteersInEvent>>(content, options);
+                    return lst;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
+
         public async Task<List<Association>> GetAssociations()
         {
             try
