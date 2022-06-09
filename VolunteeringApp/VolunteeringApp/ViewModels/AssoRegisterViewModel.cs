@@ -935,7 +935,7 @@ namespace VolunteeringApp.ViewModels
                     InformationAbout = InformationAbout,
                     PhoneNum = phoneNum,
                     Pass = Password,
-                    ActionDate = DateTime.Today
+                    ActionDate = DateTime.Now
                 };
 
                 foreach(OccupationalArea o in selectedOccuAreas)

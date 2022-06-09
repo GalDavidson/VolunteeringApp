@@ -17,7 +17,6 @@ namespace VolunteeringApp.Views
         public NewEventPage()
         {
             NewEventViewModel n = new NewEventViewModel();
-            n.SetImageSourceEvent += OnSetImageSource;
             this.BindingContext = n;
 
             InitializeComponent();
@@ -53,11 +52,6 @@ namespace VolunteeringApp.Views
                 Page p = new NavigationPage(new Views.AllEventsPage());
                 App.Current.MainPage = p;
             }
-        }
-
-        public void OnSetImageSource(ImageSource source)
-        {
-            theImage.Source = source;
         }
     }
 }

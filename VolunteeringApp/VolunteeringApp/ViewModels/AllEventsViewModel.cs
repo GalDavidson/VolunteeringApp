@@ -341,6 +341,8 @@ namespace VolunteeringApp.ViewModels
                 else
                 {
                     await App.Current.MainPage.DisplayAlert("", "נרשמת בהצלחה לאירוע", "בסדר");
+                    Page p = new NavigationPage(new VolunteerEventsPage());
+                    App.Current.MainPage = p;
                 }
             }
         }

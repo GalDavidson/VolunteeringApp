@@ -542,20 +542,6 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion הבעיה הבאה
 
-        #region מקור התמונה
-        private string imgSrc;
-
-        public string ImgSrc
-        {
-            get => imgSrc;
-            set
-            {
-                imgSrc = value;
-                OnPropertyChanged("ImgSrc");
-            }
-        }
-        private const string DEFAULT_PHOTO_SRC = "defaultphoto.jpg";
-        #endregion
 
         #region serverStatus
         private string serverStatus;
@@ -577,7 +563,6 @@ namespace VolunteeringApp.ViewModels
             this.showDateError = false;
             this.showCaptionError = false;
 
-            this.ImgSrc = DEFAULT_PHOTO_SRC;
             this.imageFileResult = null; //mark that no picture was chosen
             this.selectedOccuAreas = new List<OccupationalArea>();
             this.filteredOccuAreas = new ObservableCollection<OccupationalArea>();
@@ -622,7 +607,7 @@ namespace VolunteeringApp.ViewModels
                     EventName = this.EventName,
                     EventLocation = this.Location,
                     Caption = this.Caption,
-                    ActionDate = DateTime.Today,
+                    ActionDate = DateTime.Now,
                     AssociationId = a.AssociationId,
                     StartTime = start,
                     EndTime = end
@@ -653,22 +638,6 @@ namespace VolunteeringApp.ViewModels
                 }
                 else
                 {
-                    if (this.imageFileResult != null)
-                    {
-                        ServerStatus = "מעלה תמונה...";
-
-                        bool success = await proxy.UploadImage(new FileInfo()
-                        {
-                            Name = this.imageFileResult.FullPath
-                        }, $"E{ev.EventId}.jpg");
-
-                        if (success)
-                        {
-                            ImgSrc = ev.ImgSource;
-                        }
-                    }
-                    ServerStatus = "שומר נתונים...";
-
                     Page page = new NavigationPage(new Views.AllEventsPage());
                     App.Current.MainPage = page;
 

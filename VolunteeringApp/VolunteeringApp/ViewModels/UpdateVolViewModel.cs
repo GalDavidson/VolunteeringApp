@@ -657,7 +657,7 @@ namespace VolunteeringApp.ViewModels
                     Email = this.Email,
                     UserName = this.Username,
                     Pass = this.Password,
-                    ActionDate = DateTime.Today,
+                    ActionDate = DateTime.Now,
                     GenderId = Gender.GenderId,
                     BirthDate = EntryBirthDate
                 };

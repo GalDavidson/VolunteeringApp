@@ -578,21 +578,6 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion הבעיה הבאה
 
-        #region מקור התמונה
-        private string imgSrc;
-
-        public string ImgSrc
-        {
-            get => imgSrc;
-            set
-            {
-                imgSrc = value;
-                OnPropertyChanged("ImgSrc");
-            }
-        }
-        private const string DEFAULT_PHOTO_SRC = "defaultphoto.jpg";
-        #endregion
-
         #region serverStatus
         private string serverStatus;
         public string ServerStatus
@@ -630,8 +615,6 @@ namespace VolunteeringApp.ViewModels
             this.ShowDateError = false;
             this.ShowCaptionError = false;
 
-            this.ImgSrc = proxy.GetBasePhotoUri() + $"A{currentUser.AssociationId}.jpg";
-            this.imageFileResult = null; //mark that no picture was chosen
             this.SelectedOccuAreas = new ObservableCollection<Object>();
             this.FilteredOccuAreas = new ObservableCollection<OccupationalArea>();
 
@@ -708,22 +691,6 @@ namespace VolunteeringApp.ViewModels
                 }
                 else
                 {
-                    //    if (this.imageFileResult != null)
-                    //    {
-                    //        ServerStatus = "מעלה תמונה...";
-
-                    //        bool success = await proxy.UploadImage(new FileInfo()
-                    //        {
-                    //            Name = this.imageFileResult.FullPath
-                    //        }, $"E{ev.EventId}.jpg");
-
-                    //        if (success)
-                    //        {
-                    //            ImgSrc = ev.ImgSource;
-                    //        }
-                    //    }
-                    ServerStatus = "שומר נתונים...";
-
                     Page page = new NavigationPage(new Views.AllEventsPage());
                     App.Current.MainPage = page;
 
@@ -735,64 +702,5 @@ namespace VolunteeringApp.ViewModels
                 NextError = "אירעה שגיאה! לא ניתן להמשיך בהרשמה";
             }
         }
-
-        //public async void OnDelete()
-        //{
-        //    bool result = await App.Current.MainPage.DisplayAlert("את.ה בטוח.ה?", "", "כן", "לא", FlowDirection.RightToLeft);
-        //    if (result)
-        //    {
-        //        VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
-        //        bool ok = await proxy.DelEvent(NewOccuAr);
-        //        App theApp = (App)App.Current;
-        //        theApp.CurrentUser = null;
-        //        await App.Current.MainPage.DisplayAlert("האירוע נמחק בהצלחה", "", "", "בסדר", FlowDirection.RightToLeft);
-        //        Page p = new NavigationPage(new Views.VolunteerEventsPage());
-        //        App.Current.MainPage = p;
-        //    }
-        //}
-
-        #region new pic
-        FileResult imageFileResult;
-        public event Action<ImageSource> SetImageSourceEvent;
-        public ICommand PickImageCommand => new Command(OnPickImage);
-        public async void OnPickImage()
-        {
-            FileResult result = await MediaPicker.PickPhotoAsync(new MediaPickerOptions()
-            {
-                Title = "בחר תמונה"
-            });
-
-            if (result != null)
-            {
-                this.imageFileResult = result;
-
-                var stream = await result.OpenReadAsync();
-                ImageSource imgSource = ImageSource.FromStream(() => stream);
-                if (SetImageSourceEvent != null)
-                    SetImageSourceEvent(imgSource);
-            }
-        }
-
-        ///The following command handle the take photo button
-        public ICommand CameraImageCommand => new Command(OnCameraImage);
-        public async void OnCameraImage()
-        {
-            var result = await MediaPicker.CapturePhotoAsync(new MediaPickerOptions()
-            {
-                Title = "צלם תמונה"
-            });
-
-            if (result != null)
-            {
-                this.imageFileResult = result;
-                var stream = await result.OpenReadAsync();
-                ImageSource imgSource = ImageSource.FromStream(() => stream);
-                if (SetImageSourceEvent != null)
-                    SetImageSourceEvent(imgSource);
-            }
-        }
-
-        #endregion
-
     }
 }
