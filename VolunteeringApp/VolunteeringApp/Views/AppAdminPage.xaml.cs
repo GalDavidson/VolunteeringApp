@@ -49,7 +49,8 @@ namespace VolunteeringApp.Views
 
         protected override void OnAppearing()
         {
-            assCollection.SelectedItem = null;
+            assoCollection.SelectedItem = null;
+            assoCollection2.SelectedItem = null;
             base.OnAppearing();
         }
     }

@@ -49,7 +49,7 @@ namespace VolunteeringApp.ViewModels
         public ICommand RateVolunteerCommand => new Command<VolunteersInEvent>(RateVol);
         public async void RateVol(VolunteersInEvent vol)
         {
-            string result = await App.Current.MainPage.DisplayPromptAsync("", "מילוי חוות דעת כתובה על המתנדב", "שלח", "לא תודה");
+            string result = await App.Current.MainPage.DisplayPromptAsync("מילוי חוות דעת כתובה על המתנדב ושליחת הדירוג", "(ניתן להשאיר את חוות הדעת ריקה)", "שלח", "לא תודה");
             if (result != null)
             {
                 vol.WrittenRating = result;

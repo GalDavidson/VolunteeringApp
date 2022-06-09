@@ -31,7 +31,7 @@
     <ContentPage.Content>
         <StackLayout>
             <ScrollView>
-                <StackLayout>
+                <StackLayout Padding="80,20">
 
                     <Label Text="עדכון נתונים" TextDecorations="Underline"/>
 
@@ -55,32 +55,32 @@
                     </Grid>
 
                     <!-- Email-->
-                    <Label Text="מייל" HorizontalOptions="End" Style="{StaticResource labelNameStyle}"/>
-                    <Frame CornerRadius="10" BorderColor="DarkGray" HorizontalOptions="End" BackgroundColor="Transparent" WidthRequest="140" HeightRequest="18" Padding="10" >
+                    <Label Text="מייל" HorizontalOptions="Start" Style="{StaticResource labelNameStyle}"/>
+                    <Frame CornerRadius="10" BorderColor="DarkGray" HorizontalOptions="Start" BackgroundColor="Transparent" WidthRequest="140" HeightRequest="18" Padding="10" >
                         <Label Text="{Binding Email}"/>
                     </Frame>
                     <Label />
 
                     <!-- User Name-->
 
-                    <Label Text="שם משתמש" HorizontalOptions="End" Style="{StaticResource labelNameStyle}"/>
-                    <Frame CornerRadius="10" BorderColor="DarkGray" HorizontalOptions="End" BackgroundColor="Transparent" WidthRequest="140" HeightRequest="18" Padding="10" >
+                    <Label Text="שם משתמש" HorizontalOptions="Start" Style="{StaticResource labelNameStyle}"/>
+                    <Frame CornerRadius="10" BorderColor="DarkGray" HorizontalOptions="Start" BackgroundColor="Transparent" WidthRequest="140" HeightRequest="18" Padding="10" >
                         <Label Text="{Binding Username}"/>
                     </Frame>
                     <Label />
 
                     <!-- Name-->
-                    <Label Text="שם פרטי" HorizontalOptions="End" Style="{StaticResource labelNameStyle}"/>
+                    <Label Text="שם פרטי" HorizontalOptions="Start" Style="{StaticResource labelNameStyle}"/>
                     <Entry Text="{Binding Name}" HeightRequest="40" MaxLength="100" WidthRequest="20"></Entry>
                     <Label Padding="0" Text="{Binding NameError}"  HorizontalOptions="Center" IsVisible="{Binding ShowNameError}" Style="{StaticResource labelErrorStyle}"/>
 
                     <!-- LastName-->
-                    <Label Text="שם משפחה" HorizontalOptions="End" Style="{StaticResource labelNameStyle}"/>
+                    <Label Text="שם משפחה" HorizontalOptions="Start" Style="{StaticResource labelNameStyle}"/>
                     <Entry Text="{Binding LastName}" HeightRequest="40" MaxLength="100" WidthRequest="20"></Entry>
                     <Label Padding="0" Text="{Binding LastNameError}"  HorizontalOptions="Center" IsVisible="{Binding ShowLastNameError}" Style="{StaticResource labelErrorStyle}"/>
 
                     <!-- Password-->
-                    <Label Text="סיסמה" HorizontalOptions="End" Style="{StaticResource labelNameStyle}"/>
+                    <Label Text="סיסמה" HorizontalOptions="Start" Style="{StaticResource labelNameStyle}"/>
                     <Entry Text="{Binding Password}" IsPassword="True" HeightRequest="40" MaxLength="15" WidthRequest="20"></Entry>
                     <Label Padding="0" Text="{Binding PasswordError}"  HorizontalOptions="Center" IsVisible="{Binding ShowPasswordError}" Style="{StaticResource labelErrorStyle}"/>
 
@@ -91,7 +91,8 @@
                     <Entry Placeholder="רשום מגדר חדש שתרצה להוסיף" MaxLength="30" Text="{Binding NewGender}" TextColor="Black"></Entry>
                     <Button Text=" הוסף מגדר לרשימה" Command="{Binding AddGender}"></Button>
 
-
+                    <Label/>
+                    <Label/>
                     <Frame CornerRadius="10" BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="70" Padding="10">
                         <StackLayout>
                             <Label Text="תאריך לידה"></Label>

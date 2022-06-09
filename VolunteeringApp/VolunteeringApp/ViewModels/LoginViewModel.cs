@@ -189,7 +189,7 @@ namespace VolunteeringApp.ViewModels
 
             if (user == null)
             {
-               await App.Current.MainPage.DisplayAlert("שגיאה", "התחברות נכשלה, בדוק שם משתמש וסיסמה ונסה שוב", "בסדר");
+               await App.Current.MainPage.DisplayAlert("שגיאה", "התחברות נכשלה, נא לבדוק שם משתמש וסיסמה", "בסדר");
             }
             else
             {
