@@ -2,12 +2,12 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="VolunteeringApp.Views.ServerStatusPage"
-             BackgroundColor="#7EB6B8"
+             BackgroundColor="#7cb2be"
              >
     <ContentPage.Content>
         <StackLayout>
 
-            <Image Source="logo.jpeg" HeightRequest="700" WidthRequest="10000" BackgroundColor="Transparent" ></Image>
+            <Image Source="logo.jpeg" HeightRequest="100" WidthRequest="100" BackgroundColor="Transparent" ></Image>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
