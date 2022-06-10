@@ -5,7 +5,7 @@
              FlowDirection="RightToLeft">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="דף הרשמה" Priority='0' Order='Secondary' Clicked='ToolbarItem_Clicked_AllEvents'/>
+        <ToolbarItem Text="כל האירועים" Priority='0' Order='Secondary' Clicked='ToolbarItem_Clicked_AllEvents'/>
         <ToolbarItem Text="הרשמה" Priority='0' Order='Secondary' Clicked='ToolbarItem_Clicked_Register'/>
     </ContentPage.ToolbarItems>
 
@@ -42,8 +42,22 @@
                     <Entry x:Name="Email" Text="{Binding Email}" Placeholder="דואר אלקטרוני"   
                            Keyboard="Email"  
                            Style="{StaticResource LoginEntry}"/>
-                    <Entry x:Name="Password" IsPassword="True" Text="{Binding Password}" Placeholder="סיסמה" HorizontalTextAlignment="End"
+
+                    <Grid HorizontalOptions="FillAndExpand">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="27"/>
+                        </Grid.ColumnDefinitions>
+                        <Entry x:Name="Password" Grid.Column="0" Grid.Row="0" IsPassword="{Binding ShowPass}" Text="{Binding Password}" Placeholder="סיסמה" HorizontalTextAlignment="End"
                            Style="{StaticResource LoginEntry}"/>
+                        <ImageButton Grid.Column="1" Grid.Row="0" HorizontalOptions="End" BackgroundColor="Transparent" Source="{Binding ImgSource}" Command="{Binding PassCommand}" HeightRequest="27" WidthRequest="27"/>
+                    </Grid>
+                    
+                    
+                    
                 </StackLayout>
             </Frame>
             <Button Command="{Binding SubmitCommand}" Text="התחבר.י" Style="{StaticResource LoginButton}" />

@@ -78,15 +78,49 @@ namespace VolunteeringApp.ViewModels
 
             List<VolunteersInEvent> lst = vol.VolunteersInEvents;
 
-            ShowVolunteerViewModel volContext = new ShowVolunteerViewModel()
+            string icon = "";
+            string rank = "";
+
+            App theApp = (App)App.Current;
+            List<Rank> ranks = theApp.LookupTables.Ranks;
+
+            if (lst.Count < 11)
+            {
+                rank = ranks[0].RankName;
+                icon = "footSteps.png";
+            }
+            if (lst.Count > 10 && lst.Count < 16)
+            {
+                rank = ranks[1].RankName;
+                icon = "coolHand.png";
+            }
+            if (lst.Count > 15 && lst.Count < 21)
+            {
+                rank = ranks[2].RankName;
+                icon = "clap.png";
+            }
+            if (lst.Count > 20 && lst.Count < 26)
+            {
+                rank = ranks[3].RankName;
+                icon = "fire.png";
+            }
+            if (lst.Count > 25)
+            {
+                rank = ranks[4].RankName;
+                icon = "party.png";
+            }
+
+            VolProfileViewModel volContext = new VolProfileViewModel()
             {
                 FName = vol.FName,
                 LName = vol.LName,
                 UserName = vol.UserName,
                 Age = age,
-                RatingNum = v.RatingNum,
+                RatingNum = (int)vol.AvgRating,
                 TotalEvents = lst.Count,
-                ProfilePic = vol.ProfilePic
+                ProfilePic = vol.ProfilePic,
+                Rank = rank,
+                RankPic = icon
             };
             Page volPage = new VolProfilePage(volContext);
 

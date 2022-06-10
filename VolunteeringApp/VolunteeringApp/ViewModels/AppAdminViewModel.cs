@@ -131,7 +131,7 @@ namespace VolunteeringApp.ViewModels
             List<DailyEvent> eventsList = await proxy.GetEvents();
             foreach (DailyEvent de in eventsList)
             {
-                if (((DateTime)de.StartTime).Day == DateTime.Now.Day)
+                if (((DateTime)de.ActionDate).Day == DateTime.Now.Day)
                     this.TodayEventsList++;
             }
         }
@@ -162,7 +162,7 @@ namespace VolunteeringApp.ViewModels
             List<DailyEvent> eventsList = await proxy.GetEvents();
             foreach (DailyEvent de in eventsList)
             {
-                if (((DateTime)de.StartTime).Month == DateTime.Now.Month)
+                if (((DateTime)de.ActionDate).Month == DateTime.Now.Month)
                     this.MonthEventsList++;
             }
         }
@@ -210,6 +210,7 @@ namespace VolunteeringApp.ViewModels
             CreateMonthVolCollection();
             CreateTodayEventsCollection();
             CreateMonthEventsCollection();
+            CreateVolsInEventsCollection();
         }
 
         #region Associasions
@@ -260,7 +261,7 @@ namespace VolunteeringApp.ViewModels
                 Association chosenAsso = (Association)obj;
                 Page associationPage = new ShowAssociationPage();
 
-                ShowAssociationViewModel assoContext = new ShowAssociationViewModel
+                AssoProfileViewModel assoContext = new AssoProfileViewModel
                 {
                     Email = chosenAsso.Email,
                     UserName = chosenAsso.UserName,
@@ -297,10 +298,6 @@ namespace VolunteeringApp.ViewModels
                     await App.Current.MainPage.DisplayAlert("שגיאה", "לא בוצע", "אישור");
                 }
             }
-            else
-            {
-                await App.Current.MainPage.DisplayAlert("שגיאה", "לא בוצע", "אישור");
-            }
         }
 
         #endregion
@@ -331,29 +328,55 @@ namespace VolunteeringApp.ViewModels
                 age = age / 365;
 
                 List<VolunteersInEvent> lst = vol.VolunteersInEvents;
-                int ratingSum = 0;
-                foreach(VolunteersInEvent v in lst)
+
+                string icon = "";
+                string rank = "";
+
+                App theApp = (App)App.Current;
+                List<Rank> ranks = theApp.LookupTables.Ranks;
+
+                if (lst.Count < 11)
                 {
-                    ratingSum += v.RatingNum;
+                    rank = ranks[0].RankName;
+                    icon = "footSteps.png";
+                }
+                if (lst.Count > 10 && lst.Count < 16)
+                {
+                    rank = ranks[1].RankName;
+                    icon = "coolHand.png";
+                }
+                if (lst.Count > 15 && lst.Count < 21) 
+                {
+                    rank = ranks[2].RankName;
+                    icon = "clap.png";
+                }
+                if (lst.Count > 20 && lst.Count < 26)
+                {
+                    rank = ranks[3].RankName;
+                    icon = "fire.png";
+                }
+                if (lst.Count > 25)
+                {
+                    rank = ranks[4].RankName;
+                    icon = "party.png";
                 }
 
-                ShowVolunteerViewModel volContext = new ShowVolunteerViewModel()
+                VolProfileViewModel volContext = new VolProfileViewModel()
                 {
                     FName = vol.FName,
                     LName = vol.LName,
                     UserName = vol.UserName,
                     Age = age,
-                    RatingNum = ratingSum / lst.Count,
+                    RatingNum = (int)vol.AvgRating,
                     TotalEvents = lst.Count,
                     ProfilePic = vol.ProfilePic,
-                    Gender = vol.Gender
+                    Rank = rank,
+                    RankPic = icon
                 };
                 Page volPage = new VolProfilePage(volContext);
 
                 if (NavigateToPageEvent != null)
                     NavigateToPageEvent(volPage);
-
-                //Gender = genders[(int)chosenVol.GenderId].GenderType;
             }
         }
         //Delete volunteer

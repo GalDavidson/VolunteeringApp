@@ -479,7 +479,7 @@ namespace VolunteeringApp.ViewModels
 
 
             //Copy list to the filtered list
-            this.filteredBranches = new ObservableCollection<Branch>(this.allBranches.OrderBy(b => b.BranchLocation));
+            this.FilteredBranches = new ObservableCollection<Branch>(this.allBranches.OrderBy(b => b.BranchLocation));
             SearchBranch = String.Empty;
             IsRefresh = false;
         }
@@ -610,33 +610,39 @@ namespace VolunteeringApp.ViewModels
                 return;
             }
 
-            Branch newBranches = new Branch
+            Branch newB = new Branch
             {
                 BranchLocation = NewBranch
             };
 
             bool IsExist = false;
-            if (allBranches.Contains(newBranches)) { IsExist = true; }
+
+            foreach (Branch b in allBranches)
+            {
+                if (b.BranchLocation == newB.BranchLocation)
+                    IsExist = true;
+            }
 
             if (!IsExist)
             {
                 VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
-                bool ok = await proxy.AddBranch(newBranches);
+                bool ok = await proxy.AddBranch(newB);
 
                 if (ok)
                 {
-                    allBranches.Add(newBranches);
+                    allBranches.Add(newB);
+                    this.FilteredBranches = new ObservableCollection<Branch>(this.allBranches.OrderBy(b => b.BranchLocation));
                     //SearchBranch = "";
-                    await App.Current.MainPage.DisplayAlert("", "בסדר", "!הוספת מיקום בהצלחה");
+                    await App.Current.MainPage.DisplayAlert("", "!הוספת מיקום בהצלחה", "בסדר");
                 }
                 else if (!ok)
                 {
-                    await App.Current.MainPage.DisplayAlert("בסדר", "הוספת המיקום נכשלה", "שגיאה");
+                    await App.Current.MainPage.DisplayAlert("שגיאה", "הוספת המיקום נכשלה", "בסדר");
                 }
             }
             else
             {
-                await App.Current.MainPage.DisplayAlert("בסדר", "מיקום זה כבר קיים במערכת", "שגיאה");
+                await App.Current.MainPage.DisplayAlert("שגיאה", "מיקום זה כבר קיים במערכת", "בסדר");
             }
 
         }
@@ -799,32 +805,39 @@ namespace VolunteeringApp.ViewModels
                 return;
             }
 
-            OccupationalArea NewOccuAr = new OccupationalArea
+            OccupationalArea newO = new OccupationalArea
             {
                 OccupationName = NewOccuArea
             };
 
             bool IsExist = false;
-            if (allOccupationalAreas.Contains(NewOccuAr)) { IsExist = true; }
+
+            foreach (OccupationalArea o in allOccupationalAreas)
+            {
+                if (o.OccupationName == newO.OccupationName)
+                    IsExist = true;
+            }
 
             if (!IsExist)
             {
                 VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
-                bool ok = await proxy.AddOccupationalArea(NewOccuAr);
+                bool ok = await proxy.AddOccupationalArea(newO);
 
                 if (ok)
                 {
-                    allOccupationalAreas.Add(NewOccuAr);
-                    await App.Current.MainPage.DisplayAlert("", "בסדר", "!הוספת תחום עיסוק בהצלחה");
+                    allOccupationalAreas.Add(newO);
+                    this.FilteredOccuAreas = new ObservableCollection<OccupationalArea>(this.allOccupationalAreas.OrderBy(a => a.OccupationName));
+
+                    await App.Current.MainPage.DisplayAlert("", "!הוספת תחום עיסוק בהצלחה", "בסדר");
                 }
                 else if (!ok)
                 {
-                    await App.Current.MainPage.DisplayAlert("בסדר", "הוספת תחום עיסוק נכשלה", "שגיאה");
+                    await App.Current.MainPage.DisplayAlert("שגיאה", "הוספת תחום עיסוק נכשלה", "בסדר");
                 }
             }
             else
             {
-                await App.Current.MainPage.DisplayAlert("בסדר", "תחום עיסוק זה כבר קיים במערכת", "שגיאה");
+                await App.Current.MainPage.DisplayAlert("שגיאה", "תחום עיסוק זה כבר קיים במערכת", "בסדר");
             }
 
         }

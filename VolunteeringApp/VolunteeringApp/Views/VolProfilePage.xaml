@@ -20,6 +20,7 @@
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="60"/>
                     <RowDefinition Height="60"/>
+                    <RowDefinition Height="30"/>
                     <RowDefinition Height="90"/>
                 </Grid.RowDefinitions>
                 <Frame CornerRadius="200" IsClippedToBounds="True" Padding="0" HeightRequest="20" WidthRequest="10" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="0">
@@ -32,18 +33,20 @@
                 <rating:RatingBar 
                                 x:Name="rating" 
                                 HorizontalOptions="CenterAndExpand"
+                                IsEnabled="False"
                                 VerticalOptions="Start"
                                 ImageWidth="30" ImageHeight="30" 
                                 FlowDirection="LeftToRight" 
                                 EmptyStarImage="emptyStar.png" 
                                 FillStarImage="blackStar.png" 
-                                SelectedStarValue="{Binding RatingNum, Mode=OneWay}" Grid.ColumnSpan="2" Grid.Column="2" Grid.Row="3">
+                                SelectedStarValue="{Binding RatingNum}" Grid.ColumnSpan="2" Grid.Column="2" Grid.Row="3">
                 </rating:RatingBar>
 
                 <Label Padding="0" Text="רמה:" HorizontalOptions="StartAndExpand" TextColor="Black" FontSize="16" Grid.Column="1" Grid.Row="4" HeightRequest="100"/>
-                <Image Source="fire.png" HorizontalOptions="Center" Aspect="AspectFill" Grid.Column="2" Grid.Row="4" />
-                <Label Padding="0" Text="צבירת התנדבויות:" HorizontalOptions="Center" TextColor="Black" FontSize="17" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="5" />
-                <Label Padding="0" Text="{Binding TotalEvents}" HorizontalOptions="Center" TextColor="Black" FontSize="17" Grid.Column="2" Grid.Row="5" FontAttributes="Bold" />
+                <Image Source="{Binding RankPic}" HorizontalOptions="Center" Aspect="AspectFill" Grid.Column="2" Grid.Row="4" />
+                <Label Text="{Binding Rank}" HorizontalOptions="Center" Grid.Column="2" Grid.Row="5" />
+                <Label Padding="0" Text="צבירת התנדבויות:" HorizontalOptions="Center" TextColor="Black" FontSize="17" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="6" />
+                <Label Padding="0" Text="{Binding TotalEvents}" HorizontalOptions="Center" TextColor="Black" FontSize="17" Grid.Column="2" Grid.Row="6" FontAttributes="Bold" />
 
             </Grid>
         </StackLayout>

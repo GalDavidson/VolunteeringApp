@@ -146,9 +146,9 @@
                 <Label Grid.Column="1" Grid.Row="1" Text="{Binding MonthVolList}" TextColor="Black" HorizontalOptions="Center"/>
                 <Label Grid.Column="0" Grid.Row="1" Text="מתנדבים חדשים החודש:" TextColor="Black" HorizontalOptions="Center"/>
                 <Label Grid.Column="1" Grid.Row="2" Text="{Binding TodayEventsList}" TextColor="Black" HorizontalOptions="Center"/>
-                <Label Grid.Column="0" Grid.Row="2" Text="אירועים חדשים היום:" TextColor="Black" HorizontalOptions="Center"/>
+                <Label Grid.Column="0" Grid.Row="2" Text="אירועים חדשים שנוצרו היום:" TextColor="Black" HorizontalOptions="Center"/>
                 <Label Grid.Column="1" Grid.Row="3" Text="{Binding MonthEventsList}" TextColor="Black" HorizontalOptions="Center"/>
-                <Label Grid.Column="0" Grid.Row="3" Text="אירועים חדשים החודש:" TextColor="Black" HorizontalOptions="Center"/>
+                <Label Grid.Column="0" Grid.Row="3" Text="אירועים חדשים שנוצרו החודש:" TextColor="Black" HorizontalOptions="Center"/>
                 <Label Grid.Column="1" Grid.Row="4" Text="{Binding VolsInEvents}" TextColor="Black" HorizontalOptions="Center"/>
                 <Label Grid.Column="0" Grid.Row="4" Text="מתנדבים שנרשמו לאירועים החודש" TextColor="Black" HorizontalOptions="Center"/>
                 <Label Grid.Column="1" Grid.Row="5" Text="" TextColor="Black" HorizontalOptions="End"/>

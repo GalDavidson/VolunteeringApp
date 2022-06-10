@@ -11,7 +11,7 @@ using VolunteeringApp.Views;
 
 namespace VolunteeringApp.ViewModels
 {
-    public class ShowVolunteerViewModel: INotifyPropertyChanged
+    public class VolProfileViewModel: INotifyPropertyChanged
     {
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -20,6 +20,12 @@ namespace VolunteeringApp.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
+
+        public const int first = 10;
+        public const int sec = 15;
+        public const int third = 20;
+        public const int fourth = 25;
+        public const int fifth = 10;
 
         public string FName { get; set; }
         public string LName { get; set; }
@@ -40,10 +46,10 @@ namespace VolunteeringApp.ViewModels
         }
 
         public string ProfilePic { get; set; }
-        public Gender Gender { get; set; }
         public int RatingNum { get; set; }
         public int TotalEvents { get; set; }
-        public string Rank { get; set; }
+        public string RankPic { get; set; }
+        public string Rank { get; set; }  
 
         public async void ShowProfilePage()
         {

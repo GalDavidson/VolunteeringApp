@@ -44,15 +44,17 @@ namespace VolunteeringApp.ViewModels
             }
         }
 
-        private void InitEvents()
+        private async void InitEvents()
         {
             IsRefresh = true;
             App theApp = (App)App.Current;
-            this.allEvents = new List<DailyEvent>(theApp.LookupTables.Events);
 
+            VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
+
+            this.allEvents = await proxy.GetEvents();
 
             //Copy list to the filtered list
-            this.filteredEvents = new ObservableCollection<DailyEvent>(this.allEvents);
+            this.FilteredEvents = new ObservableCollection<DailyEvent>(this.allEvents);
             IsRefresh = false;
         }
         #endregion

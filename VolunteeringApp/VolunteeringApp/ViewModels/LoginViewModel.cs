@@ -167,19 +167,65 @@ namespace VolunteeringApp.ViewModels
         }
         #endregion
 
+        private const string OPENEYE_PHOTO_SRC = "openEye.png";
+        private const string CLOSEDEYE_PHOTO_SRC = "closedEye.png";
+
         public ICommand SubmitCommand { protected set; get; }
         public ICommand MoveToRegister { protected set; get; }
 
         public LoginViewModel()
         {
+            ShowPass = true;
+            imgSource = OPENEYE_PHOTO_SRC;
             SubmitCommand = new Command(OnSubmit);
             MoveToRegister = new Command(OnTap);
+            PassCommand = new Command(OnShowPass);
         }
 
         public void OnTap()
         {
             Page p = new NavigationPage(new Views.RegisterNavigation());
             App.Current.MainPage = p;
+        }
+
+        private bool showPass;
+        public bool ShowPass
+        {
+            get { return showPass; }
+
+            set
+            {
+                if (this.showPass != value)
+                {
+                    this.showPass = value;
+                    OnPropertyChanged(nameof(ShowPass));
+                }
+            }
+        }
+
+        private string imgSource;
+        public string ImgSource
+        {
+            get => imgSource;
+            set
+            {
+                imgSource = value;
+                OnPropertyChanged("ImgSource");
+            }
+        }
+
+        public ICommand PassCommand { protected set; get; }
+        public void OnShowPass()
+        {
+            if (ShowPass == false)
+            { ShowPass = true; }
+
+            else { ShowPass = false; }
+
+            if (ImgSource == CLOSEDEYE_PHOTO_SRC)
+            { ImgSource = OPENEYE_PHOTO_SRC; }
+
+            else { ImgSource = CLOSEDEYE_PHOTO_SRC; }
         }
 
         public async void OnSubmit()

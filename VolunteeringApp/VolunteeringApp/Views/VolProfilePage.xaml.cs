@@ -17,7 +17,7 @@ namespace VolunteeringApp.Views
             InitializeComponent();
         }
 
-        public VolProfilePage(ShowVolunteerViewModel vm)
+        public VolProfilePage(VolProfileViewModel vm)
         {
             this.BindingContext = vm;
             InitializeComponent();

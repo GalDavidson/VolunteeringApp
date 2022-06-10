@@ -459,7 +459,12 @@ namespace VolunteeringApp.ViewModels
             };
 
             bool IsExist = false;
-            if (Genders.Contains(newG)) { IsExist = true; }
+
+            foreach (Gender g in this.Genders) 
+            {
+                if (g.GenderType == newG.GenderType)
+                    IsExist = true;
+            }
 
             if (!IsExist)
             {
@@ -470,16 +475,16 @@ namespace VolunteeringApp.ViewModels
                 {
                     Genders.Add(newG);
                     //SearchBranch = "";
-                    await App.Current.MainPage.DisplayAlert("", "בסדר", "!הוספת מגדר בהצלחה");
+                    await App.Current.MainPage.DisplayAlert("", "!המגדר נוסף בהצלחה", "בסדר");
                 }
                 else if (!ok)
                 {
-                    await App.Current.MainPage.DisplayAlert("בסדר", "הוספת המגדר נכשלה", "שגיאה");
+                    await App.Current.MainPage.DisplayAlert("שגיאה", "הוספת המגדר נכשלה", "בסדר");
                 }
             }
             else
             {
-                await App.Current.MainPage.DisplayAlert("בסדר", "מגדר זה כבר קיים במערכת", "שגיאה");
+                await App.Current.MainPage.DisplayAlert("שגיאה", "מגדר זה כבר קיים במערכת", "בסדר");
             }
 
         }
