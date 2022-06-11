@@ -455,7 +455,7 @@ namespace VolunteeringApp.ViewModels
         #endregion
 
         #region AreaSelection
-        ObservableCollection<Object> selectedOccuAreas;
+        private ObservableCollection<Object> selectedOccuAreas;
         public ObservableCollection<Object> SelectedOccuAreas
         {
             get
@@ -489,7 +489,7 @@ namespace VolunteeringApp.ViewModels
         public ICommand UpdateOccuArea => new Command(OnPressedOccuArea);
         public async void OnPressedOccuArea(object occuAreasList)
         {
-            SelectedOccuAreas.Clear();
+            selectedOccuAreas.Clear();
             OccupationalAreas = string.Empty;
             if (occuAreasList is IList<object>)
             {
@@ -695,8 +695,8 @@ namespace VolunteeringApp.ViewModels
         #endregion
 
         #region BranchSelection
-        List<Object> selectedBranches;
-        public List<Object> SelectedBranches
+        ObservableCollection<Object> selectedBranches;
+        public ObservableCollection<Object> SelectedBranches
         {
             get
             {
@@ -707,7 +707,6 @@ namespace VolunteeringApp.ViewModels
                 if (selectedBranches != value)
                 {
                     selectedBranches = value;
-                    OnPropertyChanged("SelectedBranches");
                 }
             }
         }
@@ -824,6 +823,9 @@ namespace VolunteeringApp.ViewModels
             this.ShowPasswordError = false;
             this.selectedOccuAreas = new ObservableCollection<Object>();
             this.filteredOccuAreas = new ObservableCollection<OccupationalArea>();
+
+            this.selectedBranches = new ObservableCollection<Object>();
+            this.filteredBranches = new ObservableCollection<Branch>();
 
             InitOccuAreas();
             InitBranches();

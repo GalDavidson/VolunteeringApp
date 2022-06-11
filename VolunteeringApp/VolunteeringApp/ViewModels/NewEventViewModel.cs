@@ -145,7 +145,6 @@ namespace VolunteeringApp.ViewModels
             set
             {
                 showDateError = value;
-                ValidateDate();
                 OnPropertyChanged("ShowDateError");
             }
         }
@@ -157,7 +156,6 @@ namespace VolunteeringApp.ViewModels
             set
             {
                 dateError = value;
-                ValidateDate();
                 OnPropertyChanged("DateError");
             }
         }
@@ -165,6 +163,8 @@ namespace VolunteeringApp.ViewModels
         private void ValidateDate()
         {
             DateTime today = DateTime.Now;
+            DateError = "";
+            ShowDateError = false;
 
             if (today.Date == EntryDate.Date)
             {

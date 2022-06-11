@@ -26,8 +26,9 @@ namespace VolunteeringApp.Models
             get
             {
                 VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
-                string url = $"{proxy.GetBasePhotoUri()}A{this.AssociationId}.jpg";
-                return url;
+                Random r = new Random();
+                string source = $"{proxy.GetBasePhotoUri()}A{this.AssociationId}.jpg?{r.Next(10000)}";
+                return source;
             }
         }
 

@@ -17,7 +17,6 @@ namespace VolunteeringApp.Models
 
         public VolunteersInEvent()
         {
-            Comments = new List<Comment>();
         }
 
         public int EventId { get; set; }
@@ -28,6 +27,5 @@ namespace VolunteeringApp.Models
 
         public virtual DailyEvent Event { get; set; }
         public virtual Volunteer Volunteer { get; set; }
-        public virtual List<Comment> Comments { get; set; }
     }
 }
