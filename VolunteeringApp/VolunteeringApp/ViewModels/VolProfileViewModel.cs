@@ -49,23 +49,7 @@ namespace VolunteeringApp.ViewModels
         public int RatingNum { get; set; }
         public int TotalEvents { get; set; }
         public string RankPic { get; set; }
-        public string Rank { get; set; }  
-
-        public async void ShowProfilePage()
-        {
-            App app = (App)App.Current;
-
-            await app.MainPage.Navigation.PushModalAsync(new RateVolPage());
-
-
-            //else
-            //{
-            //    Nickname = app.CurrentUser.Nickname;
-            //    ImgUrl = app.CurrentUser.ImageUrl;
-            //}
-        }
-
-
-
+        public string Rank { get; set; }
+        
     }
 }

@@ -501,13 +501,14 @@ namespace VolunteeringApp.ViewModels
                 if (value != this.entryBirthDate)
                 {
                     this.entryBirthDate = value;
+                    ValidateBirthDate();
                     OnPropertyChanged("EntryBirthDate");
                 }
             }
         }
 
         private bool showBirthDateError;
-        private bool ShowBirthDateError
+        public bool ShowBirthDateError
         {
             get => showBirthDateError;
             set
@@ -516,21 +517,10 @@ namespace VolunteeringApp.ViewModels
                 OnPropertyChanged("ShowBirthDateError");
             }
         }
-
-        private DateTime birthDate;
-        private DateTime BirthDate
-        {
-            get => birthDate;
-            set
-            {
-                birthDate = value;
-                ValidateBirthDate();
-                OnPropertyChanged("BirthDate");
-            }
-        }
+        
 
         private string birthDateError;
-        private string BirthDateError
+        public string BirthDateError
         {
             get => birthDateError;
             set

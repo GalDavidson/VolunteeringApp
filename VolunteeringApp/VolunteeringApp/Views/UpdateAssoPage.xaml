@@ -133,28 +133,28 @@
              Command="{Binding RefreshBranchesCommand}"
              IsRefreshing="{Binding IsRefresh}">
 
-                        <CollectionView  x:Name="collection" ItemsSource="{Binding FilteredBranches}" SelectionMode="Multiple" SelectedItems="{Binding SelectedBranches}" BackgroundColor="Transparent"
+                        <ScrollView>
+                            <CollectionView x:Name="collection" ItemsSource="{Binding FilteredBranches}" SelectionMode="Multiple" SelectedItems="{Binding SelectedBranches}" BackgroundColor="Transparent"
                                 SelectionChangedCommand="{Binding UpdateBranches}" SelectionChangedCommandParameter="{Binding Source={x:Reference collection}, Path=SelectedItems}">
                             <CollectionView.ItemsLayout>
                                 <GridItemsLayout Span="1" Orientation="Vertical" />
                             </CollectionView.ItemsLayout>
                             <CollectionView.ItemTemplate>
                                 <DataTemplate>
-                                    <SwipeView>
-                                        <Grid Margin="7">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="50"/>
-                                            </Grid.RowDefinitions>
-                                            <Label Text="{Binding Path=BranchLocation, StringFormat='{0}'}" HorizontalTextAlignment="Start" FontSize="20" TextColor="Black" Grid.Row="0" Grid.Column="0"/>
-                                        </Grid>
-
-                                    </SwipeView>
+                                    <Grid Margin="7">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="50"/>
+                                        </Grid.RowDefinitions>
+                                        <Label Text="{Binding Path=BranchLocation, StringFormat='{0}'}" HorizontalTextAlignment="Start" FontSize="20" TextColor="Black" Grid.Row="0" Grid.Column="0"/>
+                                    </Grid>
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
-                        </CollectionView>
+
+                            </CollectionView>
+                        </ScrollView>
                     </RefreshView>
 
 

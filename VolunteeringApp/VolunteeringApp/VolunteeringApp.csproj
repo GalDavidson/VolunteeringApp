@@ -30,6 +30,9 @@
     <Compile Update="Views\NewEventPage.xaml.cs">
       <DependentUpon>NewEventPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\AssoProfilePage.xaml.cs">
+      <DependentUpon>AssoProfilePage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\VolunteerEventsPage.xaml.cs">
       <DependentUpon>VolunteerEventsPage.xaml</DependentUpon>
     </Compile>
@@ -69,7 +72,7 @@
     <EmbeddedResource Update="Views\ServerStatusPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\ShowAssociationPage.xaml">
+    <EmbeddedResource Update="Views\AssoProfilePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\ShowEventPage.xaml">

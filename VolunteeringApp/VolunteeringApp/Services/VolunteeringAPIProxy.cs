@@ -635,6 +635,73 @@ namespace VolunteeringApp.Services
             }
         }
 
+        public async Task<Volunteer> RegVolAsync(Volunteer volunteer)
+        {
+            try
+            {
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve,
+                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.Hebrew, UnicodeRanges.BasicLatin),
+                    PropertyNameCaseInsensitive = true
+                };
+                string jsonObject = JsonSerializer.Serialize<Volunteer>(volunteer, options);
+                StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/RegisterVolunteer", content);
+                if (response.IsSuccessStatusCode)
+                {
+
+                    string str = await response.Content.ReadAsStringAsync();
+
+                    Volunteer v = JsonSerializer.Deserialize<Volunteer>(str, options);
+                    return v;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
+        public async Task<bool> Logout()
+        {
+            try
+            {
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve,
+                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.Hebrew, UnicodeRanges.BasicLatin),
+                    PropertyNameCaseInsensitive = true
+                };
+
+                App app = (App)App.Current;
+                string jsonObject = JsonSerializer.Serialize<Object>(app.CurrentUser, options);
+                StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/Logout", content);
+
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ee)
+            {
+                Console.WriteLine(ee.Message);
+                return false;
+            }
+        }
+
         public async Task<DailyEvent> NewEvent(DailyEvent d)
         {
             try
@@ -690,40 +757,6 @@ namespace VolunteeringApp.Services
 
                     VolunteersInEvent ev = JsonSerializer.Deserialize<VolunteersInEvent>(str, options);
                     return ev;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return null;
-            }
-        }
-
-        public async Task<Volunteer> RegVolAsync(Volunteer volunteer)
-        {
-            try
-            {
-                JsonSerializerOptions options = new JsonSerializerOptions
-                {
-                    ReferenceHandler = ReferenceHandler.Preserve,
-                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.Hebrew, UnicodeRanges.BasicLatin),
-                    PropertyNameCaseInsensitive = true
-                };
-                string jsonObject = JsonSerializer.Serialize<Volunteer>(volunteer, options);
-                StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
-
-                HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/RegisterVolunteer", content);
-                if (response.IsSuccessStatusCode)
-                {
-
-                    string str = await response.Content.ReadAsStringAsync();
-
-                    Volunteer v = JsonSerializer.Deserialize<Volunteer>(str, options);
-                    return v;
                 }
                 else
                 {

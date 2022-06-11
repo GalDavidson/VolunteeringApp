@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VolunteeringApp.Models;
+using VolunteeringApp.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -42,11 +43,20 @@ namespace VolunteeringApp.Views
             bool result = await App.Current.MainPage.DisplayAlert("להתנתק?", "", "כן", "לא", FlowDirection.RightToLeft);
             if (result)
             {
-                App theApp = (App)App.Current;
-                theApp.CurrentUser = null;
-                await App.Current.MainPage.DisplayAlert("התנתקת בהצלחה", "", "", "בסדר", FlowDirection.RightToLeft);
-                Page p = new NavigationPage(new Views.AllEventsPage());
-                App.Current.MainPage = p;
+                VolunteeringAPIProxy proxy = VolunteeringAPIProxy.CreateProxy();
+                bool success = await proxy.Logout();
+
+                if (success)
+                {
+                    App theApp = (App)App.Current;
+                    theApp.CurrentUser = null;
+                    await App.Current.MainPage.DisplayAlert("התנתקת בהצלחה", "", "", "בסדר", FlowDirection.RightToLeft);
+                    Page p = new NavigationPage(new Views.AllEventsPage());
+                    App.Current.MainPage = p;
+                }
+                else
+                    await App.Current.MainPage.DisplayAlert("ההתנתקות נכשלה", "", "", "בסדר", FlowDirection.RightToLeft);
+
             }
         }
     }
