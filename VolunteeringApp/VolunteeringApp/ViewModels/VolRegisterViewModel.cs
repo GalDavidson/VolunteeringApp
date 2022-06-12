@@ -621,7 +621,8 @@ namespace VolunteeringApp.ViewModels
                     Pass = Password,
                     ActionDate = DateTime.Now,
                     GenderId = this.Gender.GenderId,
-                    BirthDate = EntryBirthDate
+                    BirthDate = EntryBirthDate,
+                    AvgRating = 1
                 };
 
                 volunteer.Gender = new Gender

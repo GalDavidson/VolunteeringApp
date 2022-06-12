@@ -32,6 +32,24 @@ namespace VolunteeringApp.ViewModels
         public TimeSpan EndTime { get; set; }
         public string Caption { get; set; }
 
+        private VolunteersInEvent curVolunteer;
+        public VolunteersInEvent CurVolunteer
+        {
+            get
+            {
+                return this.curVolunteer;
+            }
+            set
+            {
+                if (this.curVolunteer != value)
+                {
+                    this.curVolunteer = value;
+                    OnPropertyChanged("CurVolunteer");
+                }
+            }
+        }
+
+
         private ObservableCollection<VolunteersInEvent> volunteersList;
         public ObservableCollection<VolunteersInEvent> VolunteersList
         { 
@@ -53,6 +71,8 @@ namespace VolunteeringApp.ViewModels
             if (result != null)
             {
                 vol.WrittenRating = result;
+                this.CurVolunteer = new VolunteersInEvent();
+                this.CurVolunteer = vol;
             }
             else
                 return;
@@ -110,13 +130,18 @@ namespace VolunteeringApp.ViewModels
                 icon = "party.png";
             }
 
+            if (CurVolunteer == null)
+            {
+                this.CurVolunteer = v;
+            }
+
             VolProfileViewModel volContext = new VolProfileViewModel()
             {
                 FName = vol.FName,
                 LName = vol.LName,
                 UserName = vol.UserName,
                 Age = age,
-                RatingNum = (int)vol.AvgRating,
+                RatingNum = curVolunteer.RatingNum,
                 TotalEvents = lst.Count,
                 ProfilePic = vol.ProfilePic,
                 Rank = rank,

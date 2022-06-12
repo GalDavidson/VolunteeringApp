@@ -316,7 +316,7 @@ namespace VolunteeringApp.ViewModels
 
             if (o == null)
             {
-                await App.Current.MainPage.DisplayAlert("", "על מנת להירשם לאירוע התנדבות עליך להירשם או להתחבר לאפליקציה כמתנדב", "בסדר");
+                await App.Current.MainPage.DisplayAlert("", "על מנת להירשם לאירוע התנדבות עליך להירשם או להתחבר לאפליקציה כמתנדב.ת", "בסדר");
                 return;
             }
 

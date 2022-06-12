@@ -489,18 +489,20 @@ namespace VolunteeringApp.ViewModels
         public ICommand UpdateOccuArea => new Command(OnPressedOccuArea);
         public async void OnPressedOccuArea(object occuAreasList)
         {
-            selectedOccuAreas.Clear();
-            OccupationalAreas = string.Empty;
-            if (occuAreasList is IList<object>)
-            {
-                List<object> list = ((IList<object>)occuAreasList).ToList();
-                foreach (object a in list)
-                {
-                    SelectedOccuAreas.Add((OccupationalArea)a);
+            //List<OccupationalArea> temp = new List<OccupationalArea>();
+            ////selectedOccuAreas.Clear();
+            //OccupationalAreas = string.Empty;
+            //if (occuAreasList is IList<object>)
+            //{
+            //    List<object> list = ((IList<object>)occuAreasList).ToList();
+            //    foreach (object a in list)
+            //    {
+            //        temp.Add((OccupationalArea)a);
 
-                }
-                if (selectedOccuAreas.Count == 0) { OccupationalAreas = "לא נבחרו תחומי עיסוק"; }
-            }
+            //    }
+            //}
+            //SelectedOccuAreas = new ObservableCollection<object>(temp);
+            //if (selectedOccuAreas.Count == 0) { OccupationalAreas = "לא נבחרו תחומי עיסוק"; }
         }
         #endregion
 
@@ -728,18 +730,18 @@ namespace VolunteeringApp.ViewModels
         public ICommand UpdateBranches => new Command(OnPressedBranches);
         public async void OnPressedBranches(object branchesList)
         {
-            SelectedBranches.Clear();
-            Branches = string.Empty;
-            if (branchesList is IList<object>)
-            {
-                List<object> list = ((IList<object>)branchesList).ToList();
-                foreach (object b in list)
-                {
-                    SelectedBranches.Add((Branch)b);
+            //SelectedBranches.Clear();
+            //Branches = string.Empty;
+            //if (branchesList is IList<object>)
+            //{
+            //    List<object> list = ((IList<object>)branchesList).ToList();
+            //    foreach (object b in list)
+            //    {
+            //        SelectedBranches.Add((Branch)b);
 
-                }
-                if (selectedBranches.Count == 0) { Branches = "לא נבחרו סניפים"; }
-            }
+            //    }
+            //    if (selectedBranches.Count == 0) { Branches = "לא נבחרו סניפים"; }
+            //}
         }
         #endregion
 

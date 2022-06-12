@@ -259,7 +259,7 @@ namespace VolunteeringApp.ViewModels
             if (obj is Association)
             {
                 Association chosenAsso = (Association)obj;
-                Page associationPage = new ShowAssociationPage();
+                Page associationPage = new AssoProfilePage();
 
                 AssoProfileViewModel assoContext = new AssoProfileViewModel
                 {

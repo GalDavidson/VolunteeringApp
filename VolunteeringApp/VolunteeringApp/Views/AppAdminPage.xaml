@@ -46,18 +46,18 @@
                                 </SwipeView.LeftItems>
                                 <Grid Padding="10" HorizontalOptions="FillAndExpand">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="25" />
+                                        <RowDefinition Height="35" />
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="50" />
-                                        <ColumnDefinition Width="100" />
-                                        <ColumnDefinition Width="100" />
-                                        <ColumnDefinition Width="100" />
+                                        <ColumnDefinition Width="60" />
+                                        <ColumnDefinition Width="120" />
+                                        <ColumnDefinition Width="110" />
+                                        <ColumnDefinition Width="90" />
                                     </Grid.ColumnDefinitions>
-                                    <Label Grid.Column="1" Grid.Row="0" Text="{Binding Email}" VerticalOptions="Center" HorizontalOptions="Center" />
-                                    <Label Grid.Column="0" Grid.Row="0" Text="{Binding UserName}" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Black" FontAttributes="Bold"/>
-                                    <Label Grid.Column="2" Grid.Row="0" Text="{Binding InformationAbout}" VerticalOptions="Center" HorizontalOptions="Center"/>
-                                    <Label Grid.Column="3" Grid.Row="0" Text="{Binding PhoneNum}" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                    <Label Grid.Column="1" Grid.Row="0" Text="{Binding Email}" VerticalOptions="Center" HorizontalOptions="Center" FontSize="12"/>
+                                    <Label Grid.Column="0" Grid.Row="0" Text="{Binding UserName}" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Black" FontAttributes="Bold" FontSize="12"/>
+                                    <Label Grid.Column="2" Grid.Row="0" Text="{Binding InformationAbout}" VerticalOptions="Center" HorizontalOptions="Center" FontSize="12"/>
+                                    <Label Grid.Column="3" Grid.Row="0" Text="{Binding PhoneNum}" VerticalOptions="Center" HorizontalOptions="Center" FontSize="12"/>
 
                                 </Grid>
                             </SwipeView>

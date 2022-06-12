@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace VolunteeringApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ShowAssociationPage : ContentPage
+    public partial class AssoProfilePage : ContentPage
     {
-        public ShowAssociationPage()
+        public AssoProfilePage()
         {
             InitializeComponent();
         }
