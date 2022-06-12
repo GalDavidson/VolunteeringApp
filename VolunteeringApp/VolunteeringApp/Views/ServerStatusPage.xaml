@@ -6,8 +6,7 @@
              >
     <ContentPage.Content>
         <StackLayout>
-
-            <Image Source="logo.jpeg" HeightRequest="100" WidthRequest="100" BackgroundColor="Transparent" ></Image>
+            <Image VerticalOptions="CenterAndExpand" Source="logo.jpeg" HeightRequest="300" WidthRequest="300" BackgroundColor="Transparent" ></Image>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
